@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://got2gqjnjnnf"]
+
+[ext_resource type="Texture2D" uid="uid://b3ht18ys827kw" path="res://assets/classroom/classroom_background.png" id="background"]
+[ext_resource type="Resource" uid="uid://dk4g6nsqp82un" path="res://Dialogue/Scene1/Dialogue1.dialogue" id="dialogue"]
+[ext_resource type="Texture2D" uid="uid://dwqq66htnkwkr" path="res://assets/nino_3d/nino_idle_down.png" id="idle_down"]
+[ext_resource type="Texture2D" uid="uid://cyrswrbm5ahj8" path="res://assets/nino_3d/nino_idle_side.png" id="idle_side"]
+[ext_resource type="Texture2D" uid="uid://b1hlkrph2sfwv" path="res://assets/nino_3d/nino_idle_up.png" id="idle_up"]
+[ext_resource type="Script" uid="uid://yit7ccf77r7f" path="res://code/classroom_interactable.gd" id="interactable_script"]
+[ext_resource type="Script" uid="uid://cjg7d1g7tksc8" path="res://code/pseudo_3d_player.gd" id="player_script"]
+[ext_resource type="Texture2D" uid="uid://2yummbox3vfi" path="res://assets/nino_3d/nino_run_down.png" id="run_down"]
+[ext_resource type="Texture2D" uid="uid://mb5lnbwv6mec" path="res://assets/nino_3d/nino_run_side.png" id="run_side"]
+[ext_resource type="Texture2D" uid="uid://b5fjagmv3daga" path="res://assets/nino_3d/nino_run_up.png" id="run_up"]
+[ext_resource type="Texture2D" uid="uid://qyd752wh20kv" path="res://assets/nino_3d/nino_walk_down.png" id="walk_down"]
+[ext_resource type="Texture2D" uid="uid://dcbo70rh102m4" path="res://assets/nino_3d/nino_walk_side.png" id="walk_side"]
+[ext_resource type="Texture2D" uid="uid://bvblafsjrad8e" path="res://assets/nino_3d/nino_walk_up.png" id="walk_up"]
+
+[sub_resource type="RectangleShape2D" id="WalkLeft"]
+size = Vector2(340.5, 35.5)
+
+[sub_resource type="RectangleShape2D" id="WalkCenter"]
+size = Vector2(237, 124)
+
+[sub_resource type="RectangleShape2D" id="WalkRight"]
+size = Vector2(436, 22)
+
+[sub_resource type="RectangleShape2D" id="WalkBottom"]
+size = Vector2(252, 73)
+
+[sub_resource type="RectangleShape2D" id="InteractShape"]
+size = Vector2(92, 82)
+
+[sub_resource type="CapsuleShape2D" id="PlayerShape"]
+height = 24.0
+
+[node name="classroom" type="Node2D" unique_id=354152300]
+y_sort_enabled = true
+
+[node name="background" type="Sprite2D" parent="." unique_id=1907899337]
+z_index = -1000
+position = Vector2(581, 330.5)
+texture = ExtResource("background")
+
+[node name="WalkableAreas" type="Node2D" parent="." unique_id=41239084]
+
+[node name="LeftAisle" type="Area2D" parent="WalkableAreas" unique_id=1004051374 groups=["classroom_walkable"]]
+position = Vector2(210, 505)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/LeftAisle" unique_id=523257605]
+position = Vector2(106.75, -15.25)
+shape = SubResource("WalkLeft")
+
+[node name="CenterFloor" type="Area2D" parent="WalkableAreas" unique_id=1631435938 groups=["classroom_walkable"]]
+position = Vector2(560, 510)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/CenterFloor" unique_id=1121242887]
+position = Vector2(32.5, 26)
+shape = SubResource("WalkCenter")
+
+[node name="FrontBoardStrip" type="Area2D" parent="WalkableAreas" unique_id=1633637688 groups=["classroom_walkable"]]
+position = Vector2(575, 365)
+
+[node name="RightAisle" type="Area2D" parent="WalkableAreas" unique_id=1867733272 groups=["classroom_walkable"]]
+position = Vector2(940, 490)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/RightAisle" unique_id=34186320]
+position = Vector2(-28, 7)
+shape = SubResource("WalkRight")
+
+[node name="BottomPassage" type="Area2D" parent="WalkableAreas" unique_id=13242361 groups=["classroom_walkable"]]
+position = Vector2(582, 605)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/BottomPassage" unique_id=1089144465]
+position = Vector2(10, 17.5)
+shape = SubResource("WalkBottom")
+
+[node name="Interactables" type="Node2D" parent="." unique_id=1672669305]
+
+[node name="DeskPoint" type="Area2D" parent="Interactables" unique_id=157750191]
+position = Vector2(425, 518)
+script = ExtResource("interactable_script")
+interaction_name = "pupitre"
+dialogue_resource = ExtResource("dialogue")
+
+[node name="BoardTablePoint" type="Area2D" parent="Interactables" unique_id=554868513]
+position = Vector2(605, 447)
+script = ExtResource("interactable_script")
+interaction_name = "mesa del tablero"
+dialogue_resource = ExtResource("dialogue")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/BoardTablePoint" unique_id=886023368]
+shape = SubResource("InteractShape")
+
+[node name="PlantTabletPoint" type="Area2D" parent="Interactables" unique_id=1025262065]
+position = Vector2(1063, 425)
+script = ExtResource("interactable_script")
+interaction_name = "planta y tablet"
+dialogue_resource = ExtResource("dialogue")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=511022955 groups=["players"]]
+position = Vector2(575, 560)
+script = ExtResource("player_script")
+walk_speed = 150.0
+run_speed = 220.0
+walkable_area_group = &"classroom_walkable"
+base_visual_scale = 0.54
+idle_down_texture = ExtResource("idle_down")
+walk_down_texture = ExtResource("walk_down")
+run_down_texture = ExtResource("run_down")
+idle_up_texture = ExtResource("idle_up")
+walk_up_texture = ExtResource("walk_up")
+run_up_texture = ExtResource("run_up")
+idle_side_texture = ExtResource("idle_side")
+walk_side_texture = ExtResource("walk_side")
+run_side_texture = ExtResource("run_side")
+
+[node name="Shadow" type="Polygon2D" parent="Player" unique_id=1899282581]
+z_index = -1
+position = Vector2(0, 2)
+color = Color(0, 0, 0, 0.3)
+polygon = PackedVector2Array(-23, -5, -12, -9, 12, -9, 23, -5, 23, 5, 12, 9, -12, 9, -23, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1850784381]
+position = Vector2(0, -31)
+texture = ExtResource("idle_down")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1345001478]
+position = Vector2(0, -9)
+shape = SubResource("PlayerShape")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1489959069]
+position = Vector2(0, -32)
+limit_left = 0
+limit_top = 0
+limit_right = 1162
+limit_bottom = 661
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
