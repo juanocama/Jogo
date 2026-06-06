@@ -76,6 +76,7 @@ func _exit_tree() -> void:
 
 	if is_instance_valid(main_view):
 		main_view.queue_free()
+		main_view = null
 
 	_hide_find_in_dialogue()
 
@@ -192,6 +193,7 @@ func _hide_find_in_dialogue() -> void:
 	if is_instance_valid(find_in_dialogue_view):
 		remove_control_from_bottom_panel(find_in_dialogue_view)
 		find_in_dialogue_view.queue_free()
+		find_in_dialogue_view = null
 
 
 ## Get the shortcuts used by the plugin
