@@ -6,6 +6,9 @@ extends CharacterBody2D
 @export var floor_drag: float = 500.0
 
 func _physics_process(delta: float) -> void:
+	
+	if GameManager.is_dialogue_active:
+		return
 	var left = Input.is_action_pressed("ui_left")
 	var right = Input.is_action_pressed("ui_right")
 	var input_dir = 0
