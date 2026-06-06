@@ -41,7 +41,8 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
-	result_template.queue_free()
+	if is_instance_valid(result_template):
+		result_template.queue_free()
 
 
 func prepare() -> void:

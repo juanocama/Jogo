@@ -1,12 +1,14 @@
-[gd_scene format=3 uid="uid://cmk7bgf67gydc"]
+[gd_scene format=3 uid="uid://g3d7sgcwqtk5"]
 
-[ext_resource type="Script" uid="uid://vjotx7qrogsj" path="res://code/main_character.gd" id="script"]
-[ext_resource type="Texture2D" uid="uid://b3ox3bctig4je" path="res://assets/nino_01/correr derecha.png" id="tex_run"]
-[ext_resource type="Texture2D" path="res://assets/nino_01/dash2d.png" id="tex_dash"]
-[ext_resource type="Texture2D" uid="uid://onq1isncll25" path="res://assets/nino_01/Agacharse derecha.png" id="tex_death"]
-[ext_resource type="Texture2D" uid="uid://dwrn3ygwkhpo5" path="res://assets/nino_01/Salto caminando derecha.png" id="tex_fall"]
-[ext_resource type="Texture2D" uid="uid://c1kbe1q3kcgqx" path="res://assets/nino_01/Respiracion y parpadeo.png" id="tex_hit"]
-[ext_resource type="Texture2D" uid="uid://dy6sgc5bhmxw8" path="res://assets/nino_01/caminar derecha.png" id="tex_walk"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/robot_02/robot_02_projectile_soft.tscn" id="projectile_scene"]
+[ext_resource type="Script" path="res://code/enemies/robots/boss_robot.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/enemies/robot_02/envestir.png" id="tex_dash"]
+[ext_resource type="Texture2D" path="res://assets/enemies/robot_02/caer con fuerza.png" id="tex_death"]
+[ext_resource type="Texture2D" path="res://assets/enemies/robot_02/volar.png" id="tex_fly"]
+[ext_resource type="Texture2D" path="res://assets/enemies/robot_02/golpeo.png" id="tex_hit"]
+[ext_resource type="Texture2D" path="res://assets/enemies/robot_02/disparar.png" id="tex_shoot"]
+[ext_resource type="Texture2D" path="res://assets/enemies/robot_02/transformar tanque y disparo.png" id="tex_special"]
+[ext_resource type="Texture2D" path="res://assets/enemies/robot_02/caminar.png" id="tex_walk"]
 
 [sub_resource type="Animation" id="Animation_RESET"]
 resource_name = "RESET"
@@ -26,7 +28,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_attack"]
 resource_name = "attack"
-length = 0.36
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -34,24 +36,7 @@ tracks/0/path = NodePath("attack:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_crouch"]
-resource_name = "crouch"
-length = 0.75
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("crouch:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -59,7 +44,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_dash"]
 resource_name = "dash"
-length = 0.3
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -67,7 +52,7 @@ tracks/0/path = NodePath("dash:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -75,7 +60,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_death"]
 resource_name = "death"
-length = 0.8
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -83,20 +68,20 @@ tracks/0/path = NodePath("death:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333, 0.666667),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_fall"]
-resource_name = "fall"
+[sub_resource type="Animation" id="Animation_fly"]
+resource_name = "fly"
 length = 0.75
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("fall:frame")
+tracks/0/path = NodePath("fly:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -108,7 +93,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_hit"]
 resource_name = "hit"
-length = 0.28
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -116,7 +101,7 @@ tracks/0/path = NodePath("hit:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.046667, 0.093333, 0.14, 0.186667, 0.233333),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -139,30 +124,46 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_jump"]
-resource_name = "jump"
-length = 0.42
+[sub_resource type="Animation" id="Animation_shoot"]
+resource_name = "shoot"
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("jump:frame")
+tracks/0/path = NodePath("shoot:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.07, 0.14, 0.21, 0.28, 0.35),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_run"]
-resource_name = "run"
+[sub_resource type="Animation" id="Animation_slam"]
+resource_name = "slam"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("slam:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_special"]
+resource_name = "special"
 length = 0.75
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("run:frame")
+tracks/0/path = NodePath("special:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -193,110 +194,118 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_RESET"),
 &"attack": SubResource("Animation_attack"),
-&"crouch": SubResource("Animation_crouch"),
 &"dash": SubResource("Animation_dash"),
 &"death": SubResource("Animation_death"),
-&"fall": SubResource("Animation_fall"),
+&"fly": SubResource("Animation_fly"),
 &"hit": SubResource("Animation_hit"),
 &"idle": SubResource("Animation_idle"),
-&"jump": SubResource("Animation_jump"),
-&"run": SubResource("Animation_run"),
+&"shoot": SubResource("Animation_shoot"),
+&"slam": SubResource("Animation_slam"),
+&"special": SubResource("Animation_special"),
 &"walk": SubResource("Animation_walk")
 }
 
 [sub_resource type="RectangleShape2D" id="BodyShape"]
-size = Vector2(32, 54)
+size = Vector2(58, 92)
 
 [sub_resource type="RectangleShape2D" id="AttackShape"]
-size = Vector2(42, 36)
+size = Vector2(68, 64)
 
-[node name="nino_01" type="CharacterBody2D" unique_id=2098854589 groups=["players"]]
+[node name="robot_02_boss" type="CharacterBody2D" unique_id=935529323 groups=["bosses"]]
 script = ExtResource("script")
-max_health = 110
-attack_damage = 19
-walk_speed = 125.0
-run_speed = 190.0
-jump_velocity = -365.0
+boss_id = &"robot_02"
+max_health = 330
+contact_damage = 14
+melee_damage = 28
+projectile_damage = 22
+speed = 62.0
+dash_speed = 245.0
+shoot_cooldown = 2.2
+slam_cooldown = 4.5
+projectile_scene = ExtResource("projectile_scene")
 
-[node name="idle" type="Sprite2D" parent="." unique_id=37630476]
-position = Vector2(0, -36)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("tex_hit")
-hframes = 6
-
-[node name="walk" type="Sprite2D" parent="." unique_id=675965530]
-visible = false
-position = Vector2(0, -36)
-scale = Vector2(0.25, 0.25)
+[node name="idle" type="Sprite2D" parent="." unique_id=1589258705]
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
 texture = ExtResource("tex_walk")
 hframes = 6
 
-[node name="run" type="Sprite2D" parent="." unique_id=1255258981]
+[node name="walk" type="Sprite2D" parent="." unique_id=382730432]
 visible = false
-position = Vector2(0, -36)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("tex_run")
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_walk")
 hframes = 6
 
-[node name="jump" type="Sprite2D" parent="." unique_id=1222059414]
+[node name="dash" type="Sprite2D" parent="." unique_id=146731832]
 visible = false
-position = Vector2(0, -36)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("tex_fall")
-hframes = 6
-
-[node name="fall" type="Sprite2D" parent="." unique_id=1314439138]
-visible = false
-position = Vector2(0, -36)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("tex_fall")
-hframes = 6
-
-[node name="crouch" type="Sprite2D" parent="." unique_id=1325362987]
-visible = false
-position = Vector2(0, -36)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("tex_death")
-hframes = 6
-
-[node name="attack" type="Sprite2D" parent="." unique_id=7553001]
-visible = false
-position = Vector2(0, -36)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("tex_death")
-hframes = 6
-
-[node name="hit" type="Sprite2D" parent="." unique_id=1139668100]
-visible = false
-position = Vector2(0, -36)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("tex_hit")
-hframes = 6
-
-[node name="death" type="Sprite2D" parent="." unique_id=1385993365]
-visible = false
-position = Vector2(0, -36)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("tex_death")
-hframes = 6
-
-[node name="dash" type="Sprite2D" parent="." unique_id=287376785]
-visible = false
-position = Vector2(0, -36)
-scale = Vector2(0.25, 0.25)
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
 texture = ExtResource("tex_dash")
 hframes = 6
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=284013538]
+[node name="attack" type="Sprite2D" parent="." unique_id=1470989110]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_hit")
+hframes = 6
+
+[node name="shoot" type="Sprite2D" parent="." unique_id=934883256]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_shoot")
+hframes = 6
+
+[node name="fly" type="Sprite2D" parent="." unique_id=2110696834]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_fly")
+hframes = 6
+
+[node name="slam" type="Sprite2D" parent="." unique_id=784710099]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_death")
+hframes = 6
+
+[node name="hit" type="Sprite2D" parent="." unique_id=1018870528]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_hit")
+hframes = 6
+
+[node name="death" type="Sprite2D" parent="." unique_id=2061294861]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_death")
+hframes = 6
+
+[node name="special" type="Sprite2D" parent="." unique_id=1265524252]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_special")
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=975629861]
 libraries/ = SubResource("AnimationLibrary_main")
 speed_scale = 1.5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=925521821]
-position = Vector2(0, -27)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1664804677]
+position = Vector2(0, -46)
 shape = SubResource("BodyShape")
 
-[node name="AttackArea" type="Area2D" parent="." unique_id=1948526149]
-position = Vector2(30, -30)
+[node name="AttackArea" type="Area2D" parent="." unique_id=1551103186]
+position = Vector2(-50, -48)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1240138638]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=77681940]
 shape = SubResource("AttackShape")
+
+[node name="ProjectileOrigin" type="Marker2D" parent="." unique_id=1464813734]
+position = Vector2(-54, -54)
