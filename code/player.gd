@@ -16,8 +16,8 @@ func _physics_process(delta: float) -> void:
 
 	velocity.x = move_toward(velocity.x, input_dir * speed, floor_drag * delta)
 
-	if is_on_floor():
-		if Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_up"):
+	if is_on_floor():	
+		if Input.is_action_just_pressed("ui_up"):
 			velocity.y = jump_velocity
 
 	velocity.y += gravity * delta
