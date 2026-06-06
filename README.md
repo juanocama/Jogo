@@ -1,5 +1,5 @@
 # Jogo
-holachavalones
+
 carpeta res/assets/nino_01 es el niño con ropa limpia
 carpeta res/assets/nino_02 es el niño con ropa Sucia
 carpeta res/assets/Robot1 es el robot volador
