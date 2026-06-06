@@ -1,4 +1,58 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1780699598
-icon.svg::CompressedTexture2D::2283935863672813662::1780697864::1780697875::1::::<><><>0<>0<>0898c564e61cbdcadbc6c7220d87cc8b<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-README.md::TextFile::-1::1780698488::0::1::::<><><>0<>0<><>::
+::res://::1780723825
+icon.svg::CompressedTexture2D::2283935863672813662::1780705994::1780705994::1::::<><><>0<>0<>0898c564e61cbdcadbc6c7220d87cc8b<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+README.md::TextFile::-1::1780705994::0::1::::<><><>0<>0<><>::
+::res://assets/::1780757063
+.gitkeep.txt::TextFile::-1::1780705994::0::1::::<><><>0<>0<><>::
+00032.png::CompressedTexture2D::7825718850818682431::1780723825::1780723907::1::::<><><>0<>0<>d5bc1a17f58665817959adb9f0fdf4f8<>res://.godot/imported/00032.png-1bd559ad535d8b439f9f535841c9a64c.ctex::
+test.png.png::CompressedTexture2D::4966935123672925736::1780723825::1780723907::1::::<><><>0<>0<>6f53024068258d53bd75baf9f74d6ac9<>res://.godot/imported/test.png.png-264fc34a9b83573263055d467dcbedf3.ctex::
+world_tileset.png::CompressedTexture2D::8776350499916284620::1780723825::1780723907::1::::<><><>0<>0<>668af3319851ce5e5a609142f1a39f75<>res://.godot/imported/world_tileset.png-43b294f106264424c84ae223dbce0789.ctex::
+::res://assets/fantasma/::1780723907
+IDLE.png::CompressedTexture2D::7854438064789539518::1780723825::1780723907::1::::<><><>0<>0<>14f64400f0a42203e3c669a3a8bba52a<>res://.godot/imported/IDLE.png-34290ab910e3df1272b1f798e271b939.ctex::
+misil.png::CompressedTexture2D::1433540362939582420::1780723825::1780723907::1::::<><><>0<>0<>388d6f579e70a1a57f0588ac25edd319<>res://.godot/imported/misil.png-0dc53d1fda862f7ce5c17af42068ca0b.ctex::
+move.png::CompressedTexture2D::7070552844493703012::1780723825::1780723907::1::::<><><>0<>0<>903392d253a481e1fe180708013f7b92<>res://.godot/imported/move.png-fef06747be67c55d37024d754a0a1179.ctex::
+shoot.png::CompressedTexture2D::7639474025616138746::1780723825::1780723907::1::::<><><>0<>0<>45996efccf19efc9419c5edb4b475f31<>res://.godot/imported/shoot.png-2023dd519ea71fcbc13572e2d00ad725.ctex::
+up_down.png::CompressedTexture2D::2240244935945646075::1780723825::1780723907::1::::<><><>0<>0<>db170d878a7997e5ffb6d73c9161c3be<>res://.godot/imported/up_down.png-10fb83dfdb2e67af3659cfb32a36e255.ctex::
+::res://assets/nino_01/::1780756871
+Agacharse derecha.png::CompressedTexture2D::1010499072848081016::1780756837::1780756859::1::::<><><>0<>0<>4221ccd738c4730e057ba5c822ea2c39<>res://.godot/imported/Agacharse derecha.png-04b66f1ac7b730e0eaebf4d184c109cf.ctex::
+caminar derecha.png::CompressedTexture2D::8908893780847280729::1780756749::1780756859::1::::<><><>0<>0<>eb66bbdcab358e17519692d5d4fa7532<>res://.godot/imported/caminar derecha.png-aa2902f811ecc35101793d65158f3235.ctex::
+correr derecha.png::CompressedTexture2D::4382056143665002810::1780756738::1780756859::1::::<><><>0<>0<>623b4eb3568ebd268001d652b86298ed<>res://.godot/imported/correr derecha.png-59c297bd5ad5a4a3403860816cbb1d8c.ctex::
+De frente.png::CompressedTexture2D::7736013720556945901::1780726832::1780756871::1::::<><><>0<>0<>5ecbf01a9d1e3a1d8218d2630b7c6ed7<>res://.godot/imported/De frente.png-1b7b71d627025aa1ba3f139010b5e787.ctex::
+Respiracion y parpadeo.png::CompressedTexture2D::6618464331293643647::1780756713::1780756859::1::::<><><>0<>0<>4bb9d5d8418d4f17081fefbdbd3af731<>res://.godot/imported/Respiracion y parpadeo.png-0aa8525fc150136fa7dafabafbc2b96d.ctex::
+Salto caminando derecha.png::CompressedTexture2D::8739351626912798542::1780756726::1780756859::1::::<><><>0<>0<>f7e157bd1537c78a324f3b812e45bb52<>res://.godot/imported/Salto caminando derecha.png-d205a0cf22efacbd9ed48da8a74bcfce.ctex::
+::res://assets/nino_02/::1780756445
+boy_school_clean_crouch_sheet.png::CompressedTexture2D::6748486852220012526::1780756126::1780756440::1::::<><><>0<>0<>c69edb36ce57188b3ad012215e0de400<>res://.godot/imported/boy_school_clean_crouch_sheet.png-922f4930c071186a8a41b8a461d4424a.ctex::
+boy_school_clean_idle_front.png::CompressedTexture2D::6538337343892805972::1780728610::1780756445::1::::<><><>0<>0<>d97f96ad3590d545d6e16c61c75de375<>res://.godot/imported/boy_school_clean_idle_front.png-7370d396721c59c38f31a973a95eb8e7.ctex::
+boy_school_clean_run_sheet.png::CompressedTexture2D::1505039461383705468::1780756101::1780756440::1::::<><><>0<>0<>3feefd8da5ea92d0e9594a85b616caf7<>res://.godot/imported/boy_school_clean_run_sheet.png-326089d8f307256a2a656f2d6298a059.ctex::
+boy_school_clean_walk_jump_sheet.png::CompressedTexture2D::6960430526139897197::1780756110::1780756440::1::::<><><>0<>0<>50e9c753613198c87c25d90f5bbbfcac<>res://.godot/imported/boy_school_clean_walk_jump_sheet.png-636be8d13ab1156b43bcdf3c67d03b3a.ctex::
+boy_school_clean_walk_sheet.png::CompressedTexture2D::695980139200121621::1780756186::1780756440::1::::<><><>0<>0<>45f69305d2f5d7736d763e1a341ab770<>res://.godot/imported/boy_school_clean_walk_sheet.png-6f34885ce1ec9448368d46182cc5f239.ctex::
+::res://assets/Robot1/::1780757040
+abajo.png::CompressedTexture2D::7089729902622927944::1780757017::1780757291::1::::<><><>0<>0<>84d5ee9cb7b34d2c9bb4cb2f8afbbdbc<>res://.godot/imported/abajo.png-b67496fde87c865619b7c561d7754dcb.ctex::
+arriba.png::CompressedTexture2D::2933457836005306609::1780757008::1780757291::1::::<><><>0<>0<>53d48039c407f241909bdd4a076efc32<>res://.godot/imported/arriba.png-b621af2c2b4ba0bf574d04b7c4e0b0a5.ctex::
+dash.png::CompressedTexture2D::4052887025175171900::1780757026::1780757291::1::::<><><>0<>0<>61b62626f5252d29e15768fcb3866ea9<>res://.godot/imported/dash.png-58bb27556c29fb549e9a5fcd28b673f6.ctex::
+De frente.png::CompressedTexture2D::1681641599643796970::1780729512::1780757293::1::::<><><>0<>0<>d72bbdeddafddaa130fec0d6f8b44518<>res://.godot/imported/De frente.png-a4ce4456a19193d2259fce1d98ae5565.ctex::
+movimiento a la derecha.png::CompressedTexture2D::7789944670141264854::1780756998::1780757291::1::::<><><>0<>0<>d9b3847a5e1d8c8abe6e3d5f05180843<>res://.godot/imported/movimiento a la derecha.png-8ab1e630e05f6b5004f5e00e4fc25e69.ctex::
+por defecto.png::CompressedTexture2D::6460609498964876955::1780756961::1780757291::1::::<><><>0<>0<>6987f684876c9e5980a5de1ff7aecb6b<>res://.godot/imported/por defecto.png-75bd56c3f48755c2c5ad80b00c0fe0c9.ctex::
+::res://assets/Robot2/::1780757288
+caer con fuerza.png::CompressedTexture2D::771290715819428126::1780757193::1780757291::1::::<><><>0<>0<>aa20d76d6916ef5b85725388ec2c6fa8<>res://.godot/imported/caer con fuerza.png-b987fe82556eeec8e57e086ce4d77451.ctex::
+caminar.png::CompressedTexture2D::1166090344500254184::1780757146::1780757291::1::::<><><>0<>0<>1304751056318b756f8d0ee8b37c189e<>res://.godot/imported/caminar.png-2af67e1b6fcfd2e1aa3333e13cd76174.ctex::
+disparar.png::CompressedTexture2D::6953406739931844119::1780757162::1780757291::1::::<><><>0<>0<>e911a2e4cf68631946d17f5cb9a13fae<>res://.godot/imported/disparar.png-f0da35edf4f924d156e78ddd7e6b2640.ctex::
+envestir.png::CompressedTexture2D::8064358258750197758::1780757154::1780757291::1::::<><><>0<>0<>ae6b4b43437d495cbff40cc95ffa4138<>res://.godot/imported/envestir.png-669689761e32a9e61ab79ba04b918169.ctex::
+frente.png::CompressedTexture2D::4336279128197426640::1780754218::1780757293::1::::<><><>0<>0<>def738e4ef1d29370323dae7aa1d625d<>res://.godot/imported/frente.png-ae4c467e0669c6024f69166fcc46976c.ctex::
+golpeo.png::CompressedTexture2D::9190679311643055862::1780757215::1780757291::1::::<><><>0<>0<>e49ecdd98cade11fb1ef9ca8d5d960cf<>res://.godot/imported/golpeo.png-ccd074adbc142d20a05352bb355657e5.ctex::
+proyectil fuerte.png::CompressedTexture2D::8963565979432391269::1780757264::1780757291::1::::<><><>0<>0<>446398841c2bb2cf80ac69b18180d50a<>res://.godot/imported/proyectil fuerte.png-970e0f44637d0782e183e61eef78bc03.ctex::
+proyectil suave.png::CompressedTexture2D::114718999254221077::1780757207::1780757291::1::::<><><>0<>0<>02f13c1b664a9d0b567cdc8d873eeeea<>res://.godot/imported/proyectil suave.png-202d32111678a07c881c56e781dc62b7.ctex::
+transformar tanque y disparo.png::CompressedTexture2D::3903157267437092857::1780757174::1780757291::1::::<><><>0<>0<>b2761149350dae14f12673a3e4f21291<>res://.godot/imported/transformar tanque y disparo.png-e6b65b3fceded0da1d4db9d065e0074c.ctex::
+volar.png::CompressedTexture2D::5204661261139419527::1780757182::1780757291::1::::<><><>0<>0<>a9a6e0df4ecdf0510164b41cc8ad8f83<>res://.godot/imported/volar.png-c8580d807dcf0b22120113abde044bd0.ctex::
+::res://code/::1780723825
+.gitkeep.txt::TextFile::-1::1780705994::0::1::::<><><>0<>0<><>::
+ghost.gd::GDScript::2503397765581055866::1780723825::0::1::::<>CharacterBody2D<><>0<>0<><>::
+level.gd::GDScript::7091105921217293497::1780723825::0::1::::<>Node2D<><>0<>0<><>::
+player.gd::GDScript::3293446522429233936::1780723825::0::1::::<>CharacterBody2D<><>0<>0<><>::
+projectile.gd::GDScript::3556165744545843127::1780723825::0::1::::<>CharacterBody2D<><>0<>0<><>::
+::res://scenes/::1780723907
+.gitkeep.txt::TextFile::-1::1780705994::0::1::::<><><>0<>0<><>::
+fantasma.tscn::PackedScene::9050633440183148526::1780723907::0::1::::<><><>0<>0<><>::
+pelea_test.tscn::PackedScene::6305075728286041684::1780723907::0::1::::<><><>0<>0<><>::
+proyectil.tscn::PackedScene::2561851713189658014::1780723907::0::1::::<><><>0<>0<><>::uid://uoog2t7sfn53::::res://assets/fantasma/misil.png<>res://code/projectile.gd
+test_character.tscn::PackedScene::7817511526432671451::1780723907::0::1::::<><><>0<>0<><>::
