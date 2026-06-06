@@ -3,6 +3,8 @@ extends CharacterBody2D
 @export var walk_speed: float = 145.0
 @export var run_speed: float = 215.0
 @export var vertical_depth_scale: float = 0.72
+@export var walkable_area_group: StringName = &""
+@export var base_visual_scale: float = 0.27
 
 @export_group("Down")
 @export var idle_down_texture: Texture2D
@@ -49,9 +51,13 @@ func _physics_process(delta: float) -> void:
 	var input_vector: Vector2 = _get_input_vector()
 	var is_running: bool = Input.is_key_pressed(KEY_SHIFT)
 	var speed: float = run_speed if is_running else walk_speed
+	var previous_position: Vector2 = global_position
 
 	velocity = Vector2(input_vector.x, input_vector.y * vertical_depth_scale) * speed
 	move_and_slide()
+	if not _is_inside_walkable_area():
+		global_position = previous_position
+		velocity = Vector2.ZERO
 
 	if input_vector.x != 0.0:
 		last_facing = -1 if input_vector.x < 0.0 else 1
@@ -75,6 +81,43 @@ func _get_input_vector() -> Vector2:
 		direction.y += 1.0
 
 	return direction.normalized()
+
+
+func _is_inside_walkable_area() -> bool:
+	if walkable_area_group == &"":
+		return true
+
+	var areas: Array[Node] = get_tree().get_nodes_in_group(walkable_area_group)
+	if areas.is_empty():
+		return true
+
+	for area_node: Node in areas:
+		if _point_is_inside_area_shapes(global_position, area_node):
+			return true
+	return false
+
+
+func _point_is_inside_area_shapes(point: Vector2, area_node: Node) -> bool:
+	if area_node == null:
+		return false
+
+	for child: Node in area_node.get_children():
+		if not child is CollisionShape2D:
+			continue
+
+		var collision_shape: CollisionShape2D = child as CollisionShape2D
+		if collision_shape.disabled:
+			continue
+		if not collision_shape.shape is RectangleShape2D:
+			continue
+
+		var rectangle: RectangleShape2D = collision_shape.shape as RectangleShape2D
+		var half_size: Vector2 = rectangle.size * 0.5
+		var local_point: Vector2 = collision_shape.global_transform.affine_inverse() * point
+		if absf(local_point.x) <= half_size.x and absf(local_point.y) <= half_size.y:
+			return true
+
+	return false
 
 
 func _update_animation(delta: float, input_vector: Vector2, is_running: bool) -> void:
@@ -171,7 +214,7 @@ func _update_depth_visuals() -> void:
 	var visual_scale: float = lerpf(0.86, 1.08, depth_factor)
 	if current_animation_key == &"walk_side" or current_animation_key == &"run_side":
 		visual_scale *= side_move_scale_multiplier
-	sprite.scale = Vector2(0.27, 0.27) * visual_scale
+	sprite.scale = Vector2(base_visual_scale, base_visual_scale) * visual_scale
 
 	if shadow != null:
 		shadow.scale = Vector2(1.0, 0.72) * visual_scale
