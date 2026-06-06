@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://c0d60r6442ytg"]
+
+[ext_resource type="Texture2D" path="res://assets/levels/battle/00032.png" id="1_17g6n"]
+[ext_resource type="Script" path="res://code/characters/pseudo_3d_player.gd" id="2_vxjeo"]
+[ext_resource type="Texture2D" path="res://assets/characters/nino_3d/nino_idle_down.png" id="3_bmd4a"]
+[ext_resource type="Texture2D" path="res://assets/characters/nino_3d/nino_walk_down.png" id="4_noitt"]
+[ext_resource type="Texture2D" path="res://assets/characters/nino_3d/nino_run_down.png" id="5_ftasb"]
+[ext_resource type="Texture2D" path="res://assets/characters/nino_3d/nino_idle_up.png" id="6_jy6w7"]
+[ext_resource type="Texture2D" path="res://assets/characters/nino_3d/nino_walk_up.png" id="7_6v1lh"]
+[ext_resource type="Texture2D" path="res://assets/characters/nino_3d/nino_run_up.png" id="8_5l0y3"]
+[ext_resource type="Texture2D" path="res://assets/characters/nino_3d/nino_idle_side.png" id="9_7jx7l"]
+[ext_resource type="Texture2D" path="res://assets/characters/nino_3d/nino_walk_side.png" id="10_7hev7"]
+[ext_resource type="Texture2D" path="res://assets/characters/nino_3d/nino_run_side.png" id="11_rhbk3"]
+
+[sub_resource type="RectangleShape2D" id="WallHorizontal"]
+size = Vector2(720, 18)
+
+[sub_resource type="RectangleShape2D" id="WallVertical"]
+size = Vector2(18, 430)
+
+[sub_resource type="CapsuleShape2D" id="PlayerShape"]
+height = 24.0
+
+[node name="pseudo_3d_test" type="Node2D" unique_id=1652409999]
+y_sort_enabled = true
+
+[node name="background" type="Sprite2D" parent="." unique_id=1658719025]
+z_index = -1000
+position = Vector2(0, -36)
+scale = Vector2(0.62, 0.62)
+texture = ExtResource("1_17g6n")
+
+[node name="play_area" type="Polygon2D" parent="." unique_id=2039661666]
+z_index = -900
+position = Vector2(0, 40)
+color = Color(0.16, 0.24, 0.18, 0.62)
+polygon = PackedVector2Array(-360, -190, 360, -190, 360, 205, -360, 205)
+
+[node name="depth_grid" type="Node2D" parent="." unique_id=881706353]
+z_index = -850
+
+[node name="line_back" type="Line2D" parent="depth_grid" unique_id=1498603946]
+points = PackedVector2Array(-330, -120, 330, -120)
+width = 2.0
+default_color = Color(0.8, 0.9, 0.65, 0.2)
+
+[node name="line_mid" type="Line2D" parent="depth_grid" unique_id=1703120447]
+points = PackedVector2Array(-345, 10, 345, 10)
+width = 2.0
+default_color = Color(0.8, 0.9, 0.65, 0.22)
+
+[node name="line_front" type="Line2D" parent="depth_grid" unique_id=1029963877]
+points = PackedVector2Array(-360, 145, 360, 145)
+width = 2.0
+default_color = Color(0.8, 0.9, 0.65, 0.26)
+
+[node name="Walls" type="StaticBody2D" parent="." unique_id=974351054]
+
+[node name="Top" type="CollisionShape2D" parent="Walls" unique_id=1203208657]
+position = Vector2(0, -155)
+shape = SubResource("WallHorizontal")
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls" unique_id=161452906]
+position = Vector2(0, 255)
+shape = SubResource("WallHorizontal")
+
+[node name="Left" type="CollisionShape2D" parent="Walls" unique_id=965778842]
+position = Vector2(-370, 50)
+shape = SubResource("WallVertical")
+
+[node name="Right" type="CollisionShape2D" parent="Walls" unique_id=1509818212]
+position = Vector2(370, 50)
+shape = SubResource("WallVertical")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1921160749 groups=["players"]]
+position = Vector2(-120, 60)
+script = ExtResource("2_vxjeo")
+idle_down_texture = ExtResource("3_bmd4a")
+walk_down_texture = ExtResource("4_noitt")
+run_down_texture = ExtResource("5_ftasb")
+idle_up_texture = ExtResource("6_jy6w7")
+walk_up_texture = ExtResource("7_6v1lh")
+run_up_texture = ExtResource("8_5l0y3")
+idle_side_texture = ExtResource("9_7jx7l")
+walk_side_texture = ExtResource("10_7hev7")
+run_side_texture = ExtResource("11_rhbk3")
+
+[node name="Shadow" type="Polygon2D" parent="Player" unique_id=1992092113]
+z_index = -1
+position = Vector2(0, 2)
+color = Color(0, 0, 0, 0.3)
+polygon = PackedVector2Array(-23, -5, -12, -9, 12, -9, 23, -5, 23, 5, 12, 9, -12, 9, -23, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=715934053]
+position = Vector2(0, -31)
+texture = ExtResource("3_bmd4a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1782065466]
+position = Vector2(0, -9)
+shape = SubResource("PlayerShape")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=682357036]
+position = Vector2(0, -32)
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
