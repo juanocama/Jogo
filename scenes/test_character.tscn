@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bm6mt3abfo0j1" path="res://code/player.gd" id="2_gdscript"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tb1xc"]
-size = Vector2(6, 11)
+size = Vector2(6, 12)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=2010548240]
 script = ExtResource("2_gdscript")
@@ -15,5 +15,5 @@ scale = Vector2(0.044250004, 0.04425)
 texture = ExtResource("1_1ft0k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=390482444]
-position = Vector2(0, -1.5)
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_tb1xc")
