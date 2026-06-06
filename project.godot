@@ -18,6 +18,11 @@ config/icon="res://icon.svg"
 [autoload]
 
 DialogueManager="*uid://c3rodes2l3gxb"
+GameManager="*uid://vx20q6ggavqk"
+
+[dialogue_manager]
+
+runtime/balloon_path="res://Dialogue/Scene1/balloon.tscn"
 
 [editor_plugins]
 
