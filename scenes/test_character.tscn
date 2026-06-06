@@ -6,6 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tb1xc"]
 size = Vector2(6, 12)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_tb1xc"]
+
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=2010548240]
 script = ExtResource("2_gdscript")
 
@@ -17,3 +19,8 @@ texture = ExtResource("1_1ft0k")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=390482444]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_tb1xc")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1322880217]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1840429163]
+shape = SubResource("CircleShape2D_tb1xc")
