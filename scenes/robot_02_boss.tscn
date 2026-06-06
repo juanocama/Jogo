@@ -216,6 +216,7 @@ size = Vector2(68, 64)
 
 [node name="robot_02_boss" type="CharacterBody2D" groups=["bosses"]]
 script = ExtResource("script")
+damage_enabled = false
 boss_id = &"robot_02"
 max_health = 330
 contact_damage = 14

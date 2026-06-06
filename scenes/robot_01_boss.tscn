@@ -1,7 +1,6 @@
-[gd_scene format=3 uid="uid://bqp6jy0l4bplj"]
+[gd_scene format=3 uid="uid://bydk8l453qugk"]
 
 [ext_resource type="Script" uid="uid://4chos6q1337" path="res://code/boss_robot.gd" id="script"]
-[ext_resource type="PackedScene" path="res://scenes/robot_02_projectile_soft.tscn" id="projectile_scene"]
 [ext_resource type="Texture2D" uid="uid://bx0ipsqvkll1e" path="res://assets/Robot1/dash.png" id="tex_dash"]
 [ext_resource type="Texture2D" uid="uid://c8ak2y6iej7pc" path="res://assets/Robot1/abajo.png" id="tex_death"]
 [ext_resource type="Texture2D" uid="uid://cybtkaqv4lv84" path="res://assets/Robot1/por defecto.png" id="tex_hit"]
@@ -211,22 +210,19 @@ size = Vector2(58, 58)
 
 [node name="robot_01_boss" type="CharacterBody2D" unique_id=19624957 groups=["bosses"]]
 script = ExtResource("script")
+damage_enabled = false
 max_health = 230
 melee_damage = 24
-speed = 120.0
+speed = 82.0
 gravity = 0.0
-stop_distance = 36.0
+stop_distance = 92.0
 is_flying_boss = true
-flight_height_offset = -115.0
-vertical_follow_speed = 260.0
-hover_amplitude = 10.0
+flight_height_offset = -150.0
+vertical_follow_speed = 180.0
+hover_amplitude = 12.0
 hover_speed = 3.4
-dash_speed = 360.0
-shoot_range = 520.0
-shoot_cooldown = 1.8
-shoot_delay = 0.25
-ram_height_offset = -32.0
-projectile_scene = ExtResource("projectile_scene")
+dash_speed = 285.0
+shoot_cooldown = 99.0
 
 [node name="idle" type="Sprite2D" parent="." unique_id=2039796361]
 visible = false
@@ -312,4 +308,4 @@ position = Vector2(-40, -44)
 shape = SubResource("AttackShape")
 
 [node name="ProjectileOrigin" type="Marker2D" parent="." unique_id=1514351095]
-position = Vector2(-48, -58)
+position = Vector2(-44, -48)
