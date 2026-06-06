@@ -1,10 +1,10 @@
-[gd_scene format=4 uid="uid://bqsokvr5sjnhy"]
+[gd_scene format=4 uid="uid://b1m6upousufks"]
 
 [ext_resource type="Script" uid="uid://c8a8qje6k074x" path="res://code/level.gd" id="1_cnp6u"]
 [ext_resource type="Texture2D" uid="uid://djq3pfyl0vosl" path="res://assets/00032.png" id="2_bsenj"]
 [ext_resource type="Texture2D" uid="uid://dxblhflhcclge" path="res://assets/world_tileset.png" id="3_6hlmo"]
 [ext_resource type="PackedScene" uid="uid://djm4jjhyjssjb" path="res://scenes/test_character.tscn" id="4_fhgb8"]
-[ext_resource type="PackedScene" uid="uid://cft0u0g3ggpvp" path="res://scenes/dik.tscn" id="5_cnp6u"]
+[ext_resource type="PackedScene" uid="uid://fs6qc05ldrjh" path="res://scenes/dik.tscn" id="5_cnp6u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iubt4"]
 texture = ExtResource("3_6hlmo")
