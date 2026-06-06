@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://bcq8k845qwbv7"]
 
 [ext_resource type="Texture2D" uid="uid://uoog2t7sfn53" path="res://assets/fantasma/misil.png" id="1_fmodo"]
-[ext_resource type="Script" uid="uid://projectile_script" path="res://code/projectile.gd" id="2_gdscript"]
+[ext_resource type="Script" uid="uid://bqwvsa77vua3p" path="res://code/projectile.gd" id="2_gdscript"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2e24"]
-size = Vector2(20, 14)
+size = Vector2(18, 11)
 
 [sub_resource type="Animation" id="Animation_f1hqu"]
 length = 0.001
@@ -52,7 +52,7 @@ texture = ExtResource("1_fmodo")
 hframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1532262118]
-position = Vector2(1.5, 9.5)
+position = Vector2(2, 9.5)
 shape = SubResource("RectangleShape2D_w2e24")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1270917533]

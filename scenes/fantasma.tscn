@@ -132,7 +132,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ptde3"]
-size = Vector2(7, 7)
+size = Vector2(5, 5)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1841844524]
 script = ExtResource("5_gdscript")
@@ -148,7 +148,6 @@ libraries/ = SubResource("AnimationLibrary_4u1gv")
 speed_scale = 2.0
 
 [node name="dash" type="Sprite2D" parent="." unique_id=1867000555]
-visible = false
 position = Vector2(-1.5000004, -2)
 scale = Vector2(0.04861111, 0.04861111)
 texture = ExtResource("2_e5ye4")
