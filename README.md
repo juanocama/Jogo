@@ -7,3 +7,5 @@ carpeta res/assets/Robot1 es el robot 2 que se puede transformar en tanque
 
 
 Agregue animacion del nino_01 cosas a mejorar la animacion de caida
+
+la animacion de nino_01 se llama map
