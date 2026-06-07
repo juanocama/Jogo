@@ -19,6 +19,7 @@ const PHASE_TWO_MAX_MINIONS: int = 1
 const ROBOT2_PHASE_ONE_HEALTH: int = 45
 const ROBOT1_PHASE_ONE_HEALTH: int = 30
 const MINION_DAMAGE_TAKEN_MULTIPLIER: float = 6.0
+const MINION_MIN_SPAWN_DISTANCE: float = 260.0
 const FLOOR_Y: float = 188.0
 const LASER_BASE_PREPARE_TIME: float = 0.85
 const LASER_MIN_PREPARE_TIME: float = 0.28
@@ -28,6 +29,24 @@ const LASER_HIT_HALF_WIDTH: float = 115.0
 const LASER_FLOOR_Y: float = 125.0
 const LASER_TOP_Y: float = -390.0
 const LASER_GROUND_Y: float = 188.0
+const MIN_BOSS_ATTACK_ANIMATION_DURATION: float = 1.6
+const FINAL_ATTACK_IMPACT_TIME: float = 1.02
+const FINAL_ATTACK_RECOVERY_TIME: float = 0.58
+const SPECIAL_ENTROPY_COOLDOWN: float = 7.2
+const AMBUSH_PHASE_TWO_CHANCE: float = 0.07
+const AMBUSH_PHASE_THREE_CHANCE: float = 0.17
+const AMBUSH_REACTION_TIME_PHASE_TWO: float = 0.72
+const AMBUSH_REACTION_TIME_PHASE_THREE: float = 0.46
+const AMBUSH_SIDE_OFFSET: float = 145.0
+const AMBUSH_RETURN_FLASH_TIME: float = 0.16
+const FIRE_ENTROPY_DURATION: float = 5.0
+const FIRE_PHASE_TWO_CHANCE: float = 0.08
+const FIRE_PHASE_THREE_CHANCE: float = 0.10
+const FIRE_SPEED: float = 235.0
+const FIRE_HIT_RADIUS: float = 68.0
+const FIRE_LEFT_X: float = -940.0
+const FIRE_RIGHT_X: float = 705.0
+const FIRE_Y: float = 158.0
 
 @export var boss_path: NodePath
 @export var player_path: NodePath
@@ -40,6 +59,7 @@ const LASER_GROUND_Y: float = 188.0
 @export var final_projectile_scene: PackedScene
 @export var laser_texture: Texture2D
 @export var warning_texture: Texture2D
+@export var floor_flame_texture: Texture2D
 
 var roll_timer: float = 1.2
 var minion_timer: float = 4.0
@@ -48,6 +68,13 @@ var action_locked: bool = false
 var action_serial: int = 0
 var current_action: StringName = &""
 var last_phase: int = 1
+var standard_boss_position: Vector2 = Vector2.ZERO
+var dark_flash_layer: CanvasLayer = null
+var dark_flash_rect: ColorRect = null
+var fire_entropy_active: bool = false
+var special_entropy_cooldown_timer: float = 0.0
+var active_fire_flames: Array[Sprite2D] = []
+var intro_dialogue_running: bool = false
 
 @onready var boss: Node2D = get_node_or_null(boss_path) as Node2D
 @onready var player: Node2D = get_node_or_null(player_path) as Node2D
@@ -57,8 +84,17 @@ var last_phase: int = 1
 
 
 func _ready() -> void:
+	if boss != null:
+		standard_boss_position = boss.global_position
 	_configure_boss()
 	_update_boss_health_ui()
+	if GameManager.should_show_final_battle_candy_dialogue():
+		intro_dialogue_running = true
+		action_locked = true
+		current_action = &"intro_dialogue"
+	else:
+		_play_final_boss_music_for_phase(_get_phase(), 0.65)
+	call_deferred("_show_intro_candy_dialogue_if_needed")
 
 
 func _process(delta: float) -> void:
@@ -69,7 +105,10 @@ func _process(delta: float) -> void:
 		return
 
 	_update_boss_health_ui()
+	if intro_dialogue_running or GameManager.is_dialogue_active:
+		return
 	_update_close_melee(delta)
+	_update_special_entropy_cooldown(delta)
 
 	_update_phase_transition()
 	_update_minions(delta)
@@ -92,6 +131,34 @@ func _configure_boss() -> void:
 	boss.set("dash_timer", 9999.0)
 	boss.set("shoot_timer", 9999.0)
 	boss.set("slam_timer", 9999.0)
+
+
+func _show_intro_candy_dialogue_if_needed() -> void:
+	if not GameManager.should_show_final_battle_candy_dialogue():
+		intro_dialogue_running = false
+		action_locked = false
+		current_action = &""
+		return
+	if GameManager.is_dialogue_active and current_action != &"intro_dialogue":
+		return
+
+	intro_dialogue_running = true
+	action_locked = true
+	current_action = &"intro_dialogue"
+	GameManager.is_dialogue_active = true
+
+	var dialogue_text: String = GameManager.build_final_battle_candy_dialogue()
+	var resource: DialogueResource = DialogueManager.create_resource_from_text(dialogue_text) as DialogueResource
+	DialogueManager.show_dialogue_balloon(resource)
+	await DialogueManager.dialogue_ended
+	await _wait_seconds(0.2)
+
+	GameManager.mark_final_battle_candy_dialogue_shown()
+	GameManager.is_dialogue_active = false
+	action_locked = false
+	current_action = &""
+	intro_dialogue_running = false
+	_play_final_boss_music_for_phase(_get_phase(), 0.65)
 
 
 func _update_minions(delta: float) -> void:
@@ -153,7 +220,7 @@ func _spawn_robot1_minion() -> void:
 	_attach_minion_health_bar(minion, 44.0, -112.0)
 	if minion is Node2D:
 		var minion_2d: Node2D = minion as Node2D
-		minion_2d.global_position = Vector2(randf_range(140.0, 540.0), randf_range(65.0, 145.0))
+		minion_2d.global_position = _get_spaced_minion_spawn_position(120.0, 720.0, 65.0, 145.0)
 		minion_2d.scale *= 1.18
 	get_tree().current_scene.add_child(minion)
 	minion.add_to_group("final_minions")
@@ -175,7 +242,7 @@ func _spawn_robot2_minion() -> void:
 	_attach_minion_health_bar(minion, 56.0, -132.0)
 	if minion is Node2D:
 		var minion_2d: Node2D = minion as Node2D
-		minion_2d.global_position = Vector2(randf_range(260.0, 700.0), FLOOR_Y)
+		minion_2d.global_position = _get_spaced_minion_spawn_position(180.0, 760.0, FLOOR_Y, FLOOR_Y)
 		minion_2d.scale *= 1.16
 	get_tree().current_scene.add_child(minion)
 	minion.add_to_group("final_minions")
@@ -199,6 +266,29 @@ func _attach_minion_health_bar(minion: Node, half_width: float, y_offset: float)
 	minion.add_child(health_bar)
 
 
+func _get_spaced_minion_spawn_position(min_x: float, max_x: float, min_y: float, max_y: float) -> Vector2:
+	var best_position: Vector2 = Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
+	var best_distance: float = -INF
+	for attempt: int in range(12):
+		var candidate: Vector2 = Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
+		var nearest_distance: float = INF
+		for node: Node in get_tree().get_nodes_in_group("final_minions"):
+			if not node is Node2D:
+				continue
+			if node.has_method("is_alive") and not bool(node.call("is_alive")):
+				continue
+			var distance: float = candidate.distance_to((node as Node2D).global_position)
+			nearest_distance = minf(nearest_distance, distance)
+		if nearest_distance == INF:
+			return candidate.round()
+		if nearest_distance >= MINION_MIN_SPAWN_DISTANCE:
+			return candidate.round()
+		if nearest_distance > best_distance:
+			best_distance = nearest_distance
+			best_position = candidate
+	return best_position.round()
+
+
 func _refresh_minion_health_bar(minion: Node) -> void:
 	var health_bar: ProgressBar = minion.get_node_or_null("HealthBar") as ProgressBar
 	if health_bar == null:
@@ -208,7 +298,7 @@ func _refresh_minion_health_bar(minion: Node) -> void:
 
 
 func _update_close_melee(delta: float) -> void:
-	if current_action == &"melee":
+	if current_action == &"melee" or current_action == &"ambush":
 		close_timer = 0.0
 		return
 
@@ -220,6 +310,11 @@ func _update_close_melee(delta: float) -> void:
 	if close_timer >= CLOSE_MELEE_TIME and current_action != &"melee":
 		close_timer = 0.0
 		_start_boss_melee()
+
+
+func _update_special_entropy_cooldown(delta: float) -> void:
+	if special_entropy_cooldown_timer > 0.0:
+		special_entropy_cooldown_timer = maxf(0.0, special_entropy_cooldown_timer - delta)
 
 
 func _update_boss_roll(delta: float) -> void:
@@ -240,20 +335,28 @@ func _update_boss_roll(delta: float) -> void:
 		else:
 			_start_boss_shot(1)
 	elif phase == 2:
-		if roll < 0.10:
+		if roll < 0.07:
 			_play_boss_animation(&"idle")
-		elif roll < 0.28:
+		elif roll < 0.34:
 			_start_boss_stomp()
-		elif roll < 0.78:
+		elif roll < 0.34 + AMBUSH_PHASE_TWO_CHANCE and _can_start_special_entropy():
+			_start_dark_ambush()
+		elif roll < 0.34 + AMBUSH_PHASE_TWO_CHANCE + FIRE_PHASE_TWO_CHANCE and _can_start_special_entropy():
+			_start_wandering_fire_entropy()
+		elif roll < 0.82:
 			_start_boss_laser(1)
 		else:
 			_start_boss_shot(2)
 	else:
-		if roll < 0.04:
+		if roll < 0.03:
 			_play_boss_animation(&"idle")
-		elif roll < 0.20:
+		elif roll < 0.32:
 			_start_boss_stomp()
-		elif roll < 0.86:
+		elif roll < 0.32 + AMBUSH_PHASE_THREE_CHANCE and _can_start_special_entropy():
+			_start_dark_ambush()
+		elif roll < 0.32 + AMBUSH_PHASE_THREE_CHANCE + FIRE_PHASE_THREE_CHANCE and _can_start_special_entropy():
+			_start_wandering_fire_entropy()
+		elif roll < 0.91:
 			_start_boss_laser(randi_range(1, 3))
 		else:
 			_start_boss_shot(randi_range(2, 3))
@@ -270,7 +373,7 @@ func _get_boss_roll_interval(phase: int) -> float:
 func _start_boss_stomp() -> void:
 	var action_id: int = _begin_action(&"slam")
 	_play_boss_animation(&"slam")
-	await _wait_seconds(_get_attack_wait_time(0.78))
+	await _wait_seconds(MIN_BOSS_ATTACK_ANIMATION_DURATION)
 	if action_id != action_serial:
 		return
 	_apply_slam_entropy()
@@ -281,41 +384,229 @@ func _start_boss_shot(projectile_count: int = 1) -> void:
 	var action_id: int = _begin_action(&"shoot")
 	_play_boss_animation(&"shoot")
 	for projectile_index: int in range(projectile_count):
-		await _wait_seconds(_get_attack_wait_time(0.28 if projectile_index == 0 else 0.34))
+		await _wait_seconds(FINAL_ATTACK_IMPACT_TIME if projectile_index == 0 else 0.42)
 		if action_id != action_serial:
 			return
 		_spawn_final_projectile()
-	await _wait_seconds(_get_attack_wait_time(0.32))
+	await _wait_seconds(FINAL_ATTACK_RECOVERY_TIME)
 	_finish_action(action_id)
 
 
 func _start_boss_laser(laser_count: int = 1) -> void:
 	var action_id: int = _begin_action(&"laser")
 	_play_boss_animation(&"special")
-	await _wait_seconds(_get_attack_wait_time(0.25))
+	await _wait_seconds(MIN_BOSS_ATTACK_ANIMATION_DURATION)
 	if action_id != action_serial:
 		return
 	_spawn_laser_sequence(laser_count)
-	await _wait_seconds(_get_laser_prepare_time() + _get_attack_wait_time(LASER_ACTION_RECOVERY_TIME))
+	await _wait_seconds(_get_laser_prepare_time() + LASER_ACTION_RECOVERY_TIME)
 	_finish_action(action_id)
 
 
 func _start_boss_melee() -> void:
 	var action_id: int = _begin_action(&"melee")
 	_play_boss_animation(&"attack")
-	await _wait_seconds(_get_attack_wait_time(0.38))
+	await _wait_seconds(FINAL_ATTACK_IMPACT_TIME)
 	if action_id != action_serial:
 		return
 	if _is_player_near_boss_body(CLOSE_MELEE_HIT_DISTANCE) and player.has_method("take_damage"):
 		player.call("take_damage", 1, boss)
 		_push_player_to_middle()
-	await _wait_seconds(_get_attack_wait_time(0.35))
+	await _wait_seconds(FINAL_ATTACK_RECOVERY_TIME)
 	_finish_action(action_id)
+
+
+func _start_dark_ambush() -> void:
+	if not _can_start_special_entropy():
+		return
+	_mark_special_entropy_started()
+	_clear_fire_flames()
+	var action_id: int = _begin_action(&"ambush")
+	var phase: int = _get_phase()
+	var attack_count: int = 3 if phase == 3 else 1
+	var reaction_time: float = AMBUSH_REACTION_TIME_PHASE_THREE if phase == 3 else AMBUSH_REACTION_TIME_PHASE_TWO
+	if entropy_controller != null and entropy_controller.has_method("force_background"):
+		entropy_controller.call("force_background", &"mix", 5.4 if phase == 3 else 2.6)
+
+	await _flash_black()
+	if action_id != action_serial:
+		return
+	_teleport_boss_behind_player()
+
+	for attack_index: int in range(attack_count):
+		await _wait_seconds(reaction_time if attack_index == 0 else reaction_time * 0.55)
+		if action_id != action_serial:
+			return
+		_play_boss_animation(&"attack")
+		await _wait_seconds(FINAL_ATTACK_IMPACT_TIME)
+		if action_id != action_serial:
+			return
+		if _is_player_near_boss_body(CLOSE_MELEE_HIT_DISTANCE + 25.0) and player.has_method("take_damage"):
+			player.call("take_damage", 1, boss)
+			_push_player_to_middle()
+		if phase == 3 and attack_index < attack_count - 1:
+			await _wait_seconds(0.12)
+			await _flash_black()
+			if action_id != action_serial:
+				return
+			_teleport_boss_behind_player()
+
+	await _wait_seconds(AMBUSH_RETURN_FLASH_TIME)
+	await _flash_black()
+	if action_id != action_serial:
+		return
+	boss.global_position = standard_boss_position.round()
+	_finish_action(action_id)
+
+
+func _teleport_boss_behind_player() -> void:
+	if boss == null or player == null:
+		return
+	var facing: int = 1
+	var facing_value: Variant = player.get("facing_direction")
+	if typeof(facing_value) == TYPE_INT or typeof(facing_value) == TYPE_FLOAT:
+		facing = int(facing_value)
+	if facing == 0:
+		facing = 1
+	var target_x: float = player.global_position.x - float(facing) * AMBUSH_SIDE_OFFSET
+	target_x = clampf(target_x, FIRE_LEFT_X + 120.0, FIRE_RIGHT_X - 80.0)
+	boss.global_position = Vector2(target_x, standard_boss_position.y).round()
+
+
+func _start_wandering_fire_entropy() -> void:
+	if fire_entropy_active or floor_flame_texture == null or not _can_start_special_entropy():
+		return
+	_mark_special_entropy_started()
+	fire_entropy_active = true
+	if entropy_controller != null and entropy_controller.has_method("force_background"):
+		entropy_controller.call("force_background", &"fire", FIRE_ENTROPY_DURATION)
+
+	var flame_count: int = 2 if _get_phase() == 3 else 1
+	for index: int in range(flame_count):
+		var direction: int = 1 if index % 2 == 0 else -1
+		_spawn_floor_flame(direction, float(index) * 0.35)
+
+	await _wait_seconds(FIRE_ENTROPY_DURATION)
+	fire_entropy_active = false
+
+
+func _spawn_floor_flame(initial_direction: int, start_delay: float) -> void:
+	if start_delay > 0.0:
+		await _wait_seconds(start_delay)
+	if floor_flame_texture == null:
+		return
+
+	var scene_root: Node = get_tree().current_scene
+	if scene_root == null:
+		scene_root = self
+
+	var flame: Sprite2D = Sprite2D.new()
+	flame.texture = floor_flame_texture
+	flame.hframes = 3
+	flame.frame = 0
+	flame.z_index = 42
+	flame.scale = Vector2(1.68, 1.68)
+	var direction: int = initial_direction
+	if direction == 0:
+		direction = 1
+	flame.flip_h = direction < 0
+	flame.global_position = Vector2(FIRE_LEFT_X if direction > 0 else FIRE_RIGHT_X, FIRE_Y).round()
+	scene_root.add_child(flame)
+	active_fire_flames.append(flame)
+
+	_animate_floor_flame(flame)
+	_move_floor_flame(flame, direction)
+
+
+func _animate_floor_flame(flame: Sprite2D) -> void:
+	while is_instance_valid(flame):
+		for frame_index: int in range(3):
+			if not is_instance_valid(flame):
+				return
+			flame.frame = frame_index
+			await _wait_seconds(0.08)
+
+
+func _move_floor_flame(flame: Sprite2D, initial_direction: int) -> void:
+	var elapsed: float = 0.0
+	var direction: int = initial_direction
+	while elapsed < FIRE_ENTROPY_DURATION and fire_entropy_active and is_instance_valid(flame):
+		var step: float = 0.05
+		flame.global_position.x += float(direction) * FIRE_SPEED * step
+		if flame.global_position.x >= FIRE_RIGHT_X:
+			direction = -1
+			flame.flip_h = true
+		elif flame.global_position.x <= FIRE_LEFT_X:
+			direction = 1
+			flame.flip_h = false
+		_damage_player_with_fire(flame)
+		await _wait_seconds(step)
+		elapsed += step
+	if is_instance_valid(flame):
+		active_fire_flames.erase(flame)
+		flame.queue_free()
+
+
+func _damage_player_with_fire(flame: Sprite2D) -> void:
+	if player == null or not player.has_method("take_damage") or not is_instance_valid(flame):
+		return
+	if player.global_position.distance_to(flame.global_position) <= FIRE_HIT_RADIUS:
+		player.call("take_damage", 1, flame)
+
+
+func _clear_fire_flames() -> void:
+	fire_entropy_active = false
+	for flame: Sprite2D in active_fire_flames:
+		if is_instance_valid(flame):
+			flame.queue_free()
+	active_fire_flames.clear()
+
+
+func _can_start_special_entropy() -> bool:
+	return special_entropy_cooldown_timer <= 0.0 and current_action != &"ambush" and not fire_entropy_active
+
+
+func _mark_special_entropy_started() -> void:
+	special_entropy_cooldown_timer = SPECIAL_ENTROPY_COOLDOWN
+
+
+func _flash_black() -> void:
+	_ensure_dark_flash()
+	if dark_flash_rect == null:
+		return
+	dark_flash_rect.visible = true
+	dark_flash_rect.modulate.a = 0.0
+	var tween: Tween = create_tween()
+	tween.tween_property(dark_flash_rect, "modulate:a", 1.0, 0.06)
+	tween.tween_property(dark_flash_rect, "modulate:a", 0.0, 0.10)
+	await tween.finished
+	if dark_flash_rect != null:
+		dark_flash_rect.visible = false
+
+
+func _ensure_dark_flash() -> void:
+	if dark_flash_rect != null:
+		return
+	dark_flash_layer = CanvasLayer.new()
+	dark_flash_layer.layer = 80
+	add_child(dark_flash_layer)
+	dark_flash_rect = ColorRect.new()
+	dark_flash_rect.visible = false
+	dark_flash_rect.color = Color.BLACK
+	dark_flash_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	dark_flash_rect.offset_left = 0.0
+	dark_flash_rect.offset_top = 0.0
+	dark_flash_rect.offset_right = 0.0
+	dark_flash_rect.offset_bottom = 0.0
+	dark_flash_layer.add_child(dark_flash_rect)
 
 
 func _apply_slam_entropy() -> void:
 	if entropy_controller == null:
 		return
+	if not _can_start_special_entropy():
+		return
+	_mark_special_entropy_started()
 	var phase: int = _get_phase()
 	if phase == 3 and entropy_controller.has_method("force_all_effects"):
 		entropy_controller.call("force_all_effects", 5.0)
@@ -325,15 +616,6 @@ func _apply_slam_entropy() -> void:
 		entropy_controller.call("force_random_effect", 5.0)
 	elif entropy_controller.has_method("force_effect"):
 		entropy_controller.call("force_effect", &"delay", 5.0)
-
-
-func _get_attack_wait_time(base_time: float) -> float:
-	var phase: int = _get_phase()
-	if phase == 3:
-		return base_time * 0.52
-	if phase == 2:
-		return base_time * 0.72
-	return base_time
 
 
 func _begin_action(action_name: StringName) -> int:
@@ -527,16 +809,23 @@ func _play_boss_animation(animation_name: StringName) -> void:
 	if boss.has_method("_show_animation"):
 		boss.call("_show_animation", animation_name)
 	if anim_player != null and anim_player.has_animation(animation_name):
-		anim_player.speed_scale = _get_animation_speed_scale(animation_name)
+		anim_player.speed_scale = _get_animation_speed_scale(animation_name, anim_player)
 		anim_player.stop()
 		anim_player.play(animation_name)
 	elif boss.has_method("_play_state"):
 		boss.call("_play_state", animation_name)
 
 
-func _get_animation_speed_scale(animation_name: StringName) -> float:
-	if _get_phase() == 3 and (animation_name == &"attack" or animation_name == &"shoot" or animation_name == &"special" or animation_name == &"slam"):
-		return 1.45
+func _get_animation_speed_scale(animation_name: StringName, anim_player: AnimationPlayer) -> float:
+	if animation_name != &"attack" and animation_name != &"shoot" and animation_name != &"special" and animation_name != &"slam":
+		return 1.0
+	if not anim_player.has_animation(animation_name):
+		return 1.0
+	var animation: Animation = anim_player.get_animation(animation_name)
+	if animation == null or animation.length <= 0.0:
+		return 1.0
+	if animation.length < MIN_BOSS_ATTACK_ANIMATION_DURATION:
+		return animation.length / MIN_BOSS_ATTACK_ANIMATION_DURATION
 	return 1.0
 
 
@@ -558,6 +847,7 @@ func _update_phase_transition() -> void:
 	if phase == last_phase:
 		return
 	last_phase = phase
+	_play_final_boss_music_for_phase(phase, 0.55)
 	roll_timer = minf(roll_timer, 1.0)
 	minion_timer = _get_minion_spawn_time(phase) if phase < 3 else 9999.0
 	if phase == 3:
@@ -586,3 +876,17 @@ func _wait_seconds(seconds: float) -> void:
 	if tree == null:
 		return
 	await tree.create_timer(seconds).timeout
+
+func _play_final_boss_music_for_phase(phase: int, fade_seconds: float = 0.75) -> void:
+	var music_key: StringName = &"final_boss_phase_1"
+	if phase == 2:
+		music_key = &"final_boss_phase_2"
+	elif phase >= 3:
+		music_key = &"final_boss_phase_3"
+	_play_scene_music(music_key, fade_seconds)
+
+
+func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_music"):
+		audio_manager.call("play_music", music_key, fade_seconds)

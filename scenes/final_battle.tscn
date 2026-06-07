@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dih3v4r2u25tm"]
 
-[ext_resource type="Texture2D" uid="uid://cu7uxf4eejmbg" path="res://assets/FinalBoss/fondo_final.png" id="1_2s03c"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/fondo_final.png" id="1_2s03c"]
 [ext_resource type="Texture2D" uid="uid://bk7eo7rd4calp" path="res://assets/battle/entropy_icon.png" id="2_hvrli"]
 [ext_resource type="Script" uid="uid://5x2ebhjgn35i" path="res://playerMovement.gd" id="3_pux4o"]
 [ext_resource type="Texture2D" uid="uid://c1kbe1q3kcgqx" path="res://assets/nino_01/Respiracion y parpadeo.png" id="4_sf2b8"]
@@ -20,14 +20,15 @@
 [ext_resource type="PackedScene" path="res://scenes/robot_02_boss.tscn" id="18_robot2"]
 [ext_resource type="PackedScene" path="res://scenes/robot_02_projectile_soft.tscn" id="19_minion_projectile"]
 [ext_resource type="PackedScene" path="res://scenes/final_boss_projectile.tscn" id="20_final_projectile"]
-[ext_resource type="Script" uid="uid://d0hrbnaf3xq7l" path="res://code/final_battle_controller.gd" id="21_final_controller"]
-[ext_resource type="FontFile" uid="uid://b0ejqv0b60180" path="res://Fonts/Minecraftia-Regular.ttf" id="22_boss_font"]
-[ext_resource type="Texture2D" uid="uid://cjqbedeaj8fga" path="res://assets/FinalBoss/laser.png" id="23_laser"]
-[ext_resource type="Texture2D" uid="uid://bp6caek23m07o" path="res://assets/FinalBoss/warning.png" id="24_warning"]
-[ext_resource type="Texture2D" uid="uid://buryult2yl2ki" path="res://assets/FinalBoss/entropy_backgrounds/fondo_naranja.png" id="25_entropy_orange"]
-[ext_resource type="Texture2D" uid="uid://ih8sgdfkp6vb" path="res://assets/FinalBoss/entropy_backgrounds/fondo_morado.png" id="26_entropy_purple"]
-[ext_resource type="Texture2D" uid="uid://cdcf3msih1kkv" path="res://assets/FinalBoss/entropy_backgrounds/fondo_verde.png" id="27_entropy_green"]
-[ext_resource type="Texture2D" uid="uid://ciiqp3qduryb4" path="res://assets/FinalBoss/entropy_backgrounds/fondo_mix.png" id="28_entropy_mix"]
+[ext_resource type="Script" path="res://code/final_battle_controller.gd" id="21_final_controller"]
+[ext_resource type="FontFile" path="res://Fonts/Minecraftia-Regular.ttf" id="22_boss_font"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/laser.png" id="23_laser"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/warning.png" id="24_warning"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_naranja.png" id="25_entropy_orange"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_morado.png" id="26_entropy_purple"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_verde.png" id="27_entropy_green"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_mix.png" id="28_entropy_mix"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/fire/floor_flame.png" id="29_floor_flame"]
 
 [sub_resource type="RectangleShape2D" id="FloorShape"]
 size = Vector2(1798, 34)
@@ -466,10 +467,10 @@ texture = ExtResource("1_2s03c")
 region_enabled = true
 region_rect = Rect2(0, 0, 1798, 750)
 
-[node name="EntropyBackground" type="Sprite2D" parent="." unique_id=778594020]
+[node name="EntropyBackground" type="Sprite2D" parent="."]
 visible = false
-modulate = Color(1, 1, 1, 0)
 z_index = -19
+modulate = Color(1, 1, 1, 0)
 position = Vector2(-150, 0)
 scale = Vector2(1.01353, 0.845547)
 texture = ExtResource("25_entropy_orange")
@@ -526,28 +527,28 @@ texture = ExtResource("2_hvrli")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BossHealthFrame" type="ColorRect" parent="HUD" unique_id=1744782389]
+[node name="BossHealthFrame" type="ColorRect" parent="HUD"]
 offset_left = 274.0
 offset_top = 22.0
 offset_right = 878.0
 offset_bottom = 86.0
 color = Color(0.05, 0.01, 0.01, 0.92)
 
-[node name="BossHealthAccentLeft" type="ColorRect" parent="HUD" unique_id=1945971319]
+[node name="BossHealthAccentLeft" type="ColorRect" parent="HUD"]
 offset_left = 286.0
 offset_top = 34.0
 offset_right = 322.0
 offset_bottom = 74.0
 color = Color(0.8, 0.04, 0.02, 1)
 
-[node name="BossHealthAccentRight" type="ColorRect" parent="HUD" unique_id=2061938558]
+[node name="BossHealthAccentRight" type="ColorRect" parent="HUD"]
 offset_left = 830.0
 offset_top = 34.0
 offset_right = 866.0
 offset_bottom = 74.0
 color = Color(0.8, 0.04, 0.02, 1)
 
-[node name="BossHealthBar" type="ProgressBar" parent="HUD" unique_id=743351814]
+[node name="BossHealthBar" type="ProgressBar" parent="HUD"]
 offset_left = 330.0
 offset_top = 42.0
 offset_right = 822.0
@@ -559,7 +560,7 @@ max_value = 4000.0
 value = 4000.0
 show_percentage = false
 
-[node name="BossHealthLabel" type="Label" parent="HUD" unique_id=766383846]
+[node name="BossHealthLabel" type="Label" parent="HUD"]
 offset_left = 332.0
 offset_top = 20.0
 offset_right = 820.0
@@ -567,11 +568,11 @@ offset_bottom = 42.0
 theme_override_colors/font_color = Color(1, 0.22, 0.16, 1)
 theme_override_fonts/font = ExtResource("22_boss_font")
 theme_override_font_sizes/font_size = 18
-text = "TELON PRIME  100%"
 horizontal_alignment = 1
+text = "TELON PRIME  100%"
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=92573699]
-position = Vector2(672, 240)
+position = Vector2(210, 172)
 script = ExtResource("3_pux4o")
 sprite_scale_multiplier = 1.14
 
@@ -603,11 +604,16 @@ position = Vector2(220, -130)
 [node name="final_boss" parent="." unique_id=257800392 instance=ExtResource("13_dldxc")]
 position = Vector2(-760, 188)
 scale = Vector2(1.5, 1.5)
+max_health = 4000
 damage_enabled = true
+damage_taken_multiplier = 0.46
+ai_enabled = false
+hit_reaction_enabled = false
 speed = 0.0
 dash_speed = 0.0
 dash_cooldown = 9999.0
 shoot_cooldown = 9999.0
+shoot_delay = 0.34
 slam_cooldown = 9999.0
 robot_piece_scene = ExtResource("14_ljkxc")
 robot_piece_textures = Array[Texture2D]([ExtResource("15_wk2uq"), ExtResource("16_7w0yi")])
@@ -636,7 +642,7 @@ invert_background_texture = ExtResource("26_entropy_purple")
 flip_background_texture = ExtResource("27_entropy_green")
 mixed_background_texture = ExtResource("28_entropy_mix")
 
-[node name="FinalBattleController" type="Node" parent="." unique_id=1479753670]
+[node name="FinalBattleController" type="Node" parent="."]
 script = ExtResource("21_final_controller")
 boss_path = NodePath("../final_boss")
 player_path = NodePath("../Player")
@@ -649,3 +655,4 @@ robot1_projectile_scene = ExtResource("19_minion_projectile")
 final_projectile_scene = ExtResource("20_final_projectile")
 laser_texture = ExtResource("23_laser")
 warning_texture = ExtResource("24_warning")
+floor_flame_texture = ExtResource("29_floor_flame")

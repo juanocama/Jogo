@@ -1,10 +1,10 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dketykpkop7jf"]
 
-[ext_resource type="Texture2D" path="res://assets/nino_01/water_projectile.png" id="texture"]
-[ext_resource type="Script" path="res://code/player_water_projectile.gd" id="script"]
+[ext_resource type="Script" uid="uid://cqkjugqvx4ak1" path="res://code/player_water_projectile.gd" id="script"]
+[ext_resource type="Texture2D" uid="uid://dwy6a6pfa7d25" path="res://assets/nino_01/water_projectile.png" id="texture"]
 
 [sub_resource type="RectangleShape2D" id="ProjectileShape"]
-size = Vector2(38, 20)
+size = Vector2(41, 24)
 
 [sub_resource type="Animation" id="Animation_fly"]
 resource_name = "fly"
@@ -28,18 +28,20 @@ _data = {
 &"fly": SubResource("Animation_fly")
 }
 
-[node name="player_water_projectile" type="Area2D"]
+[node name="player_water_projectile" type="Area2D" unique_id=771751374]
 script = ExtResource("script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=984716118]
 z_index = 20
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("texture")
 hframes = 5
 vframes = 5
+frame = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=969801326]
+position = Vector2(-1.5, -1)
 shape = SubResource("ProjectileShape")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2086208322]
 libraries/ = SubResource("AnimationLibrary_main")

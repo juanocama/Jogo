@@ -14,6 +14,7 @@ var completed_actions: Dictionary = {}
 
 
 func _ready() -> void:
+	_play_scene_music(&"cafeteria", 0.75)
 	_connect_action_interactables()
 
 
@@ -24,6 +25,7 @@ func handle_action(action: StringName) -> void:
 	match action:
 		&"cafeteria_candy":
 			await _show_dialogue_for_action(action, candy_dialogue_resource)
+			GameManager.collect_candy(&"cafeteria_candy2")
 			_hide_pickup(candy_pickup)
 		&"rod_pickup":
 			await _show_dialogue_for_action(action, rod_dialogue_resource)
@@ -75,3 +77,9 @@ func _disable_action(action: StringName) -> void:
 		var node_action: StringName = StringName(node.get("action"))
 		if node_action == action:
 			node.call("set_enabled", false)
+
+func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_music"):
+		audio_manager.call("play_music", music_key, fade_seconds)
+

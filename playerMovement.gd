@@ -15,13 +15,13 @@ const DASH_DURATION: float = 0.24
 const DASH_IMPULSE_DISTANCE: float = 22.0
 const DASH_DOUBLE_TAP_WINDOW: float = 0.28
 const ROD_ATTACK_DURATION: float = 0.34
-const ROD_ATTACK_DAMAGE_PERCENT: float = 0.06
+const ROD_ATTACK_DAMAGE_PERCENT: float = 0.07
 const ROD_ATTACK_COOLDOWN: float = 0.55
-const ROD_ATTACK_RANGE: float = 120.0
-const ROD_ATTACK_HEIGHT: float = 90.0
+const ROD_ATTACK_RANGE: float = 145.0
+const ROD_ATTACK_HEIGHT: float = 108.0
 const WATER_ATTACK_DURATION: float = 0.28
-const WATER_PROJECTILE_DAMAGE_PERCENT: float = 0.02
-const WATER_ATTACK_COOLDOWN: float = 0.5
+const WATER_PROJECTILE_DAMAGE_PERCENT: float = 0.016
+const WATER_ATTACK_COOLDOWN: float = 0.38
 const WATER_PROJECTILE_OFFSET: Vector2 = Vector2(84.0, -52.0)
 const WATER_PROJECTILE_SCENE: PackedScene = preload("res://scenes/player_water_projectile.tscn")
 const MAX_HEARTS: int = 5
@@ -65,6 +65,8 @@ func _ready() -> void:
 	# Los robots buscan nodos en el grupo "players".
 	# Esto NO agrega vida ni daño; solo permite que sepan a quién seguir.
 	add_to_group("players")
+	if _is_final_battle_scene():
+		GameManager.begin_final_battle_attempt()
 
 	if camera2D and camera2D.enabled:
 		camera2D.make_current()
@@ -75,6 +77,14 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if GameManager.is_dialogue_active:
+		velocity.x = move_toward(velocity.x, 0.0, SPEED)
+		_apply_gravity(delta)
+		move_and_slide()
+		_update_animation()
+		global_position = global_position.round()
+		return
+
 	_apply_gravity(delta)
 	_update_entropy_timers(delta)
 	_update_effective_input(delta)
@@ -325,7 +335,7 @@ func _set_sprite_scale(target_scale: Vector2) -> void:
 
 
 func _is_action_locked() -> bool:
-	return dash_timer > 0.0 or attack_timer > 0.0
+	return dash_timer > 0.0 or (attack_timer > 0.0 and active_attack_animation != &"RodAttack")
 
 
 func _handle_locked_movement(delta: float) -> void:
@@ -351,7 +361,8 @@ func _start_attack(animation_name: StringName, duration: float) -> void:
 	attack_timer = duration
 	water_shot_spawned = false
 	rod_hit_done = false
-	velocity.x = 0.0
+	if animation_name != &"RodAttack":
+		velocity.x = 0.0
 	_play_animation(animation_name)
 	if animation_name == &"WaterAttack":
 		_spawn_water_projectile()
@@ -455,6 +466,8 @@ func take_damage(_amount: int, _source: Node = null) -> void:
 		return
 
 	hearts -= 1
+	if _is_final_battle_scene():
+		hearts = GameManager.use_final_battle_recovery_candy(hearts, MAX_HEARTS)
 	damage_invulnerability_timer = DAMAGE_INVULNERABILITY_TIME
 	_update_hearts_ui()
 
@@ -476,3 +489,7 @@ func is_alive() -> bool:
 	# Solo para compatibilidad con la IA de los robots.
 	# No significa que el personaje tenga sistema de vida todavía.
 	return hearts > 0
+
+
+func _is_final_battle_scene() -> bool:
+	return get_tree().current_scene != null and get_tree().current_scene.scene_file_path == "res://scenes/final_battle.tscn"

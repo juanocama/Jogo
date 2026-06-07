@@ -30,6 +30,7 @@ func handle_action(action: StringName) -> void:
 	match action:
 		&"bath_door_in":
 			await _show_dialogue_for_action(action, bath_door_dialogue_resource)
+			await _show_final_battle_candy_dialogue()
 			get_tree().change_scene_to_file("res://scenes/final_battle.tscn")
 		&"gun_pickup":
 			await _show_dialogue_for_action(action, gun_pickup_dialogue_resource)
@@ -60,6 +61,15 @@ func _show_dialogue(resource: DialogueResource) -> void:
 	await get_tree().create_timer(0.2).timeout
 	GameManager.is_dialogue_active = false
 	dialogue_running = false
+
+
+func _show_final_battle_candy_dialogue() -> void:
+	if not GameManager.should_show_final_battle_candy_dialogue():
+		return
+	var dialogue_text: String = GameManager.build_final_battle_candy_dialogue()
+	var resource: DialogueResource = DialogueManager.create_resource_from_text(dialogue_text) as DialogueResource
+	await _show_dialogue(resource)
+	GameManager.mark_final_battle_candy_dialogue_shown()
 
 
 func _hide_pickup(pickup: Node2D) -> void:
