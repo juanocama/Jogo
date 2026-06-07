@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://bk4mmioq4at27"]
+
+[ext_resource type="Texture2D" uid="uid://cu7uxf4eejmbg" path="res://assets/FinalBoss/fondo_final.png" id="1_hiicb"]
+[ext_resource type="Script" uid="uid://cjg7d1g7tksc8" path="res://code/pseudo_3d_player.gd" id="2_cfxby"]
+[ext_resource type="Texture2D" uid="uid://dwqq66htnkwkr" path="res://assets/nino_3d/nino_idle_down.png" id="3_c0vct"]
+[ext_resource type="Texture2D" uid="uid://qyd752wh20kv" path="res://assets/nino_3d/nino_walk_down.png" id="4_ydovm"]
+[ext_resource type="Texture2D" uid="uid://2yummbox3vfi" path="res://assets/nino_3d/nino_run_down.png" id="5_ured3"]
+[ext_resource type="Texture2D" uid="uid://b1hlkrph2sfwv" path="res://assets/nino_3d/nino_idle_up.png" id="6_5m3fs"]
+[ext_resource type="Texture2D" uid="uid://bvblafsjrad8e" path="res://assets/nino_3d/nino_walk_up.png" id="7_ywgb7"]
+[ext_resource type="Texture2D" uid="uid://b5fjagmv3daga" path="res://assets/nino_3d/nino_run_up.png" id="8_p6hs3"]
+[ext_resource type="Texture2D" uid="uid://cyrswrbm5ahj8" path="res://assets/nino_3d/nino_idle_side.png" id="9_hwdxq"]
+[ext_resource type="Texture2D" uid="uid://dcbo70rh102m4" path="res://assets/nino_3d/nino_walk_side.png" id="10_06bg0"]
+[ext_resource type="Texture2D" uid="uid://mb5lnbwv6mec" path="res://assets/nino_3d/nino_run_side.png" id="11_06dts"]
+[ext_resource type="Script" uid="uid://hm3vg1e8ahfm" path="res://code/classroom_npc.gd" id="12_hwdxq"]
+[ext_resource type="Texture2D" uid="uid://cyktcad5toejn" path="res://assets/nina/girl_idle_down.png" id="13_06bg0"]
+[ext_resource type="Texture2D" uid="uid://3cwxy1731tmq" path="res://assets/nina/girl_walk_down.png" id="14_06dts"]
+[ext_resource type="Texture2D" uid="uid://yibuh8idsysu" path="res://assets/nina/girl_idle_up.png" id="15_q6nbb"]
+[ext_resource type="Texture2D" uid="uid://btth6w24xqqs2" path="res://assets/nina/girl_walk_up.png" id="16_4lq77"]
+[ext_resource type="Texture2D" uid="uid://r26atl3rjtl1" path="res://assets/nina/girl_idle_side.png" id="17_45prs"]
+[ext_resource type="Texture2D" uid="uid://u1bnocca7jxu" path="res://assets/nina/girl_walk_side.png" id="18_7jwdh"]
+[ext_resource type="Script" uid="uid://b5y0wi3btwkuw" path="res://code/final_cutscene_controller.gd" id="19_cutscene"]
+[ext_resource type="Script" uid="uid://ctm3psw0fn2il" path="res://code/control.gd" id="20_intro_background"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q6nbb"]
+height = 24.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ftkl0"]
+height = 24.0
+
+[node name="Node2D" type="Node2D" unique_id=860575952]
+script = ExtResource("19_cutscene")
+opening_camera_position = Vector2(320, 100)
+leaves_camera_position = Vector2(-410, 100)
+normal_zoom = Vector2(1, 1)
+leaves_zoom = Vector2(2, 2)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2084338538]
+texture = ExtResource("1_hiicb")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1636239995 groups=["players"]]
+position = Vector2(-192, 128)
+script = ExtResource("2_cfxby")
+walk_speed = 150.0
+run_speed = 220.0
+walkable_area_group = &"classroom_walkable"
+base_visual_scale = 0.54
+idle_down_texture = ExtResource("3_c0vct")
+walk_down_texture = ExtResource("4_ydovm")
+run_down_texture = ExtResource("5_ured3")
+idle_up_texture = ExtResource("6_5m3fs")
+walk_up_texture = ExtResource("7_ywgb7")
+run_up_texture = ExtResource("8_p6hs3")
+idle_side_texture = ExtResource("9_hwdxq")
+walk_side_texture = ExtResource("10_06bg0")
+run_side_texture = ExtResource("11_06dts")
+
+[node name="Shadow" type="Polygon2D" parent="Player" unique_id=921233516]
+z_index = -1
+position = Vector2(0, 2)
+color = Color(0, 0, 0, 0.3)
+polygon = PackedVector2Array(-23, -5, -12, -9, 12, -9, 23, -5, 23, 5, 12, 9, -12, 9, -23, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=437863563]
+position = Vector2(0, -31)
+texture = ExtResource("3_c0vct")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=2102246630]
+position = Vector2(0, -9)
+shape = SubResource("CapsuleShape2D_q6nbb")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=2049551037]
+position = Vector2(0, -32)
+zoom = Vector2(0.72, 0.72)
+limit_left = -10000
+limit_top = -10000
+limit_right = 10000
+limit_bottom = 10000
+
+[node name="Girl" type="CharacterBody2D" parent="Player" unique_id=392811019]
+position = Vector2(80, -8)
+script = ExtResource("12_hwdxq")
+base_visual_scale = 0.82
+idle_down_texture = ExtResource("13_06bg0")
+walk_down_texture = ExtResource("14_06dts")
+idle_up_texture = ExtResource("15_q6nbb")
+walk_up_texture = ExtResource("16_4lq77")
+idle_side_texture = ExtResource("17_45prs")
+walk_side_texture = ExtResource("18_7jwdh")
+
+[node name="Shadow" type="Polygon2D" parent="Player/Girl" unique_id=401236536]
+z_index = -1
+position = Vector2(0, 2)
+color = Color(0, 0, 0, 0.3)
+polygon = PackedVector2Array(-23, -5, -12, -9, 12, -9, 23, -5, 23, 5, 12, 9, -12, 9, -23, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/Girl" unique_id=546532074]
+position = Vector2(0, -31)
+texture = ExtResource("13_06bg0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Girl" unique_id=1573426213]
+position = Vector2(0, -9)
+shape = SubResource("CapsuleShape2D_ftkl0")
+
+[node name="IntroBackgroundLayer" type="CanvasLayer" parent="." unique_id=1388979457]
+layer = 10
+
+[node name="Background" type="Control" parent="IntroBackgroundLayer" unique_id=1666786771]
+visible = false
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("20_intro_background")
+
+[node name="Image_A" type="TextureRect" parent="IntroBackgroundLayer/Background" unique_id=1786799453]
+layout_mode = 0
+offset_right = 1264.0
+offset_bottom = 842.0
+mouse_filter = 2
+
+[node name="Image_B" type="TextureRect" parent="IntroBackgroundLayer/Background" unique_id=1008627797]
+layout_mode = 0
+offset_right = 1264.0
+offset_bottom = 842.0
+mouse_filter = 2
