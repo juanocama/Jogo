@@ -14,8 +14,8 @@ enum RobotState {
 @export var chase_speed: float = 185.0
 @export var enter_target: Vector2 = Vector2(80, 495)
 @export var exit_target: Vector2 = Vector2(-180, 495)
-@export var vision_range: float = 340.0
-@export var detection_interval: float = 2.2
+@export var vision_range: float = 440.0
+@export var detection_interval: float = 2.0
 @export var detection_probability: float = 0.45
 @export var capture_distance: float = 35.0
 @export var hidden_inspection_delay: float = 7.0
@@ -23,6 +23,8 @@ enum RobotState {
 @export var idle_fps: float = 7.0
 @export var walk_fps: float = 10.0
 @export var base_visual_scale: float = 0.88
+
+const CONFUSED_DURATION_MULTIPLIER: float = 0.7
 
 @export_group("Sprites")
 @export var idle_down_texture: Texture2D
@@ -89,7 +91,7 @@ func notify_player_hidden(spot: Area2D) -> void:
 
 	target_spot = spot
 	state = RobotState.CONFUSED
-	confused_timer = hidden_inspection_delay
+	confused_timer = hidden_inspection_delay * CONFUSED_DURATION_MULTIPLIER
 	if alert_question_texture != null:
 		_set_alert(alert_question_texture)
 
@@ -124,8 +126,12 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_search(delta: float) -> void:
+	_move_along_patrol(delta)
+	_update_detection(delta)
+
+
+func _move_along_patrol(delta: float) -> void:
 	if patrol_points.is_empty():
-		_update_detection(delta)
 		_apply_animation(delta, Vector2.ZERO)
 		return
 
@@ -133,8 +139,6 @@ func _update_search(delta: float) -> void:
 	_move_towards(target, normal_speed, delta)
 	if global_position.distance_to(target) <= 10.0:
 		patrol_index = (patrol_index + 1) % patrol_points.size()
-
-	_update_detection(delta)
 
 
 func _update_detection(delta: float) -> void:
@@ -169,9 +173,7 @@ func _update_chase(delta: float) -> void:
 
 
 func _update_confused(delta: float) -> void:
-	velocity = Vector2.ZERO
-	move_and_slide()
-	_apply_animation(delta, Vector2.ZERO)
+	_move_along_patrol(delta)
 	if player != null and player.has_method("is_hidden") and not bool(player.call("is_hidden")):
 		target_spot = null
 		state = RobotState.SEARCHING
@@ -229,7 +231,7 @@ func _move_towards(target: Vector2, speed: float, delta: float) -> void:
 
 
 func _check_touch_capture() -> void:
-	if state == RobotState.INACTIVE or state == RobotState.EXITING:
+	if state == RobotState.INACTIVE or state == RobotState.EXITING or state == RobotState.CONFUSED:
 		return
 	if player == null:
 		return
