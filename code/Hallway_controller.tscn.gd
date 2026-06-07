@@ -5,9 +5,14 @@ extends Node
 @export var candy_dialogue_resource: DialogueResource
 @export var gun_pickup_path: NodePath
 @export var candy_pickup_path: NodePath
+@export var background_path: NodePath
+@export var burned_background_texture: Texture2D
+@export var glitch_flash_count: int = 4
+@export var glitch_flash_duration: float = 0.12
 
 @onready var gun_pickup: Node2D = get_node_or_null(gun_pickup_path) as Node2D
 @onready var candy_pickup: Node2D = get_node_or_null(candy_pickup_path) as Node2D
+@onready var background: Sprite2D = get_node_or_null(background_path) as Sprite2D
 
 var dialogue_running: bool = false
 var completed_actions: Dictionary = {}
@@ -27,6 +32,7 @@ func handle_action(action: StringName) -> void:
 			get_tree().change_scene_to_file("res://scenes/bathroom.tscn")
 		&"gun_pickup":
 			await _show_dialogue_for_action(action, gun_pickup_dialogue_resource)
+			await _play_burned_hallway_glitch()
 			_hide_pickup(gun_pickup)
 		&"candy_2":
 			await _show_dialogue_for_action(action, candy_dialogue_resource)
@@ -58,6 +64,21 @@ func _show_dialogue(resource: DialogueResource) -> void:
 func _hide_pickup(pickup: Node2D) -> void:
 	if pickup != null:
 		pickup.visible = false
+
+
+func _play_burned_hallway_glitch() -> void:
+	if background == null or burned_background_texture == null:
+		return
+
+	var normal_texture: Texture2D = background.texture
+	var flash_count: int = maxi(glitch_flash_count, 1)
+	var flash_duration: float = maxf(glitch_flash_duration, 0.03)
+
+	for _index: int in range(flash_count):
+		background.texture = burned_background_texture
+		await get_tree().create_timer(flash_duration).timeout
+		background.texture = normal_texture
+		await get_tree().create_timer(flash_duration).timeout
 
 
 func _connect_action_interactables() -> void:

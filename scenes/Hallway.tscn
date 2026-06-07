@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cocwlmd8vj3uf"]
 
 [ext_resource type="Script" uid="uid://cx2h8vm6i2mbm" path="res://code/Hallway_controller.tscn.gd" id="1_24mfg"]
+[ext_resource type="Texture2D" uid="uid://dvudnsv7avddy" path="res://assets/hallway/Hallway_burned.png" id="1_burned"]
 [ext_resource type="Texture2D" uid="uid://celg0tmqgxvop" path="res://assets/hallway/Hallway.png" id="1_egbau"]
 [ext_resource type="Resource" uid="uid://baqaf3c6qssyi" path="res://Dialogue/Hallway/BathDoorIn.dialogue" id="2_bath"]
 [ext_resource type="Script" uid="uid://cjg7d1g7tksc8" path="res://code/pseudo_3d_player.gd" id="2_inlpd"]
@@ -41,6 +42,8 @@ gun_pickup_dialogue_resource = ExtResource("3_gun")
 candy_dialogue_resource = ExtResource("4_r7jtc")
 gun_pickup_path = NodePath("../GunPickup")
 candy_pickup_path = NodePath("../Candy2")
+background_path = NodePath("../Sprite2D")
+burned_background_texture = ExtResource("1_burned")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1530251129]
 position = Vector2(576.25006, 325)
@@ -132,7 +135,6 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("14_eb016")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GunPickup/PhotoPoint" unique_id=329385040]
-position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_xjknv")
 
 [node name="BathDoorIn" type="Area2D" parent="." unique_id=1858066333 groups=["classroom_actions"]]
