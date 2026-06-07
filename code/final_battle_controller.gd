@@ -88,7 +88,12 @@ func _ready() -> void:
 		standard_boss_position = boss.global_position
 	_configure_boss()
 	_update_boss_health_ui()
-	_play_final_boss_music_for_phase(_get_phase(), 0.65)
+	if GameManager.should_show_final_battle_candy_dialogue():
+		intro_dialogue_running = true
+		action_locked = true
+		current_action = &"intro_dialogue"
+	else:
+		_play_final_boss_music_for_phase(_get_phase(), 0.65)
 	call_deferred("_show_intro_candy_dialogue_if_needed")
 
 
@@ -100,6 +105,8 @@ func _process(delta: float) -> void:
 		return
 
 	_update_boss_health_ui()
+	if intro_dialogue_running or GameManager.is_dialogue_active:
+		return
 	_update_close_melee(delta)
 	_update_special_entropy_cooldown(delta)
 
@@ -128,8 +135,11 @@ func _configure_boss() -> void:
 
 func _show_intro_candy_dialogue_if_needed() -> void:
 	if not GameManager.should_show_final_battle_candy_dialogue():
+		intro_dialogue_running = false
+		action_locked = false
+		current_action = &""
 		return
-	if intro_dialogue_running or GameManager.is_dialogue_active:
+	if GameManager.is_dialogue_active and current_action != &"intro_dialogue":
 		return
 
 	intro_dialogue_running = true
@@ -148,6 +158,7 @@ func _show_intro_candy_dialogue_if_needed() -> void:
 	action_locked = false
 	current_action = &""
 	intro_dialogue_running = false
+	_play_final_boss_music_for_phase(_get_phase(), 0.65)
 
 
 func _update_minions(delta: float) -> void:
@@ -879,4 +890,3 @@ func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> voi
 	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
 	if audio_manager != null and audio_manager.has_method("play_music"):
 		audio_manager.call("play_music", music_key, fade_seconds)
-

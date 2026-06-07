@@ -65,6 +65,8 @@ func _ready() -> void:
 	# Los robots buscan nodos en el grupo "players".
 	# Esto NO agrega vida ni daño; solo permite que sepan a quién seguir.
 	add_to_group("players")
+	if _is_final_battle_scene():
+		GameManager.begin_final_battle_attempt()
 
 	if camera2D and camera2D.enabled:
 		camera2D.make_current()
@@ -464,6 +466,8 @@ func take_damage(_amount: int, _source: Node = null) -> void:
 		return
 
 	hearts -= 1
+	if _is_final_battle_scene():
+		hearts = GameManager.use_final_battle_recovery_candy(hearts, MAX_HEARTS)
 	damage_invulnerability_timer = DAMAGE_INVULNERABILITY_TIME
 	_update_hearts_ui()
 
@@ -485,3 +489,7 @@ func is_alive() -> bool:
 	# Solo para compatibilidad con la IA de los robots.
 	# No significa que el personaje tenga sistema de vida todavía.
 	return hearts > 0
+
+
+func _is_final_battle_scene() -> bool:
+	return get_tree().current_scene != null and get_tree().current_scene.scene_file_path == "res://scenes/final_battle.tscn"

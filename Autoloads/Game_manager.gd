@@ -4,6 +4,7 @@ var is_dialogue_active = false
 var candies_collected: int = 0
 var collected_candy_ids: Dictionary = {}
 var final_battle_candy_dialogue_shown: bool = false
+var final_battle_attempt_candies: int = 0
 
 
 func collect_candy(candy_id: StringName) -> bool:
@@ -16,6 +17,19 @@ func collect_candy(candy_id: StringName) -> bool:
 
 func get_candy_count() -> int:
 	return candies_collected
+
+
+func begin_final_battle_attempt() -> void:
+	final_battle_attempt_candies = candies_collected
+
+
+func use_final_battle_recovery_candy(current_hearts: int, max_hearts: int) -> int:
+	if final_battle_attempt_candies <= 0:
+		return current_hearts
+	if current_hearts >= max_hearts:
+		return current_hearts
+	final_battle_attempt_candies -= 1
+	return mini(max_hearts, current_hearts + 2)
 
 
 func build_final_battle_candy_dialogue() -> String:
