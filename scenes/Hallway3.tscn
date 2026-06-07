@@ -39,7 +39,7 @@ script = ExtResource("1_cnn28")
 bath_door_dialogue_resource = ExtResource("2_w67uc")
 
 [node name="SpriteC" type="Sprite2D" parent="." unique_id=1530251129]
-position = Vector2(576.25006, 325)
+position = Vector2(576, 325)
 scale = Vector2(0.844, 0.842)
 texture = ExtResource("5_7qosv")
 
@@ -62,7 +62,7 @@ texture = ExtResource("5_7qosv")
 position = Vector2(2216, 456)
 script = ExtResource("6_y2g5i")
 walk_speed = 150.0
-run_speed = 220.0
+run_speed = 260.0
 walkable_area_group = &"classroom_walkable"
 base_visual_scale = 0.54
 idle_down_texture = ExtResource("7_fhy30")
@@ -76,9 +76,11 @@ walk_side_texture = ExtResource("14_552cq")
 run_side_texture = ExtResource("15_3c2ga")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=2000367293]
-limit_left = 2300
-limit_right = -2310
+limit_left = -2310
+limit_top = -100000
+limit_right = 2300
 limit_bottom = 650
+limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="Shadow" type="Polygon2D" parent="Player" unique_id=43126813]
