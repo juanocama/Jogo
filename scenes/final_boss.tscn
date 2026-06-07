@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://b4r0585p1tv1s"]
+[gd_scene format=3 uid="uid://5fo73b13bq5j"]
 
-[ext_resource type="PackedScene" path="res://scenes/final_boss_projectile.tscn" id="projectile_scene"]
+[ext_resource type="PackedScene" uid="uid://ksj2qdqe3lv1" path="res://scenes/final_boss_projectile.tscn" id="projectile_scene"]
 [ext_resource type="Script" uid="uid://4chos6q1337" path="res://code/boss_robot.gd" id="script"]
 [ext_resource type="Texture2D" uid="uid://d3gviya7qp0g6" path="res://assets/FinalBoss/shoot_left.png" id="tex_dash"]
 [ext_resource type="Texture2D" uid="uid://ddw1s6f0of5xt" path="res://assets/FinalBoss/idle.png" id="tex_idle"]

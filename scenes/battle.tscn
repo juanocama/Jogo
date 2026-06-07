@@ -16,10 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://dy6sgc5bhmxw8" path="res://assets/nino_01/caminar derecha.png" id="player_walk"]
 [ext_resource type="Texture2D" uid="uid://cd5up57cd2fng" path="res://assets/nino_01/ataque_agua.png" id="player_water_attack"]
 [ext_resource type="PackedScene" uid="uid://bydk8l453qugk" path="res://scenes/robot_01_boss.tscn" id="robot01"]
-[ext_resource type="PackedScene" path="res://scenes/robot_02_boss.tscn" id="robot02"]
+[ext_resource type="PackedScene" uid="uid://ccx1u3ks2dyo1" path="res://scenes/robot_02_boss.tscn" id="robot02"]
 [ext_resource type="Texture2D" uid="uid://hgetsxsushts" path="res://assets/battle/robot_piece_1.png" id="robot_piece_1"]
 [ext_resource type="Texture2D" uid="uid://bxwfumi5e8r7k" path="res://assets/battle/robot_piece_2.png" id="robot_piece_2"]
-[ext_resource type="PackedScene" path="res://scenes/robot_piece_explosive.tscn" id="robot_piece_scene"]
+[ext_resource type="PackedScene" uid="uid://oee27rrcpq0p" path="res://scenes/robot_piece_explosive.tscn" id="robot_piece_scene"]
 [ext_resource type="Texture2D" uid="uid://bmwestplf578s" path="res://assets/star_16x16.png" id="star_icon"]
 
 [sub_resource type="RectangleShape2D" id="FloorShape"]

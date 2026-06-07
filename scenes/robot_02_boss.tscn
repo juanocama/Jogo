@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ccx1u3ks2dyo1"]
 
-[ext_resource type="PackedScene" path="res://scenes/robot_02_projectile_soft.tscn" id="projectile_scene"]
+[ext_resource type="PackedScene" uid="uid://dksothn2gtxg" path="res://scenes/robot_02_projectile_soft.tscn" id="projectile_scene"]
 [ext_resource type="Script" uid="uid://4chos6q1337" path="res://code/boss_robot.gd" id="script"]
 [ext_resource type="Texture2D" uid="uid://dm5o2jp05jcwc" path="res://assets/Robot2/envestir.png" id="tex_dash"]
 [ext_resource type="Texture2D" uid="uid://k8vbsqrcwp07" path="res://assets/Robot2/caer con fuerza.png" id="tex_death"]
