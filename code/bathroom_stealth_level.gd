@@ -5,6 +5,13 @@ extends Node
 @export var mirror_path: NodePath
 @export var timer_label_path: NodePath
 @export var level_duration: float = 60.0
+@export var robot_vision_range: float = 520.0
+@export var robot_detection_interval: float = 0.8
+@export var robot_detection_probability: float = 0.9
+@export var robot_hidden_inspection_delay: float = 5.0
+@export var robot_confused_duration_multiplier: float = 0.4
+@export var robot_confused_speed_multiplier: float = 0.85
+@export var robot_close_visible_detection_range: float = 240.0
 
 @onready var player: Node2D = get_node(player_path) as Node2D
 @onready var robot: CharacterBody2D = get_node(robot_path) as CharacterBody2D
@@ -156,6 +163,13 @@ func _setup_robot() -> void:
 		Vector2(850, 470),
 		Vector2(1050, 505)
 	]
+	robot.set("vision_range", robot_vision_range)
+	robot.set("detection_interval", robot_detection_interval)
+	robot.set("detection_probability", robot_detection_probability)
+	robot.set("hidden_inspection_delay", robot_hidden_inspection_delay)
+	robot.set("confused_duration_multiplier", robot_confused_duration_multiplier)
+	robot.set("confused_speed_multiplier", robot_confused_speed_multiplier)
+	robot.set("close_visible_detection_range", robot_close_visible_detection_range)
 	robot.call("setup", self, player, patrol_points)
 
 
