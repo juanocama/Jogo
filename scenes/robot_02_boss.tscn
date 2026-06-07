@@ -300,7 +300,7 @@ hframes = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries/ = SubResource("AnimationLibrary_main")
-speed_scale = 1.5
+speed_scale = 0.9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -46)

@@ -2,7 +2,7 @@ f098f8d3115d962055284dee314b4f89
 ::res://::1780813386
 icon.svg::CompressedTexture2D::2283935863672813662::1780784529::1780784616::1::::<><><>0<>0<>0898c564e61cbdcadbc6c7220d87cc8b<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 map.tscn::PackedScene::7705285757565826616::1780784529::0::1::::<><><>0<>0<><>::res://assets/nino_01/Respiracion y parpadeo.png<>res://playerMovement.gd<>res://assets/nino_01/Salto caminando derecha.png<>res://assets/nino_01/correr derecha.png<>res://assets/nino_01/Agacharse derecha.png<>res://assets/nino_01/caminar derecha.png
-playerMovement.gd::GDScript::2154792563219122716::1780784529::0::1::::<>CharacterBody2D<><>0<>0<><>::
+playerMovement.gd::GDScript::2154792563219122716::1780823347::0::1::::<>CharacterBody2D<><>0<>0<><>::
 README.md::TextFile::-1::1780784536::0::1::::<><><>0<>0<><>::
 robot1.tscn::PackedScene::1816203420961864326::1780784529::0::1::::<><><>0<>0<><>::res://assets/Robot1/por defecto.png
 robot_01_boss.tscn::PackedScene::3810670153382307852::1780785186::0::1::::<><><>0<>0<><>::res://code/enemies/robots/boss_robot.gd<>res://assets/enemies/robot_01/dash.png<>res://assets/enemies/robot_01/abajo.png<>res://assets/enemies/robot_01/por defecto.png<>res://assets/enemies/robot_01/arriba.png<>res://assets/enemies/robot_01/movimiento a la derecha.png
@@ -85,9 +85,10 @@ find_in_dialogue_view.gd::GDScript::1182765515527006779::1780784794::0::1::::<>P
 find_in_dialogue_view.tscn::PackedScene::1783514634430556025::1780784537::0::1::::<><><>0<>0<><>::uid://q368fmxxa8sd::::res://addons/dialogue_manager/views/find_in_dialogue_view.gd
 main_view.gd::GDScript::5365867961863611872::1780784537::0::1::::<>Control<><>0<>1<><>::
 main_view.tscn::PackedScene::4884668666408697448::1780784537::0::1::::<><><>0<>0<><>::uid://cipjcc7bkh1pc::::res://addons/dialogue_manager/views/main_view.gd<>uid://civ6shmka5e8u::::res://addons/dialogue_manager/components/code_edit.tscn<>uid://dnufpcdrreva3::::res://addons/dialogue_manager/components/files_list.tscn<>uid://ctns6ouwwd68i::::res://addons/dialogue_manager/components/title_list.tscn<>uid://co8yl23idiwbi::::res://addons/dialogue_manager/components/update_button.tscn<>uid://gr8nakpbrhby::::res://addons/dialogue_manager/components/search_and_replace.tscn<>uid://cs8pwrxr5vxix::::res://addons/dialogue_manager/components/errors_panel.tscn<>uid://klpiq4tk3t7a::::res://addons/dialogue_manager/components/code_edit_syntax_highlighter.gd<>uid://cnm67htuohhlo::::res://addons/dialogue_manager/assets/banner.png
-::res://assets/::1780813386
+::res://assets/::1780824260
 .gitkeep.txt::TextFile::-1::1780700432::0::1::::<><><>0<>0<><>::
 00032.png::CompressedTexture2D::7825718850818682431::1780784526::1780784617::1::::<><><>0<>0<>d5bc1a17f58665817959adb9f0fdf4f8<>res://.godot/imported/00032.png-1bd559ad535d8b439f9f535841c9a64c.ctex::
+cocina2d.png::CompressedTexture2D::8232786606732583056::1780821863::1780822163::1::::<><><>0<>0<>d5c009116f998bc1617df5634387e20d<>res://.godot/imported/cocina2d.png-68fe04f61ca556642179600459b0d6f2.ctex::
 Exclamation.png::CompressedTexture2D::4420401420619303628::1780784537::1780784616::1::::<><><>0<>0<>11af499177ebc13ecb4eb31d654af43c<>res://.godot/imported/Exclamation.png-e9fbdb9541c18a888d163b0e41f66db0.ctex::
 star_16x16.png::CompressedTexture2D::3274379151823566292::1780813386::1780813494::1::::<><><>0<>0<>5931faa0abc556b411768b568e7e99ba<>res://.godot/imported/star_16x16.png-022dcc12c68c6d6ac59f16163b116b90.ctex::
 test.png.png::CompressedTexture2D::4966935123672925736::1780784527::1780784616::1::::<><><>0<>0<>6f53024068258d53bd75baf9f74d6ac9<>res://.godot/imported/test.png.png-264fc34a9b83573263055d467dcbedf3.ctex::
@@ -95,6 +96,10 @@ world_tileset.png::CompressedTexture2D::8776350499916284620::1780784527::1780784
 ::res://assets/bathroom/::1780797363
 bathromok.png::CompressedTexture2D::4243886695590949857::1780795915::1780796717::1::::<><><>0<>0<>693a3d4a8dc8e0371ebf0e8b20b508ec<>res://.godot/imported/bathromok.png-b2965233cf15fa707292f48fd98f33de.ctex::
 bathroomsad.png::CompressedTexture2D::9165624013331458491::1780796410::1780797363::1::::<><><>0<>0<>b9b450d825755dcfd5736ac922fd5365<>res://.godot/imported/bathroomsad.png-5c421295543e2eb7f6b08b0351222edc.ctex::
+::res://assets/battle/::1780824260
+entropy_icon.png::CompressedTexture2D::3154638784473090821::1780808575::1780824377::1::::<><><>0<>0<>e68257be648cebad4720d33b5ffa5e66<>res://.godot/imported/entropy_icon.png-df890bea3071953c8c74a2924b985812.ctex::
+robot_piece_1.png::CompressedTexture2D::503985951841928964::1780823720::1780824377::1::::<><><>0<>0<>86fe76243905bc32f9c16cdfbfca731f<>res://.godot/imported/robot_piece_1.png-7e0f8427e3752d039e46efbae185d640.ctex::
+robot_piece_2.png::CompressedTexture2D::4046520342807454102::1780823765::1780824377::1::::<><><>0<>0<>3a41d6de806c971918911009223a6051<>res://.godot/imported/robot_piece_2.png-412dd7ec1dbc7f9eaa64edd002f296a0.ctex::
 ::res://assets/classroom/::1780809315
 classroom_background.jpg::CompressedTexture2D::3585885628715344980::1780806189::1780806189::1::::<><><>0<>0<>f5b96e9a29136dc839ad68becac880f0<>res://.godot/imported/classroom_background.jpg-6f5e2d1525e7d3244a7d573b0c6b55ba.ctex::
 classroom_background.png::CompressedTexture2D::4367360774549412370::1780788119::1780788831::1::::<><><>0<>0<>5a4323ad2c4d4cf2982ccd32693ae38d<>res://.godot/imported/classroom_background.png-079a60688cbe2f03e9f226efd76e37e0.ctex::
@@ -107,7 +112,7 @@ misil.png::CompressedTexture2D::1433540362939582420::1780784526::1780784526::1::
 move.png::CompressedTexture2D::7070552844493703012::1780784526::1780784526::1::::<><><>0<>0<>903392d253a481e1fe180708013f7b92<>res://.godot/imported/move.png-fef06747be67c55d37024d754a0a1179.ctex::
 shoot.png::CompressedTexture2D::7639474025616138746::1780784526::1780784527::1::::<><><>0<>0<>45996efccf19efc9419c5edb4b475f31<>res://.godot/imported/shoot.png-2023dd519ea71fcbc13572e2d00ad725.ctex::
 up_down.png::CompressedTexture2D::2240244935945646075::1780784527::1780784527::1::::<><><>0<>0<>db170d878a7997e5ffb6d73c9161c3be<>res://.godot/imported/up_down.png-10fb83dfdb2e67af3659cfb32a36e255.ctex::
-::res://assets/Main Menu/::1780813235
+::res://assets/Main Menu/::1780813495
 Burned_desk.png::CompressedTexture2D::7830483036218559629::1780813235::1780813495::1::::<><><>0<>0<>ac77bcc4c9181a58f990d92dfaceae92<>res://.godot/imported/Burned_desk.png-e3e346804ec9d02b026b48f243fbb11b.ctex::
 Burned_leaves.png::CompressedTexture2D::7486258201171911910::1780813235::1780813495::1::::<><><>0<>0<>f969b467b1ad75dd11c12107be9a0694<>res://.godot/imported/Burned_leaves.png-059ac369c9bbb3c6f3f226d59a0ebb6d.ctex::
 Burned_locker.png::CompressedTexture2D::5011633565314112159::1780813235::1780813495::1::::<><><>0<>0<>845d41a8346c437402a77cbcf8a961bc<>res://.godot/imported/Burned_locker.png-e978deb070ffec05e56a989c0bb87cf7.ctex::
@@ -126,14 +131,17 @@ girl_run_up.png::CompressedTexture2D::4610768240963422933::1780792130::178079212
 girl_walk_down.png::CompressedTexture2D::1970794526691414660::1780792130::1780792128::1::::<><><>0<>0<>aa7391e32aadd9a025027f0a58f66a25<>res://.godot/imported/girl_walk_down.png-9f26a05981c75fefd97f75fac927829c.ctex::
 girl_walk_side.png::CompressedTexture2D::1457535365188382598::1780792130::1780792128::1::::<><><>0<>0<>d5ab48d3fb2248510b91418f8a97c055<>res://.godot/imported/girl_walk_side.png-eb308ba7c0191159a7e5be6889b3761a.ctex::
 girl_walk_up.png::CompressedTexture2D::3759713467275702543::1780792142::1780792143::1::::<><><>0<>0<>5cbb5c8204caef433b725dc716940ba8<>res://.godot/imported/girl_walk_up.png-aeafc1d8aab9ae2da1f79ac0adf5a256.ctex::
-::res://assets/nino_01/::1780785143
+::res://assets/nino_01/::1780820909
 Agacharse derecha.png::CompressedTexture2D::1010499072848081016::1780784527::1780784527::1::::<><><>0<>0<>4221ccd738c4730e057ba5c822ea2c39<>res://.godot/imported/Agacharse derecha.png-04b66f1ac7b730e0eaebf4d184c109cf.ctex::
+ataque_agua.png::CompressedTexture2D::5046581982916188188::1780817895::1780818785::1::::<><><>0<>0<>10673fb8be78592aa152782b5cd34780<>res://.godot/imported/ataque_agua.png-ffdbb6f86307d61d655ea4bf6c076ae4.ctex::
+ataque_varilla.png::CompressedTexture2D::6775336538971932689::1780817886::1780818785::1::::<><><>0<>0<>a6cb1279737859a6ba075496bd1fc34e<>res://.godot/imported/ataque_varilla.png-83c7351220749064b3dc721eb587128e.ctex::
 caminar derecha.png::CompressedTexture2D::8908893780847280729::1780784527::1780784527::1::::<><><>0<>0<>eb66bbdcab358e17519692d5d4fa7532<>res://.godot/imported/caminar derecha.png-aa2902f811ecc35101793d65158f3235.ctex::
 correr derecha.png::CompressedTexture2D::4382056143665002810::1780784527::1780784527::1::::<><><>0<>0<>623b4eb3568ebd268001d652b86298ed<>res://.godot/imported/correr derecha.png-59c297bd5ad5a4a3403860816cbb1d8c.ctex::
 dash2d.png::CompressedTexture2D::9165364142726597242::1780784833::1780785143::1::::<><><>0<>0<>e816faa2a3883941c9dbf36e58d5b177<>res://.godot/imported/dash2d.png-7fe35e29c270ff531019991283ceeec2.ctex::
 De frente.png::CompressedTexture2D::7736013720556945901::1780784527::1780784527::1::::<><><>0<>0<>5ecbf01a9d1e3a1d8218d2630b7c6ed7<>res://.godot/imported/De frente.png-1b7b71d627025aa1ba3f139010b5e787.ctex::
 Respiracion y parpadeo.png::CompressedTexture2D::6618464331293643647::1780784527::1780784527::1::::<><><>0<>0<>4bb9d5d8418d4f17081fefbdbd3af731<>res://.godot/imported/Respiracion y parpadeo.png-0aa8525fc150136fa7dafabafbc2b96d.ctex::
 Salto caminando derecha.png::CompressedTexture2D::8739351626912798542::1780784527::1780784527::1::::<><><>0<>0<>f7e157bd1537c78a324f3b812e45bb52<>res://.godot/imported/Salto caminando derecha.png-d205a0cf22efacbd9ed48da8a74bcfce.ctex::
+water_projectile.png::CompressedTexture2D::8754845555613570592::1612718090::1780820909::1::::<><><>0<>0<>d270b756129ca3dc545c626ae19f9194<>res://.godot/imported/water_projectile.png-7eedbd825cc868529ac669f15c64b12d.ctex::
 ::res://assets/nino_02/::1780784527
 boy_school_clean_crouch_sheet.png::CompressedTexture2D::6748486852220012526::1780784527::1780784527::1::::<><><>0<>0<>c69edb36ce57188b3ad012215e0de400<>res://.godot/imported/boy_school_clean_crouch_sheet.png-922f4930c071186a8a41b8a461d4424a.ctex::
 boy_school_clean_idle_front.png::CompressedTexture2D::6538337343892805972::1780784527::1780784527::1::::<><><>0<>0<>d97f96ad3590d545d6e16c61c75de375<>res://.godot/imported/boy_school_clean_idle_front.png-7370d396721c59c38f31a973a95eb8e7.ctex::
@@ -184,13 +192,14 @@ hide_icon.png::CompressedTexture2D::1614088407037014767::1780799898::1780800950:
 out_icon.png::CompressedTexture2D::689504566782862138::1780799894::1780800950::1::::<><><>0<>0<>c5e3506c2c5c24f92ca429d92b423dfa<>res://.godot/imported/out_icon.png-84528739b66c6410fff3e89da668b312.ctex::
 ::res://Autoloads/::1780789478
 Game_manager.gd::GDScript::1523131296937566430::1780789478::0::1::::<>Node<><>0<>0<><>::
-::res://code/::1780813386
+::res://code/::1780824327
 .gitkeep.txt::TextFile::-1::1780700432::0::1::::<><><>0<>0<><>::
 bathroom_mirror_interactable.gd::GDScript::3693670882451309521::1780800974::0::1::::<>Area2D<><>0<>0<><>::
 bathroom_stealth_level.gd::GDScript::554583828794009459::1780802467::0::1::::<>Node<><>0<>0<><>::
+battle_entropy_controller.gd::GDScript::6501078689769932388::1780824327::0::1::::<>Node<><>0<>0<><>::
 battle_level.gd::GDScript::2601586297707130141::1780784528::0::1::::<>Node2D<><>0<>0<><>::
-boss_projectile.gd::GDScript::632813179218082074::1780784528::0::1::::BossProjectile<>CharacterBody2D<><>0<>0<><>::
-boss_robot.gd::GDScript::60001653974916984::1780784528::0::1::::BossRobot<>CharacterBody2D<><>0<>0<><>::
+boss_projectile.gd::GDScript::632813179218082074::1780822487::0::1::::BossProjectile<>CharacterBody2D<><>0<>0<><>::
+boss_robot.gd::GDScript::60001653974916984::1780824360::0::1::::BossRobot<>CharacterBody2D<><>0<>0<><>::
 classroom_action_interactable.gd::GDScript::556146544507576006::1780811025::0::1::::<>Area2D<><>0<>0<><>::
 classroom_interactable.gd::GDScript::1702258146020302377::1780811038::0::1::::<>Area2D<><>0<>0<><>::
 classroom_npc.gd::GDScript::517832371515272546::1780809571::0::1::::<>CharacterBody2D<><>0<>0<><>::
@@ -203,8 +212,10 @@ main_character.gd::GDScript::1493430342389178501::1780784528::0::1::::MainCharac
 main_manu.gd::GDScript::1756096805680731975::1780813386::0::1::::<>Node2D<><>0<>0<><>::
 pattern.gd::GDScript::4484597135049432967::1780813235::0::1::::<>TextureRect<><>0<>0<><>::
 player.gd::GDScript::3293446522429233936::1780797469::0::1::::<>CharacterBody2D<><>0<>0<><>::
+player_water_projectile.gd::GDScript::5917089152791305446::1780821392::0::1::::<>Area2D<><>0<>0<><>::
 projectile.gd::GDScript::3556165744545843127::1780784528::0::1::::<>CharacterBody2D<><>0<>0<><>::
 pseudo_3d_player.gd::GDScript::5418876904158761901::1780808858::0::1::::<>CharacterBody2D<><>0<>0<><>::
+robot_piece_explosive.gd::GDScript::6813201361591240095::1780824296::0::1::::<>Area2D<><>0<>0<><>::
 stealth_robot.gd::GDScript::8801106402167400216::1780813235::0::1::::<>CharacterBody2D<><>0<>0<><>::
 tanlik_ghost.gd::GDScript::3017799765916281821::1780789478::0::1::::<>Area2D<><>0<>0<><>::
 ::res://Dialogue/::1780813386
@@ -216,28 +227,29 @@ balloon.tscn::PackedScene::3499252440488638315::1780789542::0::1::::<><><>0<>0<>
 Candy.dialogue::Resource::7415641063881877905::1780808874::1780809315::1::::<><><>0<>0<>48811833c67c242eb70b93a5d2a20efd<>res://.godot/imported/Candy.dialogue-f835c663b12dc32a7c8262edfcd966f3.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
 Dialogue1.dialogue::Resource::7921437815253383193::1780789478::1780789543::1::::<><><>0<>0<>b6d1d701a5aa7d62ca41f0639d8bbcbe<>res://.godot/imported/Dialogue1.dialogue-1f1ce79435b4c5ba12d160aac0c2383d.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
 Ellipsis.dialogue::Resource::3544547298659460743::1780808829::1780809315::1::::<><><>0<>0<>0a32b6955527a3813cd674926d06aa3a<>res://.godot/imported/Ellipsis.dialogue-1c3dc584dcef84b7b874f9c92d94105c.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
-::res://Dialogue/SceneBath/::1780813386
+::res://Dialogue/SceneBath/::1780813494
 balloon.gd::GDScript::7785739717420770577::1780813386::0::1::::<>CanvasLayer<><>0<>0<><>::
 balloon.tscn::PackedScene::2244593734196150479::1780813386::0::1::::<><><>0<>0<><>::uid://b0ejqv0b60180::::res://Dialogue/Fonts/Minecraftia-Regular.ttf<>uid://ckvgyvclnwggo::::res://addons/dialogue_manager/dialogue_label.tscn<>uid://bb52rsfwhkxbn::::res://addons/dialogue_manager/dialogue_responses_menu.gd
 Mirror.dialogue::Resource::8858163255989887912::1780813386::1780813494::1::::<><><>0<>0<>56dd8612416fa2e3c966451a55bbbd32<>res://.godot/imported/Mirror.dialogue-09be787040b1fe42abd1c7c74b964cc6.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
-::res://scenes/::1780813386
+::res://scenes/::1780823023
 .gitkeep.txt::TextFile::-1::1780700432::0::1::::<><><>0<>0<><>::
 bathroom.tscn::PackedScene::7446401380195798869::1780813386::0::1::::<><><>0<>0<><>::uid://b11afbmkdi8b6::::res://assets/stealth_icons/alert_exclamation.png<>uid://botfowc5mpjoo::::res://assets/stealth_icons/alert_question.png<>uid://bw1nkqbam7lad::::res://assets/stealth_icons/alert_target.png<>uid://b1p1guctce77b::::res://assets/bathroom/bathromok.png<>uid://d3t5qutqv8xjv::::res://assets/bathroom/bathroomsad.png<>uid://dk4g6nsqp82un::::res://Dialogue/Scene1/Dialogue1.dialogue<>uid://b38jmouk3up05::::res://assets/Exclamation.png<>uid://w842hc0bj45h::::res://assets/stealth_icons/hide_icon.png<>uid://c6nak7pravwn2::::res://assets/nino_3d/hide/hide_up.png<>uid://cpqh1t5mysatm::::res://code/hiding_spot.gd<>uid://dwqq66htnkwkr::::res://assets/nino_3d/nino_idle_down.png<>uid://cyrswrbm5ahj8::::res://assets/nino_3d/nino_idle_side.png<>uid://b1hlkrph2sfwv::::res://assets/nino_3d/nino_idle_up.png<>uid://h5v6dk2bqwi2::::res://code/bathroom_stealth_level.gd<>uid://bsvihqckp76iv::::res://code/bathroom_mirror_interactable.gd<>uid://j3ablvut4h3o::::res://assets/stealth_icons/out_icon.png<>uid://cjg7d1g7tksc8::::res://code/pseudo_3d_player.gd<>uid://cri8cg0iin0du::::res://assets/Robot1/idle_down.png<>uid://bbiry37boyb3a::::res://assets/Robot1/idle_up.png<>uid://dxnk63xtsf0rk::::res://code/stealth_robot.gd<>uid://bvksb3q0ss3hx::::res://assets/Robot1/walk_down.png<>uid://buewbokfaeqch::::res://assets/Robot1/ascenso_down.png<>uid://bvt3h6iej37eh::::res://assets/Robot1/walk_up.png<>uid://2yummbox3vfi::::res://assets/nino_3d/nino_run_down.png<>uid://mb5lnbwv6mec::::res://assets/nino_3d/nino_run_side.png<>uid://b5fjagmv3daga::::res://assets/nino_3d/nino_run_up.png<>uid://cjjy22qujbo8e::::res://assets/nino_3d/hide/unhide_down.png<>uid://qyd752wh20kv::::res://assets/nino_3d/nino_walk_down.png<>uid://dcbo70rh102m4::::res://assets/nino_3d/nino_walk_side.png<>uid://bvblafsjrad8e::::res://assets/nino_3d/nino_walk_up.png
-battle_test.tscn::PackedScene::-1::1780784529::0::1::::<><><>0<>0<><>::
+battle_test.tscn::PackedScene::729056479392610245::1780823386::0::1::::<><><>0<>0<><>::uid://dpka17h4qu8tg::::res://assets/cocina2d.png<>uid://onq1isncll25::::res://assets/nino_01/Agacharse derecha.png<>uid://d3t1hc4fjtivi::::res://assets/nino_01/dash2d.png<>uid://c1kbe1q3kcgqx::::res://assets/nino_01/Respiracion y parpadeo.png<>uid://dwrn3ygwkhpo5::::res://assets/nino_01/Salto caminando derecha.png<>uid://5x2ebhjgn35i::::res://playerMovement.gd<>uid://c3sa2kfqu27m8::::res://assets/nino_01/ataque_varilla.png<>uid://b3ox3bctig4je::::res://assets/nino_01/correr derecha.png<>uid://dy6sgc5bhmxw8::::res://assets/nino_01/caminar derecha.png<>uid://cd5up57cd2fng::::res://assets/nino_01/ataque_agua.png<>uid://bydk8l453qugk::::res://scenes/robot_01_boss.tscn<>res://scenes/robot_02_boss.tscn
 classroom.tscn::PackedScene::451236529966658091::1780813092::0::1::::<><><>0<>0<><>::uid://brdbaolnhy8uy::::res://assets/classroom/classroom_background.jpg<>uid://h6nwgdloptpe::::res://code/classroom_action_interactable.gd<>uid://ddwgr31ausx0t::::res://Dialogue/Scene1/Candy.dialogue<>uid://fyr2lxqs0k4i::::res://assets/classroom/classroom_sad.png<>uid://dk4g6nsqp82un::::res://Dialogue/Scene1/Dialogue1.dialogue<>uid://bqraf8vfw7qtb::::res://Dialogue/Scene1/Ellipsis.dialogue<>uid://cri7lm42hmygh::::res://assets/classroom/entropia_icon.png<>uid://b38jmouk3up05::::res://assets/Exclamation.png<>uid://cyktcad5toejn::::res://assets/nina/girl_idle_down.png<>uid://r26atl3rjtl1::::res://assets/nina/girl_idle_side.png<>uid://yibuh8idsysu::::res://assets/nina/girl_idle_up.png<>uid://hm3vg1e8ahfm::::res://code/classroom_npc.gd<>uid://3cwxy1731tmq::::res://assets/nina/girl_walk_down.png<>uid://u1bnocca7jxu::::res://assets/nina/girl_walk_side.png<>uid://btth6w24xqqs2::::res://assets/nina/girl_walk_up.png<>uid://dwqq66htnkwkr::::res://assets/nino_3d/nino_idle_down.png<>uid://cyrswrbm5ahj8::::res://assets/nino_3d/nino_idle_side.png<>uid://b1hlkrph2sfwv::::res://assets/nino_3d/nino_idle_up.png<>uid://yit7ccf77r7f::::res://code/classroom_interactable.gd<>uid://dmrp8j7r2gyhp::::res://assets/classroom/photo.png<>uid://cjg7d1g7tksc8::::res://code/pseudo_3d_player.gd<>uid://2yummbox3vfi::::res://assets/nino_3d/nino_run_down.png<>uid://mb5lnbwv6mec::::res://assets/nino_3d/nino_run_side.png<>uid://b5fjagmv3daga::::res://assets/nino_3d/nino_run_up.png<>uid://1p5autyn8un3::::res://code/classroom_scene_controller.gd<>uid://qyd752wh20kv::::res://assets/nino_3d/nino_walk_down.png<>uid://dcbo70rh102m4::::res://assets/nino_3d/nino_walk_side.png<>uid://bvblafsjrad8e::::res://assets/nino_3d/nino_walk_up.png
 dialogue_test.tscn::PackedScene::4238021904395587386::1780797683::0::1::::<><><>0<>0<><>::uid://c8a8qje6k074x::::res://code/level.gd<>uid://djq3pfyl0vosl::::res://assets/00032.png<>uid://dxblhflhcclge::::res://assets/world_tileset.png<>uid://djm4jjhyjssjb::::res://scenes/test_character.tscn<>uid://cft0u0g3ggpvp::::res://scenes/dik.tscn
 dik.tscn::PackedScene::5164563727233803173::1780784616::0::1::::<><><>0<>0<><>::
 fantasma.tscn::PackedScene::9050633440183148526::1780784537::0::1::::<><><>0<>0<><>::uid://dj50phf2desag::::res://assets/fantasma/IDLE.png<>uid://c70a8cancb6a7::::res://assets/fantasma/move.png<>uid://66grh36iqm00::::res://assets/fantasma/up_down.png<>uid://dg3vayl1jg6b3::::res://assets/fantasma/shoot.png<>uid://bbwwuilq1hjne::::res://code/ghost.gd
 find_in_files.tscn::PackedScene::9027765392847093779::1780785193::0::1::::<><><>0<>0<><>::
-main_manu.tscn::PackedScene::3439663421579230708::1780813235::0::1::::<><><>0<>0<><>::
+main_manu.tscn::PackedScene::3439663421579230708::1780813494::0::1::::<><><>0<>0<><>::
 nino_01.tscn::PackedScene::5637696322461267736::1780784927::0::1::::<><><>0<>0<><>::
 nino_02.tscn::PackedScene::5415623761943937542::1780784616::0::1::::<><><>0<>0<><>::
 node_2d.tscn::PackedScene::7683240241585204722::1780785208::0::1::::<><><>0<>0<><>::res://code/characters/legacy_player/playerMovement.gd<>res://assets/characters/nino_01/Respiracion y parpadeo.png<>res://assets/characters/nino_01/Salto caminando derecha.png<>res://assets/characters/nino_01/correr derecha.png<>res://assets/characters/nino_01/Agacharse derecha.png<>res://assets/characters/nino_01/caminar derecha.png
 pelea_test.tscn::PackedScene::6305075728286041684::1780784537::0::1::::<><><>0<>0<><>::uid://dxblhflhcclge::::res://assets/world_tileset.png<>uid://djq3pfyl0vosl::::res://assets/00032.png<>uid://djm4jjhyjssjb::::res://scenes/test_character.tscn<>uid://d17gu0w7uhgvu::::res://scenes/fantasma.tscn<>uid://c8a8qje6k074x::::res://code/level.gd
+player_water_projectile.tscn::PackedScene::-1::1780821474::0::1::::<><><>0<>0<><>::res://assets/nino_01/water_projectile.png<>res://code/player_water_projectile.gd
 proyectil.tscn::PackedScene::2561851713189658014::1780784537::0::1::::<><><>0<>0<><>::uid://uoog2t7sfn53::::res://assets/fantasma/misil.png<>uid://bqwvsa77vua3p::::res://code/projectile.gd
 pseudo_3d_test.tscn::PackedScene::6535683405365933812::1780785215::0::1::::<><><>0<>0<><>::res://assets/levels/battle/00032.png<>res://code/characters/pseudo_3d_player.gd<>res://assets/characters/nino_3d/nino_idle_down.png<>res://assets/characters/nino_3d/nino_walk_down.png<>res://assets/characters/nino_3d/nino_run_down.png<>res://assets/characters/nino_3d/nino_idle_up.png<>res://assets/characters/nino_3d/nino_walk_up.png<>res://assets/characters/nino_3d/nino_run_up.png<>res://assets/characters/nino_3d/nino_idle_side.png<>res://assets/characters/nino_3d/nino_walk_side.png<>res://assets/characters/nino_3d/nino_run_side.png
 robot_01_boss.tscn::PackedScene::4077812789351895782::1780784616::0::1::::<><><>0<>0<><>::
-robot_02_boss.tscn::PackedScene::-1::1780784537::0::1::::<><><>0<>0<><>::
+robot_02_boss.tscn::PackedScene::-1::1780815175::0::1::::<><><>0<>0<><>::
 robot_02_projectile_soft.tscn::PackedScene::-1::1780784529::0::1::::<><><>0<>0<><>::
 robot_02_projectile_strong.tscn::PackedScene::-1::1780784529::0::1::::<><><>0<>0<><>::
 scroll.gdshader::Shader::3296498180209140818::1780813235::0::1::::<><><>0<>0<><>::

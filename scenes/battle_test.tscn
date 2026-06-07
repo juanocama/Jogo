@@ -1,21 +1,78 @@
-[gd_scene format=3 uid="uid://battle_test_player_movement"]
+[gd_scene format=3 uid="uid://knfpoqgpreo8"]
 
-[ext_resource type="Texture2D" path="res://assets/nino_01/Respiracion y parpadeo.png" id="player_idle"]
-[ext_resource type="Script" path="res://playerMovement.gd" id="player_movement"]
-[ext_resource type="Texture2D" path="res://assets/nino_01/Salto caminando derecha.png" id="player_jump"]
-[ext_resource type="Texture2D" path="res://assets/nino_01/correr derecha.png" id="player_run"]
-[ext_resource type="Texture2D" path="res://assets/nino_01/Agacharse derecha.png" id="player_crouch"]
-[ext_resource type="Texture2D" path="res://assets/nino_01/caminar derecha.png" id="player_walk"]
-[ext_resource type="Texture2D" path="res://assets/00032.png" id="bg"]
-[ext_resource type="PackedScene" path="res://scenes/robot_01_boss.tscn" id="robot01"]
+[ext_resource type="Texture2D" uid="uid://dpka17h4qu8tg" path="res://assets/cocina2d.png" id="bg"]
+[ext_resource type="Texture2D" uid="uid://onq1isncll25" path="res://assets/nino_01/Agacharse derecha.png" id="player_crouch"]
+[ext_resource type="Texture2D" uid="uid://d3t1hc4fjtivi" path="res://assets/nino_01/dash2d.png" id="player_dash"]
+[ext_resource type="Texture2D" uid="uid://c1kbe1q3kcgqx" path="res://assets/nino_01/Respiracion y parpadeo.png" id="player_idle"]
+[ext_resource type="Texture2D" uid="uid://dwrn3ygwkhpo5" path="res://assets/nino_01/Salto caminando derecha.png" id="player_jump"]
+[ext_resource type="Script" uid="uid://5x2ebhjgn35i" path="res://playerMovement.gd" id="player_movement"]
+[ext_resource type="Texture2D" uid="uid://c3sa2kfqu27m8" path="res://assets/nino_01/ataque_varilla.png" id="player_rod_attack"]
+[ext_resource type="Texture2D" uid="uid://b3ox3bctig4je" path="res://assets/nino_01/correr derecha.png" id="player_run"]
+[ext_resource type="Texture2D" uid="uid://dy6sgc5bhmxw8" path="res://assets/nino_01/caminar derecha.png" id="player_walk"]
+[ext_resource type="Texture2D" uid="uid://cd5up57cd2fng" path="res://assets/nino_01/ataque_agua.png" id="player_water_attack"]
+[ext_resource type="PackedScene" uid="uid://bydk8l453qugk" path="res://scenes/robot_01_boss.tscn" id="robot01"]
 [ext_resource type="PackedScene" path="res://scenes/robot_02_boss.tscn" id="robot02"]
+[ext_resource type="PackedScene" path="res://scenes/robot_piece_explosive.tscn" id="robot_piece_scene"]
+[ext_resource type="Texture2D" path="res://assets/battle/robot_piece_1.png" id="robot_piece_1"]
+[ext_resource type="Texture2D" path="res://assets/battle/robot_piece_2.png" id="robot_piece_2"]
+[ext_resource type="Texture2D" path="res://assets/battle/entropy_icon.png" id="entropy_icon"]
+[ext_resource type="Script" path="res://code/battle_entropy_controller.gd" id="entropy_controller_script"]
+
+[sub_resource type="RectangleShape2D" id="FloorShape"]
+size = Vector2(1672, 34)
+
+[sub_resource type="RectangleShape2D" id="WallShape"]
+size = Vector2(32, 723)
+
+[sub_resource type="RectangleShape2D" id="CeilingShape"]
+size = Vector2(1672, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_05x41"]
 size = Vector2(24, 70)
 
+[sub_resource type="Animation" id="Animation_dash_player"]
+resource_name = "Dash"
+length = 0.24
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("player_dash")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.08, 0.12, 0.16, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [sub_resource type="Animation" id="Animation_gqbix"]
 resource_name = "Fall"
-length = 0.2
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -47,15 +104,15 @@ tracks/2/path = NodePath("Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.16666667),
+"times": PackedFloat32Array(0, 0.1, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [3, 2, 4]
+"values": [3, 4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_oysan"]
 resource_name = "Jump"
-length = 0.16666667
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -87,10 +144,10 @@ tracks/2/path = NodePath("Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.033333335, 0.06666667),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [1, 2]
+"values": [0, 1, 2]
 }
 
 [sub_resource type="Animation" id="Animation_sb2pt"]
@@ -132,6 +189,46 @@ tracks/2/keys = {
 "values": [1]
 }
 
+[sub_resource type="Animation" id="Animation_rod_attack_player"]
+resource_name = "RodAttack"
+length = 0.34
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("player_rod_attack")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.056, 0.112, 0.168, 0.224, 0.28),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [sub_resource type="Animation" id="Animation_0t07s"]
 resource_name = "Run"
 length = 0.5
@@ -171,6 +268,46 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_water_attack_player"]
+resource_name = "WaterAttack"
+length = 0.28
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("player_water_attack")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.07, 0.14, 0.21),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
 }
 
 [sub_resource type="Animation" id="Animation_6qsgm"]
@@ -297,60 +434,126 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2wwcf"]
 _data = {
+&"Dash": SubResource("Animation_dash_player"),
 &"Fall": SubResource("Animation_gqbix"),
 &"Jump": SubResource("Animation_oysan"),
 &"RESET": SubResource("Animation_sb2pt"),
+&"RodAttack": SubResource("Animation_rod_attack_player"),
 &"Run": SubResource("Animation_0t07s"),
+&"WaterAttack": SubResource("Animation_water_attack_player"),
 &"agcharse": SubResource("Animation_6qsgm"),
 &"idle": SubResource("Animation_ooc2g"),
 &"walk": SubResource("Animation_71pa8")
 }
 
-[sub_resource type="RectangleShape2D" id="FloorShape"]
-size = Vector2(2000, 28)
+[node name="battle_test" type="Node2D" unique_id=1860815070]
 
-[node name="battle_test" type="Node2D"]
-
-[node name="background" type="Sprite2D" parent="."]
-position = Vector2(0, -120)
-scale = Vector2(0.55, 0.55)
+[node name="background" type="Sprite2D" parent="." unique_id=662020810]
 texture = ExtResource("bg")
 
-[node name="Floor" type="StaticBody2D" parent="."]
+[node name="SceneCamera" type="Camera2D" parent="." unique_id=288414669]
+ignore_rotation = false
+zoom = Vector2(0.68, 0.68)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(0, 96)
+[node name="Floor" type="StaticBody2D" parent="." unique_id=840281628]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1336632486]
+position = Vector2(0, 329)
 shape = SubResource("FloorShape")
 
-[node name="floor_visual" type="Polygon2D" parent="."]
-position = Vector2(0, 96)
-polygon = PackedVector2Array(-1000, -14, 1000, -14, 1000, 14, -1000, 14)
-color = Color(0.19, 0.14, 0.12, 1)
+[node name="floor_visual" type="Polygon2D" parent="." unique_id=710481669]
+position = Vector2(0, 329)
+color = Color(0.4, 0.322, 0.306, 1)
+polygon = PackedVector2Array(-836, -17, 836, -17, 836, 17, -836, 17)
 
-[node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(-260, 82)
+[node name="Bounds" type="StaticBody2D" parent="." unique_id=1514968827]
+
+[node name="LeftWall" type="CollisionShape2D" parent="Bounds" unique_id=717706102]
+position = Vector2(-852, 0)
+shape = SubResource("WallShape")
+
+[node name="RightWall" type="CollisionShape2D" parent="Bounds" unique_id=1661006820]
+position = Vector2(852, 0)
+shape = SubResource("WallShape")
+
+[node name="Ceiling" type="CollisionShape2D" parent="Bounds" unique_id=634531355]
+position = Vector2(0, -378)
+shape = SubResource("CeilingShape")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1021648947]
+
+[node name="HeartsLabel" type="Label" parent="HUD" unique_id=994523140]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 360.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.95, 0.08, 0.08, 1)
+theme_override_font_sizes/font_size = 42
+text = "♥ ♥ ♥ ♥ ♥"
+
+[node name="EntropyIcon" type="TextureRect" parent="HUD"]
+visible = false
+offset_left = 372.0
+offset_top = 16.0
+offset_right = 436.0
+offset_bottom = 80.0
+texture = ExtResource("entropy_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=92573699]
+position = Vector2(-560, 313)
 script = ExtResource("player_movement")
 
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-position = Vector2(0, -52)
-scale = Vector2(0.36, 0.36)
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1161472910]
+position = Vector2(0, -72)
+scale = Vector2(0.576, 0.576)
 texture = ExtResource("player_idle")
 hframes = 6
 frame = 1
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1932644733]
 position = Vector2(0, -52)
+enabled = false
 zoom = Vector2(2, 2)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(0, -35)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=530888649]
+position = Vector2(2, -75)
+scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_05x41")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player" unique_id=1049132025]
 libraries/ = SubResource("AnimationLibrary_2wwcf")
 
-[node name="robot_01_boss" parent="." instance=ExtResource("robot01")]
+[node name="robot_01_boss" parent="." unique_id=1395932144 instance=ExtResource("robot01")]
+process_mode = 4
+visible = false
 position = Vector2(220, -130)
 
-[node name="robot_02_boss" parent="." instance=ExtResource("robot02")]
-position = Vector2(430, 87)
+[node name="robot_02_boss" parent="." unique_id=257800392 instance=ExtResource("robot02")]
+position = Vector2(523, 305)
+scale = Vector2(1.65, 1.65)
+max_health = 800
+damage_enabled = true
+speed = 95.0
+dash_speed = 285.0
+dash_cooldown = 2.6
+shoot_cooldown = 1.65
+shoot_delay = 0.28
+slam_cooldown = 3.8
+robot_piece_scene = ExtResource("robot_piece_scene")
+robot_piece_textures = Array[Texture2D]([ExtResource("robot_piece_1"), ExtResource("robot_piece_2")])
+
+[node name="HealthBar" type="ProgressBar" parent="robot_02_boss" unique_id=641079073]
+offset_left = -70.0
+offset_top = -128.0
+offset_right = 70.0
+offset_bottom = -114.0
+show_percentage = false
+
+[node name="EntropyController" type="Node" parent="."]
+script = ExtResource("entropy_controller_script")
+boss_path = NodePath("../robot_02_boss")
+player_path = NodePath("../Player")
+camera_path = NodePath("../SceneCamera")
+entropy_icon_path = NodePath("../HUD/EntropyIcon")

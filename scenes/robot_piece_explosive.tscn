@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/battle/robot_piece_1.png" id="texture"]
+[ext_resource type="Script" path="res://code/robot_piece_explosive.gd" id="script"]
+
+[sub_resource type="CircleShape2D" id="ExplosionShape"]
+radius = 92.0
+
+[node name="robot_piece_explosive" type="Area2D"]
+script = ExtResource("script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 18
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("texture")
+hframes = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("ExplosionShape")
