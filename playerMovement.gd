@@ -15,18 +15,21 @@ const DASH_DURATION: float = 0.24
 const DASH_IMPULSE_DISTANCE: float = 22.0
 const DASH_DOUBLE_TAP_WINDOW: float = 0.28
 const ROD_ATTACK_DURATION: float = 0.34
-const ROD_ATTACK_DAMAGE_PERCENT: float = 0.10
+const ROD_ATTACK_DAMAGE_PERCENT: float = 0.06
+const ROD_ATTACK_COOLDOWN: float = 0.55
 const ROD_ATTACK_RANGE: float = 120.0
 const ROD_ATTACK_HEIGHT: float = 90.0
 const WATER_ATTACK_DURATION: float = 0.28
 const WATER_PROJECTILE_DAMAGE_PERCENT: float = 0.02
-const WATER_ATTACK_COOLDOWN: float = 0.65
+const WATER_ATTACK_COOLDOWN: float = 0.5
 const WATER_PROJECTILE_OFFSET: Vector2 = Vector2(84.0, -52.0)
 const WATER_PROJECTILE_SCENE: PackedScene = preload("res://scenes/player_water_projectile.tscn")
 const MAX_HEARTS: int = 5
 const DAMAGE_INVULNERABILITY_TIME: float = 0.9
 const HEART_FULL: String = "\u2665"
 const HEART_EMPTY: String = "\u2661"
+
+@export var sprite_scale_multiplier: float = 1.0
 
 @onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 @onready var sprite2D: Sprite2D = $Sprite2D
@@ -40,6 +43,7 @@ var hearts: int = MAX_HEARTS
 var damage_invulnerability_timer: float = 0.0
 var dash_timer: float = 0.0
 var attack_timer: float = 0.0
+var rod_attack_cooldown_timer: float = 0.0
 var water_attack_cooldown_timer: float = 0.0
 var entropy_delay_timer: float = 0.0
 var entropy_delay_seconds: float = 0.0
@@ -92,6 +96,8 @@ func _physics_process(delta: float) -> void:
 func _update_action_timers(delta: float) -> void:
 	if damage_invulnerability_timer > 0.0:
 		damage_invulnerability_timer -= delta
+	if rod_attack_cooldown_timer > 0.0:
+		rod_attack_cooldown_timer -= delta
 	if water_attack_cooldown_timer > 0.0:
 		water_attack_cooldown_timer -= delta
 
@@ -174,8 +180,9 @@ func _handle_attack_input() -> void:
 	if dash_timer > 0.0 or attack_timer > 0.0:
 		return
 
-	if left_mouse_just_pressed:
+	if left_mouse_just_pressed and rod_attack_cooldown_timer <= 0.0:
 		_start_attack(&"RodAttack", ROD_ATTACK_DURATION)
+		rod_attack_cooldown_timer = ROD_ATTACK_COOLDOWN
 	elif right_mouse_just_pressed and water_attack_cooldown_timer <= 0.0:
 		_start_attack(&"WaterAttack", WATER_ATTACK_DURATION)
 		water_attack_cooldown_timer = WATER_ATTACK_COOLDOWN
@@ -274,24 +281,24 @@ func _update_animation() -> void:
 		return
 
 	if dash_timer > 0.0:
-		_set_sprite_scale(DASH_SPRITE_SCALE)
+		_set_sprite_scale(DASH_SPRITE_SCALE * sprite_scale_multiplier)
 		_play_animation("Dash")
 		return
 
 	if attack_timer > 0.0:
-		_set_sprite_scale(ATTACK_SPRITE_SCALE)
+		_set_sprite_scale(ATTACK_SPRITE_SCALE * sprite_scale_multiplier)
 		_play_animation(active_attack_animation)
 		return
 
 	if not is_on_floor():
-		_set_sprite_scale(AIR_SPRITE_SCALE)
+		_set_sprite_scale(AIR_SPRITE_SCALE * sprite_scale_multiplier)
 		if velocity.y < 0.0:
 			_play_animation("Jump")
 		else:
 			_play_animation("Fall")
 		return
 
-	_set_sprite_scale(NORMAL_SPRITE_SCALE)
+	_set_sprite_scale(NORMAL_SPRITE_SCALE * sprite_scale_multiplier)
 	if abs(velocity.x) > 1.0:
 		_play_animation("Run")
 	else:
@@ -349,7 +356,7 @@ func _start_attack(animation_name: StringName, duration: float) -> void:
 	if animation_name == &"WaterAttack":
 		_spawn_water_projectile()
 		water_shot_spawned = true
-	_set_sprite_scale(ATTACK_SPRITE_SCALE)
+	_set_sprite_scale(ATTACK_SPRITE_SCALE * sprite_scale_multiplier)
 
 
 func _spawn_water_projectile() -> void:
@@ -381,12 +388,48 @@ func _damage_bosses_with_rod() -> void:
 			continue
 
 		var boss_2d: Node2D = boss as Node2D
-		var to_boss: Vector2 = boss_2d.global_position - global_position
-		var in_front: bool = sign(to_boss.x) == facing_direction or abs(to_boss.x) < 8.0
-		if in_front and abs(to_boss.x) <= ROD_ATTACK_RANGE and abs(to_boss.y) <= ROD_ATTACK_HEIGHT:
+		if _is_boss_in_rod_range(boss_2d):
 			var max_health_value: int = int(boss.get("max_health"))
 			var damage: int = maxi(1, int(round(float(max_health_value) * ROD_ATTACK_DAMAGE_PERCENT)))
 			boss.call("take_damage", damage, self)
+
+
+func _is_boss_in_rod_range(boss: Node2D) -> bool:
+	var boss_rect: Rect2 = _get_boss_collision_rect(boss)
+	if boss_rect.size == Vector2.ZERO:
+		var to_boss: Vector2 = boss.global_position - global_position
+		var in_front_fallback: bool = sign(to_boss.x) == facing_direction or abs(to_boss.x) < 8.0
+		return in_front_fallback and abs(to_boss.x) <= ROD_ATTACK_RANGE and abs(to_boss.y) <= ROD_ATTACK_HEIGHT
+
+	var closest_x: float = clampf(global_position.x, boss_rect.position.x, boss_rect.end.x)
+	var closest_y: float = clampf(global_position.y, boss_rect.position.y, boss_rect.end.y)
+	var to_body: Vector2 = Vector2(closest_x, closest_y) - global_position
+	var in_front: bool = sign(to_body.x) == facing_direction or abs(to_body.x) < 16.0
+	return in_front and abs(to_body.x) <= ROD_ATTACK_RANGE and abs(to_body.y) <= ROD_ATTACK_HEIGHT
+
+
+func _get_boss_collision_rect(boss: Node2D) -> Rect2:
+	var collision_shape: CollisionShape2D = boss.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if collision_shape == null or not (collision_shape.shape is RectangleShape2D):
+		return Rect2(boss.global_position, Vector2.ZERO)
+
+	var rect_shape: RectangleShape2D = collision_shape.shape as RectangleShape2D
+	var half_size: Vector2 = rect_shape.size * 0.5
+	var corners: Array[Vector2] = [
+		Vector2(-half_size.x, -half_size.y),
+		Vector2(half_size.x, -half_size.y),
+		Vector2(half_size.x, half_size.y),
+		Vector2(-half_size.x, half_size.y),
+	]
+	var min_point: Vector2 = collision_shape.global_transform * corners[0]
+	var max_point: Vector2 = min_point
+	for index: int in range(1, corners.size()):
+		var global_corner: Vector2 = collision_shape.global_transform * corners[index]
+		min_point.x = minf(min_point.x, global_corner.x)
+		min_point.y = minf(min_point.y, global_corner.y)
+		max_point.x = maxf(max_point.x, global_corner.x)
+		max_point.y = maxf(max_point.y, global_corner.y)
+	return Rect2(min_point, max_point - min_point)
 
 
 func _update_previous_dash_inputs() -> void:

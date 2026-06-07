@@ -1,0 +1,656 @@
+[gd_scene format=3 uid="uid://dih3v4r2u25tm"]
+
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/fondo_final.png" id="1_2s03c"]
+[ext_resource type="Texture2D" uid="uid://bk7eo7rd4calp" path="res://assets/battle/entropy_icon.png" id="2_hvrli"]
+[ext_resource type="Script" uid="uid://5x2ebhjgn35i" path="res://playerMovement.gd" id="3_pux4o"]
+[ext_resource type="Texture2D" uid="uid://c1kbe1q3kcgqx" path="res://assets/nino_01/Respiracion y parpadeo.png" id="4_sf2b8"]
+[ext_resource type="Texture2D" uid="uid://d3t1hc4fjtivi" path="res://assets/nino_01/dash2d.png" id="5_4k5sx"]
+[ext_resource type="Texture2D" uid="uid://dwrn3ygwkhpo5" path="res://assets/nino_01/Salto caminando derecha.png" id="6_fnjty"]
+[ext_resource type="Texture2D" uid="uid://c3sa2kfqu27m8" path="res://assets/nino_01/ataque_varilla.png" id="7_w0oye"]
+[ext_resource type="Texture2D" uid="uid://b3ox3bctig4je" path="res://assets/nino_01/correr derecha.png" id="8_rf824"]
+[ext_resource type="Texture2D" uid="uid://cd5up57cd2fng" path="res://assets/nino_01/ataque_agua.png" id="9_ao834"]
+[ext_resource type="Texture2D" uid="uid://onq1isncll25" path="res://assets/nino_01/Agacharse derecha.png" id="10_g573j"]
+[ext_resource type="Texture2D" uid="uid://dy6sgc5bhmxw8" path="res://assets/nino_01/caminar derecha.png" id="11_outtd"]
+[ext_resource type="PackedScene" uid="uid://bydk8l453qugk" path="res://scenes/robot_01_boss.tscn" id="12_f82qo"]
+[ext_resource type="PackedScene" path="res://scenes/final_boss.tscn" id="13_dldxc"]
+[ext_resource type="PackedScene" path="res://scenes/robot_piece_explosive.tscn" id="14_ljkxc"]
+[ext_resource type="Texture2D" uid="uid://hgetsxsushts" path="res://assets/battle/robot_piece_1.png" id="15_wk2uq"]
+[ext_resource type="Texture2D" uid="uid://bxwfumi5e8r7k" path="res://assets/battle/robot_piece_2.png" id="16_7w0yi"]
+[ext_resource type="Script" uid="uid://cyvf20r720gl5" path="res://code/battle_entropy_controller.gd" id="17_1fe4b"]
+[ext_resource type="PackedScene" path="res://scenes/robot_02_boss.tscn" id="18_robot2"]
+[ext_resource type="PackedScene" path="res://scenes/robot_02_projectile_soft.tscn" id="19_minion_projectile"]
+[ext_resource type="PackedScene" path="res://scenes/final_boss_projectile.tscn" id="20_final_projectile"]
+[ext_resource type="Script" path="res://code/final_battle_controller.gd" id="21_final_controller"]
+[ext_resource type="FontFile" path="res://Fonts/Minecraftia-Regular.ttf" id="22_boss_font"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/laser.png" id="23_laser"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/warning.png" id="24_warning"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_naranja.png" id="25_entropy_orange"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_morado.png" id="26_entropy_purple"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_verde.png" id="27_entropy_green"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_mix.png" id="28_entropy_mix"]
+
+[sub_resource type="RectangleShape2D" id="FloorShape"]
+size = Vector2(1798, 34)
+
+[sub_resource type="RectangleShape2D" id="WallShape"]
+size = Vector2(32, 750)
+
+[sub_resource type="RectangleShape2D" id="CeilingShape"]
+size = Vector2(1798, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_05x41"]
+size = Vector2(24, 70)
+
+[sub_resource type="Animation" id="Animation_dash_player"]
+resource_name = "Dash"
+length = 0.24
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_4k5sx")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.08, 0.12, 0.16, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_gqbix"]
+resource_name = "Fall"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_fnjty")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_oysan"]
+resource_name = "Jump"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_fnjty")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_sb2pt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_sf2b8")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_rod_attack_player"]
+resource_name = "RodAttack"
+length = 0.34
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_w0oye")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.056, 0.112, 0.168, 0.224, 0.28),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_0t07s"]
+resource_name = "Run"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("8_rf824")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_water_attack_player"]
+resource_name = "WaterAttack"
+length = 0.28
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_ao834")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.07, 0.14, 0.21),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_6qsgm"]
+resource_name = "agcharse"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_g573j")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_ooc2g"]
+resource_name = "idle"
+length = 0.8333333
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_sf2b8")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 0.39999998, 0.6, 0.76666665),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_71pa8"]
+resource_name = "walk"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_outtd")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.099999994, 0.19999999, 0.3, 0.46666664),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2wwcf"]
+_data = {
+&"Dash": SubResource("Animation_dash_player"),
+&"Fall": SubResource("Animation_gqbix"),
+&"Jump": SubResource("Animation_oysan"),
+&"RESET": SubResource("Animation_sb2pt"),
+&"RodAttack": SubResource("Animation_rod_attack_player"),
+&"Run": SubResource("Animation_0t07s"),
+&"WaterAttack": SubResource("Animation_water_attack_player"),
+&"agcharse": SubResource("Animation_6qsgm"),
+&"idle": SubResource("Animation_ooc2g"),
+&"walk": SubResource("Animation_71pa8")
+}
+
+[node name="final_battle" type="Node2D" unique_id=1860815070]
+
+[node name="background" type="Sprite2D" parent="." unique_id=662020810]
+z_index = -20
+position = Vector2(-150, 0)
+texture = ExtResource("1_2s03c")
+region_enabled = true
+region_rect = Rect2(0, 0, 1798, 750)
+
+[node name="EntropyBackground" type="Sprite2D" parent="."]
+visible = false
+z_index = -19
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-150, 0)
+scale = Vector2(1.01353, 0.845547)
+texture = ExtResource("25_entropy_orange")
+
+[node name="SceneCamera" type="Camera2D" parent="." unique_id=288414669]
+position = Vector2(-150, 0)
+ignore_rotation = false
+zoom = Vector2(0.54, 0.54)
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=840281628]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1336632486]
+position = Vector2(-150, 188)
+shape = SubResource("FloorShape")
+
+[node name="floor_visual" type="Polygon2D" parent="." unique_id=710481669]
+position = Vector2(-150, 188)
+color = Color(0.31, 0.31, 0.29, 0.7)
+polygon = PackedVector2Array(-899, -17, 899, -17, 899, 17, -899, 17)
+
+[node name="Bounds" type="StaticBody2D" parent="." unique_id=1514968827]
+
+[node name="LeftWall" type="CollisionShape2D" parent="Bounds" unique_id=717706102]
+position = Vector2(-1065, 0)
+shape = SubResource("WallShape")
+
+[node name="RightWall" type="CollisionShape2D" parent="Bounds" unique_id=1661006820]
+position = Vector2(765, 0)
+shape = SubResource("WallShape")
+
+[node name="Ceiling" type="CollisionShape2D" parent="Bounds" unique_id=634531355]
+position = Vector2(-150, -391)
+shape = SubResource("CeilingShape")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1021648947]
+
+[node name="HeartsLabel" type="Label" parent="HUD" unique_id=994523140]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 360.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.95, 0.08, 0.08, 1)
+theme_override_font_sizes/font_size = 42
+text = "♥ ♥ ♥ ♥ ♥"
+
+[node name="EntropyIcon" type="TextureRect" parent="HUD" unique_id=1162443085]
+visible = false
+z_index = 90
+offset_left = 224.0
+offset_top = 16.0
+offset_right = 288.0
+offset_bottom = 80.0
+texture = ExtResource("2_hvrli")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BossHealthFrame" type="ColorRect" parent="HUD"]
+offset_left = 274.0
+offset_top = 22.0
+offset_right = 878.0
+offset_bottom = 86.0
+color = Color(0.05, 0.01, 0.01, 0.92)
+
+[node name="BossHealthAccentLeft" type="ColorRect" parent="HUD"]
+offset_left = 286.0
+offset_top = 34.0
+offset_right = 322.0
+offset_bottom = 74.0
+color = Color(0.8, 0.04, 0.02, 1)
+
+[node name="BossHealthAccentRight" type="ColorRect" parent="HUD"]
+offset_left = 830.0
+offset_top = 34.0
+offset_right = 866.0
+offset_bottom = 74.0
+color = Color(0.8, 0.04, 0.02, 1)
+
+[node name="BossHealthBar" type="ProgressBar" parent="HUD"]
+offset_left = 330.0
+offset_top = 42.0
+offset_right = 822.0
+offset_bottom = 69.0
+theme_override_colors/font_color = Color(1, 0.82, 0.75, 1)
+theme_override_fonts/font = ExtResource("22_boss_font")
+theme_override_font_sizes/font_size = 14
+max_value = 4000.0
+value = 4000.0
+show_percentage = false
+
+[node name="BossHealthLabel" type="Label" parent="HUD"]
+offset_left = 332.0
+offset_top = 20.0
+offset_right = 820.0
+offset_bottom = 42.0
+theme_override_colors/font_color = Color(1, 0.22, 0.16, 1)
+theme_override_fonts/font = ExtResource("22_boss_font")
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+text = "TELON PRIME  100%"
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=92573699]
+position = Vector2(210, 172)
+script = ExtResource("3_pux4o")
+sprite_scale_multiplier = 1.14
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1161472910]
+position = Vector2(0, -72)
+scale = Vector2(0.576, 0.576)
+texture = ExtResource("4_sf2b8")
+hframes = 6
+frame = 1
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1932644733]
+position = Vector2(0, -52)
+enabled = false
+zoom = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=530888649]
+position = Vector2(2, -75)
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_05x41")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player" unique_id=1049132025]
+libraries/ = SubResource("AnimationLibrary_2wwcf")
+
+[node name="robot_01_boss" parent="." unique_id=1395932144 instance=ExtResource("12_f82qo")]
+process_mode = 4
+visible = false
+position = Vector2(220, -130)
+
+[node name="final_boss" parent="." unique_id=257800392 instance=ExtResource("13_dldxc")]
+position = Vector2(-760, 188)
+scale = Vector2(1.5, 1.5)
+max_health = 4000
+damage_enabled = true
+damage_taken_multiplier = 0.46
+ai_enabled = false
+hit_reaction_enabled = false
+speed = 0.0
+dash_speed = 0.0
+dash_cooldown = 9999.0
+shoot_cooldown = 9999.0
+shoot_delay = 0.34
+slam_cooldown = 9999.0
+robot_piece_scene = ExtResource("14_ljkxc")
+robot_piece_textures = Array[Texture2D]([ExtResource("15_wk2uq"), ExtResource("16_7w0yi")])
+
+[node name="HealthBar" type="ProgressBar" parent="final_boss" unique_id=641079073]
+visible = false
+offset_left = -110.0
+offset_top = -260.0
+offset_right = 110.0
+offset_bottom = -240.0
+show_percentage = false
+
+[node name="EntropyController" type="Node" parent="." unique_id=667925718]
+script = ExtResource("17_1fe4b")
+boss_path = NodePath("../final_boss")
+player_path = NodePath("../Player")
+camera_path = NodePath("../SceneCamera")
+entropy_icon_path = NodePath("../HUD/EntropyIcon")
+entropy_background_path = NodePath("../EntropyBackground")
+automatic_enabled = false
+delay_icon_texture = ExtResource("2_hvrli")
+invert_icon_texture = ExtResource("2_hvrli")
+flip_icon_texture = ExtResource("2_hvrli")
+delay_background_texture = ExtResource("25_entropy_orange")
+invert_background_texture = ExtResource("26_entropy_purple")
+flip_background_texture = ExtResource("27_entropy_green")
+mixed_background_texture = ExtResource("28_entropy_mix")
+
+[node name="FinalBattleController" type="Node" parent="."]
+script = ExtResource("21_final_controller")
+boss_path = NodePath("../final_boss")
+player_path = NodePath("../Player")
+entropy_controller_path = NodePath("../EntropyController")
+boss_health_bar_path = NodePath("../HUD/BossHealthBar")
+boss_health_label_path = NodePath("../HUD/BossHealthLabel")
+robot1_scene = ExtResource("12_f82qo")
+robot2_scene = ExtResource("18_robot2")
+robot1_projectile_scene = ExtResource("19_minion_projectile")
+final_projectile_scene = ExtResource("20_final_projectile")
+laser_texture = ExtResource("23_laser")
+warning_texture = ExtResource("24_warning")
