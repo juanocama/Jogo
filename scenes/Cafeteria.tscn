@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://dfxejqf4wub1i"]
+
+[ext_resource type="Script" uid="uid://cx2h8vm6i2mbm" path="res://code/Hallway_controller.tscn.gd" id="1_2m6oa"]
+[ext_resource type="Texture2D" uid="uid://bgukwmw3s8a07" path="res://assets/Cafeteria/Cafeteria bien.png" id="1_cx4al"]
+[ext_resource type="Resource" uid="uid://baqaf3c6qssyi" path="res://Dialogue/Hallway/BathDoorIn.dialogue" id="2_jadbj"]
+[ext_resource type="Script" uid="uid://cjg7d1g7tksc8" path="res://code/pseudo_3d_player.gd" id="2_mnt1w"]
+[ext_resource type="Resource" uid="uid://xoe71f1w1qbg" path="res://Dialogue/Hallway/GunPickup.dialogue" id="3_f8wn7"]
+[ext_resource type="Texture2D" uid="uid://dwqq66htnkwkr" path="res://assets/nino_3d/nino_idle_down.png" id="3_q3lkh"]
+[ext_resource type="Texture2D" uid="uid://qyd752wh20kv" path="res://assets/nino_3d/nino_walk_down.png" id="4_4uorg"]
+[ext_resource type="Resource" uid="uid://dj3leugyjqjfn" path="res://Dialogue/Hallway/Candy2.dialogue" id="4_ds4fd"]
+[ext_resource type="Texture2D" uid="uid://2yummbox3vfi" path="res://assets/nino_3d/nino_run_down.png" id="5_eji6i"]
+[ext_resource type="Texture2D" uid="uid://dvudnsv7avddy" path="res://assets/hallway/Hallway_burned.png" id="5_tstj6"]
+[ext_resource type="Texture2D" uid="uid://b1hlkrph2sfwv" path="res://assets/nino_3d/nino_idle_up.png" id="6_g1geh"]
+[ext_resource type="Texture2D" uid="uid://bvblafsjrad8e" path="res://assets/nino_3d/nino_walk_up.png" id="7_2m6oa"]
+[ext_resource type="Texture2D" uid="uid://b5fjagmv3daga" path="res://assets/nino_3d/nino_run_up.png" id="8_jadbj"]
+[ext_resource type="Texture2D" uid="uid://cyrswrbm5ahj8" path="res://assets/nino_3d/nino_idle_side.png" id="9_f8wn7"]
+[ext_resource type="Texture2D" uid="uid://dcbo70rh102m4" path="res://assets/nino_3d/nino_walk_side.png" id="10_ds4fd"]
+[ext_resource type="Texture2D" uid="uid://mb5lnbwv6mec" path="res://assets/nino_3d/nino_run_side.png" id="11_tstj6"]
+[ext_resource type="Script" uid="uid://h6nwgdloptpe" path="res://code/classroom_action_interactable.gd" id="12_tff8m"]
+[ext_resource type="Texture2D" uid="uid://bmwestplf578s" path="res://assets/star_16x16.png" id="13_1eckh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_imjmv"]
+size = Vector2(251.5, 35.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6lph5"]
+size = Vector2(408, 183.5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lpq3h"]
+height = 24.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0d17p"]
+size = Vector2(96, 56)
+
+[node name="Cafeteria" type="Node2D" unique_id=193494941]
+
+[node name="SceneController" type="Node" parent="." unique_id=93488887]
+script = ExtResource("1_2m6oa")
+bath_door_dialogue_resource = ExtResource("2_jadbj")
+gun_pickup_dialogue_resource = ExtResource("3_f8wn7")
+candy_dialogue_resource = ExtResource("4_ds4fd")
+gun_pickup_path = NodePath("../GunPickup")
+candy_pickup_path = NodePath("../Candy2")
+background_path = NodePath("../Sprite2D")
+burned_background_texture = ExtResource("5_tstj6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2075366317]
+position = Vector2(576.1968, 324.0893)
+scale = Vector2(0.8436678, 0.84351754)
+texture = ExtResource("1_cx4al")
+
+[node name="WalkableAreas" type="Node2D" parent="." unique_id=538219515]
+
+[node name="TileFloor" type="Area2D" parent="WalkableAreas" unique_id=1391052145 groups=["bathroom_walkable"]]
+position = Vector2(570.5, 476)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="WalkableAreas/TileFloor" unique_id=711674028]
+position = Vector2(-122.5, -28)
+shape = SubResource("RectangleShape2D_imjmv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/TileFloor" unique_id=256192097]
+position = Vector2(-366.5, 63.75)
+shape = SubResource("RectangleShape2D_6lph5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WalkableAreas/TileFloor" unique_id=1981223768]
+position = Vector2(373.5, 70.5)
+shape = SubResource("RectangleShape2D_6lph5")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="WalkableAreas/TileFloor" unique_id=1654370984]
+position = Vector2(125.5, -28)
+shape = SubResource("RectangleShape2D_imjmv")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="WalkableAreas/TileFloor" unique_id=1842017789]
+position = Vector2(-426.5, -28)
+shape = SubResource("RectangleShape2D_imjmv")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1933723109 groups=["players"]]
+position = Vector2(88, 464)
+script = ExtResource("2_mnt1w")
+walk_speed = 150.0
+run_speed = 220.0
+walkable_area_group = &"classroom_walkable"
+base_visual_scale = 0.54
+idle_down_texture = ExtResource("3_q3lkh")
+walk_down_texture = ExtResource("4_4uorg")
+run_down_texture = ExtResource("5_eji6i")
+idle_up_texture = ExtResource("6_g1geh")
+walk_up_texture = ExtResource("7_2m6oa")
+run_up_texture = ExtResource("8_jadbj")
+idle_side_texture = ExtResource("9_f8wn7")
+walk_side_texture = ExtResource("10_ds4fd")
+run_side_texture = ExtResource("11_tstj6")
+
+[node name="Shadow" type="Polygon2D" parent="Player" unique_id=1010421014]
+z_index = -1
+position = Vector2(0, 2)
+color = Color(0, 0, 0, 0.3)
+polygon = PackedVector2Array(-23, -5, -12, -9, 12, -9, 23, -5, 23, 5, 12, 9, -12, 9, -23, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1236446803]
+position = Vector2(0, -31)
+texture = ExtResource("3_q3lkh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1585804148]
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_lpq3h")
+
+[node name="Candy2" type="Node2D" parent="." unique_id=935084261]
+position = Vector2(1040, 440)
+scale = Vector2(0.5, 0.5)
+
+[node name="PhotoPoint" type="Area2D" parent="Candy2" unique_id=542340283 groups=["classroom_actions"]]
+script = ExtResource("12_tff8m")
+action = &"candy_2"
+
+[node name="ExclamationMark" type="Sprite2D" parent="Candy2/PhotoPoint" unique_id=1222366338]
+z_index = 1
+position = Vector2(6, -216)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("13_1eckh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Candy2/PhotoPoint" unique_id=689710735]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_0d17p")

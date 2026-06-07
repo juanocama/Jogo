@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpka17h4qu8tg"
-path="res://.godot/imported/cocina2d.png-68fe04f61ca556642179600459b0d6f2.ctex"
+uid="uid://bgukwmw3s8a07"
+path="res://.godot/imported/Cafeteria bien.png-f2aff3b53cba070e88dd3a7fad65bd50.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cocina2d.png"
-dest_files=["res://.godot/imported/cocina2d.png-68fe04f61ca556642179600459b0d6f2.ctex"]
+source_file="res://assets/Cafeteria/Cafeteria bien.png"
+dest_files=["res://.godot/imported/Cafeteria bien.png-f2aff3b53cba070e88dd3a7fad65bd50.ctex"]
 
 [params]
 
