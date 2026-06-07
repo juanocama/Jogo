@@ -451,7 +451,8 @@ func take_damage(amount: int, source: Node = null) -> void:
 		var dir: float = sign(global_position.x - source_2d.global_position.x)
 		if dir == 0.0:
 			dir = float(-facing_direction)
-		velocity.x = dir * 80.0
+		var knockback_force: float = 32.0 if source.is_in_group("player_projectiles") else 80.0
+		velocity.x = dir * knockback_force
 
 	if health <= 0:
 		_die()
@@ -500,15 +501,21 @@ func _spawn_robot_piece() -> void:
 	var piece: Node = robot_piece_scene.instantiate()
 	get_tree().current_scene.add_child(piece)
 
+	var fall_target_position: Vector2 = global_position
+	if target != null:
+		var side_offset: float = randf_range(70.0, 150.0)
+		side_offset *= -1.0 if randf() < 0.5 else 1.0
+		fall_target_position = target.global_position + Vector2(side_offset, 0.0)
+
 	if piece is Node2D:
 		var piece_2d: Node2D = piece as Node2D
-		piece_2d.global_position = (global_position + Vector2(0.0, -48.0)).round()
+		piece_2d.global_position = (fall_target_position + Vector2(0.0, -230.0)).round()
 
 	var texture: Texture2D = robot_piece_textures[next_piece_texture_index % robot_piece_textures.size()]
 	next_piece_texture_index += 1
-	var direction: int = -1 if next_piece_texture_index % 2 == 0 else 1
+	var direction: int = -1 if fall_target_position.x > global_position.x else 1
 	if piece.has_method("setup"):
-		piece.call("setup", texture, direction, global_position.y)
+		piece.call("setup", texture, direction, fall_target_position.y)
 
 
 func _update_facing(to_target: Vector2) -> void:

@@ -11,6 +11,7 @@ var direction: Vector2 = Vector2.RIGHT
 
 
 func _ready() -> void:
+	add_to_group("player_projectiles")
 	body_entered.connect(_on_body_entered)
 	direction = direction.normalized()
 	if direction == Vector2.ZERO:
@@ -20,7 +21,10 @@ func _ready() -> void:
 	if anim_player != null and anim_player.has_animation(&"fly"):
 		anim_player.play(&"fly")
 
-	await get_tree().create_timer(lifetime).timeout
+	var tree: SceneTree = get_tree()
+	if tree == null:
+		return
+	await tree.create_timer(lifetime).timeout
 	if is_inside_tree():
 		queue_free()
 
