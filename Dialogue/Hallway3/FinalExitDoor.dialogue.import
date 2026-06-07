@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b2konqtlyat5h"
+path="res://.godot/imported/FinalExitDoor.dialogue-8d8edeaf4249f15ac1074929e764984b.tres"
+
+[deps]
+
+source_file="res://Dialogue/Hallway3/FinalExitDoor.dialogue"
+dest_files=["res://.godot/imported/FinalExitDoor.dialogue-8d8edeaf4249f15ac1074929e764984b.tres"]
+
+[params]
+
+defaults=true
