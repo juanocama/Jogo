@@ -1,15 +1,14 @@
 [gd_scene format=3 uid="uid://dfxejqf4wub1i"]
 
-[ext_resource type="Script" uid="uid://cx2h8vm6i2mbm" path="res://code/Hallway_controller.tscn.gd" id="1_2m6oa"]
+[ext_resource type="Script" uid="uid://cdfdouyyc1imo" path="res://code/cafeteria_scene_controller.gd" id="1_2m6oa"]
 [ext_resource type="Texture2D" uid="uid://bgukwmw3s8a07" path="res://assets/Cafeteria/Cafeteria bien.png" id="1_cx4al"]
-[ext_resource type="Resource" uid="uid://baqaf3c6qssyi" path="res://Dialogue/Hallway/BathDoorIn.dialogue" id="2_jadbj"]
 [ext_resource type="Script" uid="uid://cjg7d1g7tksc8" path="res://code/pseudo_3d_player.gd" id="2_mnt1w"]
-[ext_resource type="Resource" uid="uid://xoe71f1w1qbg" path="res://Dialogue/Hallway/GunPickup.dialogue" id="3_f8wn7"]
+[ext_resource type="Resource" uid="uid://dukmqjfbukvnj" path="res://Dialogue/Cafeteria/Varilla.dialogue" id="3_2m6oa"]
+[ext_resource type="Texture2D" uid="uid://cgjrajgaeu7u4" path="res://assets/candy.png" id="3_candy"]
 [ext_resource type="Texture2D" uid="uid://dwqq66htnkwkr" path="res://assets/nino_3d/nino_idle_down.png" id="3_q3lkh"]
 [ext_resource type="Texture2D" uid="uid://qyd752wh20kv" path="res://assets/nino_3d/nino_walk_down.png" id="4_4uorg"]
-[ext_resource type="Resource" uid="uid://dj3leugyjqjfn" path="res://Dialogue/Hallway/Candy2.dialogue" id="4_ds4fd"]
+[ext_resource type="Resource" uid="uid://b7l6nnemq0v0y" path="res://Dialogue/Candy found/Candy.dialogue" id="4_ds4fd"]
 [ext_resource type="Texture2D" uid="uid://2yummbox3vfi" path="res://assets/nino_3d/nino_run_down.png" id="5_eji6i"]
-[ext_resource type="Texture2D" uid="uid://dvudnsv7avddy" path="res://assets/hallway/Hallway_burned.png" id="5_tstj6"]
 [ext_resource type="Texture2D" uid="uid://b1hlkrph2sfwv" path="res://assets/nino_3d/nino_idle_up.png" id="6_g1geh"]
 [ext_resource type="Texture2D" uid="uid://bvblafsjrad8e" path="res://assets/nino_3d/nino_walk_up.png" id="7_2m6oa"]
 [ext_resource type="Texture2D" uid="uid://b5fjagmv3daga" path="res://assets/nino_3d/nino_run_up.png" id="8_jadbj"]
@@ -18,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://mb5lnbwv6mec" path="res://assets/nino_3d/nino_run_side.png" id="11_tstj6"]
 [ext_resource type="Script" uid="uid://h6nwgdloptpe" path="res://code/classroom_action_interactable.gd" id="12_tff8m"]
 [ext_resource type="Texture2D" uid="uid://bmwestplf578s" path="res://assets/star_16x16.png" id="13_1eckh"]
+[ext_resource type="Texture2D" uid="uid://bbvacr2gv0x2p" path="res://assets/Cafeteria/varilla.png" id="15_rod"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_imjmv"]
 size = Vector2(251.5, 35.75)
@@ -29,19 +29,16 @@ size = Vector2(408, 183.5)
 height = 24.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0d17p"]
-size = Vector2(96, 56)
+size = Vector2(140, 88)
 
 [node name="Cafeteria" type="Node2D" unique_id=193494941]
 
 [node name="SceneController" type="Node" parent="." unique_id=93488887]
 script = ExtResource("1_2m6oa")
-bath_door_dialogue_resource = ExtResource("2_jadbj")
-gun_pickup_dialogue_resource = ExtResource("3_f8wn7")
 candy_dialogue_resource = ExtResource("4_ds4fd")
-gun_pickup_path = NodePath("../GunPickup")
+rod_dialogue_resource = ExtResource("3_2m6oa")
 candy_pickup_path = NodePath("../Candy2")
-background_path = NodePath("../Sprite2D")
-burned_background_texture = ExtResource("5_tstj6")
+rod_pickup_path = NodePath("../Candy3")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2075366317]
 position = Vector2(576.1968, 324.0893)
@@ -50,7 +47,7 @@ texture = ExtResource("1_cx4al")
 
 [node name="WalkableAreas" type="Node2D" parent="." unique_id=538219515]
 
-[node name="TileFloor" type="Area2D" parent="WalkableAreas" unique_id=1391052145 groups=["bathroom_walkable"]]
+[node name="TileFloor" type="Area2D" parent="WalkableAreas" unique_id=1391052145 groups=["classroom_walkable"]]
 position = Vector2(570.5, 476)
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="WalkableAreas/TileFloor" unique_id=711674028]
@@ -110,14 +107,42 @@ scale = Vector2(0.5, 0.5)
 
 [node name="PhotoPoint" type="Area2D" parent="Candy2" unique_id=542340283 groups=["classroom_actions"]]
 script = ExtResource("12_tff8m")
-action = &"candy_2"
+action = &"cafeteria_candy"
 
 [node name="ExclamationMark" type="Sprite2D" parent="Candy2/PhotoPoint" unique_id=1222366338]
+visible = false
 z_index = 1
 position = Vector2(6, -216)
-scale = Vector2(1.5, 1.5)
+scale = Vector2(2, 2)
 texture = ExtResource("13_1eckh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Candy2/PhotoPoint" unique_id=689710735]
-position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_0d17p")
+
+[node name="PhotoProp" type="Sprite2D" parent="Candy2" unique_id=1558490443]
+position = Vector2(2, 22)
+rotation = 0.08726646
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("3_candy")
+
+[node name="Candy3" type="Node2D" parent="." unique_id=1957617909]
+position = Vector2(752, 624)
+scale = Vector2(0.25, 0.25)
+
+[node name="PhotoPoint" type="Area2D" parent="Candy3" unique_id=583054764 groups=["classroom_actions"]]
+script = ExtResource("12_tff8m")
+action = &"rod_pickup"
+
+[node name="ExclamationMark" type="Sprite2D" parent="Candy3/PhotoPoint" unique_id=1681339998]
+z_index = 1
+position = Vector2(-96, -192)
+scale = Vector2(6, 6)
+texture = ExtResource("13_1eckh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Candy3/PhotoPoint" unique_id=687764917]
+position = Vector2(64, -32)
+shape = SubResource("RectangleShape2D_0d17p")
+
+[node name="Sprite2D" type="Sprite2D" parent="Candy3" unique_id=2120581587]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_rod")

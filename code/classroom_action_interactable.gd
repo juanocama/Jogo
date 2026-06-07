@@ -28,9 +28,12 @@ func _process(_delta: float) -> void:
 		return
 
 	interaction_running = true
+	var tree: SceneTree = get_tree()
 	interacted.emit(action)
-	await get_tree().process_frame
-	interaction_running = false
+	if tree != null:
+		await tree.process_frame
+	if is_inside_tree():
+		interaction_running = false
 
 
 func set_enabled(value: bool) -> void:

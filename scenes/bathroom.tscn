@@ -2,6 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://dyg7wi0wylqps" path="res://Dialogue/SceneBath/Mirror.dialogue" id="4_0s8rv"]
 [ext_resource type="Texture2D" uid="uid://bmwestplf578s" path="res://assets/star_16x16.png" id="5_ycb2m"]
+[ext_resource type="Script" uid="uid://h6nwgdloptpe" path="res://code/classroom_action_interactable.gd" id="action_interactable_script"]
 [ext_resource type="Texture2D" uid="uid://b11afbmkdi8b6" path="res://assets/stealth_icons/alert_exclamation.png" id="alert_exclamation"]
 [ext_resource type="Texture2D" uid="uid://botfowc5mpjoo" path="res://assets/stealth_icons/alert_question.png" id="alert_question"]
 [ext_resource type="Texture2D" uid="uid://bw1nkqbam7lad" path="res://assets/stealth_icons/alert_target.png" id="alert_target"]
@@ -37,6 +38,9 @@ size = Vector2(1142.5, 148)
 [sub_resource type="RectangleShape2D" id="FirstMirrorInteractionShape"]
 size = Vector2(76, 219.5)
 
+[sub_resource type="RectangleShape2D" id="ExitDoorInteractionShape"]
+size = Vector2(128, 200)
+
 [sub_resource type="RectangleShape2D" id="HidingSpotShape"]
 size = Vector2(96, 77.5)
 
@@ -56,6 +60,7 @@ player_path = NodePath("../Player")
 robot_path = NodePath("../Robot1")
 mirror_path = NodePath("../Interactables/FirstMirror")
 timer_label_path = NodePath("../UI/TimerLabel")
+exit_door_path = NodePath("../Interactables/ExitDoor")
 level_duration = 40.0
 
 [node name="background" type="Sprite2D" parent="." unique_id=1735717431]
@@ -88,6 +93,22 @@ shape = SubResource("FirstMirrorInteractionShape")
 [node name="ExclamationMark" type="Sprite2D" parent="Interactables/FirstMirror" unique_id=1789275590]
 position = Vector2(19, -123)
 scale = Vector2(2, 2)
+texture = ExtResource("5_ycb2m")
+
+[node name="ExitDoor" type="Area2D" parent="Interactables" unique_id=1734069867 groups=["classroom_actions"]]
+position = Vector2(70, 460)
+script = ExtResource("action_interactable_script")
+action = &"bathroom_exit_door"
+enabled = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/ExitDoor" unique_id=184368003]
+position = Vector2(26, -128)
+shape = SubResource("ExitDoorInteractionShape")
+
+[node name="ExclamationMark" type="Sprite2D" parent="Interactables/ExitDoor" unique_id=1585689830]
+visible = false
+position = Vector2(25.999998, -172)
+scale = Vector2(1.75, 1.75)
 texture = ExtResource("5_ycb2m")
 
 [node name="HidingSpotLeft" type="Area2D" parent="Interactables" unique_id=1046591710 groups=["hiding_spots"]]
