@@ -31,6 +31,9 @@ height = 24.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0d17p"]
 size = Vector2(96, 56)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2m6oa"]
+size = Vector2(118.5, 218)
+
 [node name="Cafeteria" type="Node2D" unique_id=193494941]
 
 [node name="SceneController" type="Node" parent="." unique_id=93488887]
@@ -147,3 +150,19 @@ shape = SubResource("RectangleShape2D_0d17p")
 [node name="Sprite2D" type="Sprite2D" parent="Candy3" unique_id=2120581587]
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("15_rod")
+
+[node name="LeftDoorExit" type="Area2D" parent="." unique_id=292636082 groups=["classroom_actions"]]
+position = Vector2(68, 510)
+script = ExtResource("12_tff8m")
+action = &"sad_door"
+enabled = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDoorExit" unique_id=1626337426]
+position = Vector2(16.75, -166)
+shape = SubResource("RectangleShape2D_2m6oa")
+
+[node name="ExclamationMark" type="Sprite2D" parent="LeftDoorExit" unique_id=1031685424]
+visible = false
+position = Vector2(18, -215)
+scale = Vector2(1.7499998, 1.7500005)
+texture = ExtResource("13_1eckh")
