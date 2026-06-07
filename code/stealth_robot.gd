@@ -236,7 +236,6 @@ func _move_towards(target: Vector2, speed: float, delta: float) -> void:
 
 func _check_touch_capture() -> void:
 	if state == RobotState.INACTIVE or state == RobotState.EXITING or state == RobotState.CONFUSED:
-	if state == RobotState.INACTIVE or state == RobotState.EXITING or state == RobotState.CONFUSED:
 		return
 	if player == null:
 		return
