@@ -170,7 +170,7 @@ texture = ExtResource("11_h8p8k")
 [node name="Girl" type="CharacterBody2D" parent="." unique_id=225794821]
 position = Vector2(-80, 630)
 script = ExtResource("girl_script")
-base_visual_scale = 0.62
+base_visual_scale = 0.82
 idle_down_texture = ExtResource("girl_idle_down")
 walk_down_texture = ExtResource("girl_walk_down")
 idle_up_texture = ExtResource("girl_idle_up")
