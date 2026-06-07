@@ -38,10 +38,13 @@ class_name BossRobot
 @export var shoot_delay: float = 0.35
 @export var slam_cooldown: float = 5.0
 @export var projectile_scene: PackedScene
+@export var robot_piece_scene: PackedScene
+@export var robot_piece_textures: Array[Texture2D] = []
 
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var attack_area: Area2D = $AttackArea
 @onready var projectile_origin: Marker2D = $ProjectileOrigin
+@onready var health_bar: ProgressBar = get_node_or_null("HealthBar") as ProgressBar
 
 const SPRITE_NODE_NAMES: Array[StringName] = [
 	&"idle", &"walk", &"dash", &"attack", &"shoot", &"fly", &"slam", &"hit", &"death", &"special"
@@ -63,11 +66,15 @@ var shot_spawned: bool = false
 var dead: bool = false
 var hover_time: float = 0.0
 var ram_target_position: Vector2 = Vector2.ZERO
+var active_state_duration: float = 0.0
+var next_piece_drop_percent: float = 0.35
+var next_piece_texture_index: int = 0
 
 
 func _ready() -> void:
 	add_to_group("bosses")
 	health = max_health
+	_update_health_bar()
 	melee_timer = randf_range(0.2, melee_cooldown)
 	dash_timer = randf_range(0.5, dash_cooldown)
 	shoot_timer = randf_range(0.25, shoot_cooldown)
@@ -269,7 +276,8 @@ func _update_hover(delta: float) -> void:
 
 func _start_melee() -> void:
 	state = &"melee"
-	state_timer = 0.55
+	active_state_duration = _get_animation_duration(&"attack", 0.55)
+	state_timer = active_state_duration
 	attack_has_hit = false
 	melee_timer = melee_cooldown
 	velocity.x = 0.0
@@ -283,7 +291,9 @@ func _update_melee(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0.0, friction * delta)
 	if is_flying_boss:
 		_update_hover(delta)
-	if not attack_has_hit and state_timer <= 0.34:
+	var elapsed: float = active_state_duration - state_timer
+	var hit_time: float = min(0.3, active_state_duration * 0.45)
+	if not attack_has_hit and elapsed >= hit_time:
 		attack_has_hit = true
 		_damage_targets_in_attack_area(melee_damage)
 	if state_timer <= 0.0:
@@ -293,7 +303,8 @@ func _update_melee(delta: float) -> void:
 
 func _start_dash() -> void:
 	state = &"dash"
-	state_timer = dash_duration
+	active_state_duration = _get_animation_duration(&"dash", dash_duration)
+	state_timer = max(dash_duration, active_state_duration)
 	dash_timer = dash_cooldown
 
 	if is_flying_boss and target != null:
@@ -332,7 +343,8 @@ func _update_dash(delta: float) -> void:
 
 func _start_shoot() -> void:
 	state = &"shoot"
-	state_timer = 0.85
+	active_state_duration = _get_animation_duration(&"shoot", 0.85)
+	state_timer = active_state_duration
 	shot_spawned = false
 	shoot_timer = shoot_cooldown
 	velocity.x = 0.0
@@ -347,7 +359,7 @@ func _update_shoot(delta: float) -> void:
 	if is_flying_boss:
 		_update_hover(delta)
 
-	if not shot_spawned and state_timer <= 0.85 - shoot_delay:
+	if not shot_spawned and active_state_duration - state_timer >= shoot_delay:
 		shot_spawned = true
 		_spawn_projectile()
 
@@ -358,7 +370,8 @@ func _update_shoot(delta: float) -> void:
 
 func _start_slam() -> void:
 	state = &"slam"
-	state_timer = 1.05
+	active_state_duration = _get_animation_duration(&"slam", 1.05)
+	state_timer = max(1.05, active_state_duration)
 	slam_timer = slam_cooldown
 	velocity.y = -260.0
 	velocity.x = float(facing_direction) * 95.0
@@ -367,7 +380,7 @@ func _start_slam() -> void:
 
 func _update_slam(delta: float) -> void:
 	state_timer -= delta
-	if state_timer <= 0.45:
+	if state_timer <= active_state_duration * 0.45:
 		_play_state(&"slam")
 		velocity.x = float(facing_direction) * 160.0
 		if is_on_floor():
@@ -427,7 +440,11 @@ func take_damage(amount: int, source: Node = null) -> void:
 	if dead or hurt_timer > 0.0:
 		return
 	hurt_timer = invulnerability_time
+	var previous_health: int = health
 	health -= amount
+	health = maxi(health, 0)
+	_update_health_bar()
+	_drop_pieces_for_health_change(previous_health, health)
 
 	if source is Node2D:
 		var source_2d: Node2D = source as Node2D
@@ -448,6 +465,7 @@ func _die() -> void:
 	state = &"dead"
 	dead = true
 	health = 0
+	_update_health_bar()
 	velocity = Vector2.ZERO
 	_play_state(&"death")
 	$CollisionShape2D.set_deferred("disabled", true)
@@ -456,6 +474,41 @@ func _die() -> void:
 
 func is_alive() -> bool:
 	return not dead and health > 0
+
+
+func _update_health_bar() -> void:
+	if health_bar == null:
+		return
+	health_bar.max_value = float(max_health)
+	health_bar.value = float(clampi(health, 0, max_health))
+
+
+func _drop_pieces_for_health_change(previous_health: int, current_health: int) -> void:
+	if boss_id != &"robot_02" or robot_piece_scene == null or robot_piece_textures.is_empty():
+		return
+	if max_health <= 0:
+		return
+
+	var previous_percent: float = float(previous_health) / float(max_health)
+	var current_percent: float = float(current_health) / float(max_health)
+	while next_piece_drop_percent >= 0.0 and previous_percent > next_piece_drop_percent and current_percent <= next_piece_drop_percent:
+		_spawn_robot_piece()
+		next_piece_drop_percent -= 0.05
+
+
+func _spawn_robot_piece() -> void:
+	var piece: Node = robot_piece_scene.instantiate()
+	get_tree().current_scene.add_child(piece)
+
+	if piece is Node2D:
+		var piece_2d: Node2D = piece as Node2D
+		piece_2d.global_position = (global_position + Vector2(0.0, -48.0)).round()
+
+	var texture: Texture2D = robot_piece_textures[next_piece_texture_index % robot_piece_textures.size()]
+	next_piece_texture_index += 1
+	var direction: int = -1 if next_piece_texture_index % 2 == 0 else 1
+	if piece.has_method("setup"):
+		piece.call("setup", texture, direction, global_position.y)
 
 
 func _update_facing(to_target: Vector2) -> void:
@@ -478,6 +531,20 @@ func _play_state(anim_name: StringName) -> void:
 	_show_animation(final_anim)
 	if anim_player and anim_player.has_animation(final_anim) and anim_player.current_animation != final_anim:
 		anim_player.play(final_anim)
+
+
+func _get_animation_duration(anim_name: StringName, fallback: float) -> float:
+	if anim_player == null or not anim_player.has_animation(anim_name):
+		return fallback
+
+	var animation: Animation = anim_player.get_animation(anim_name)
+	if animation == null:
+		return fallback
+
+	var speed: float = anim_player.speed_scale
+	if speed <= 0.0:
+		speed = 1.0
+	return animation.length / speed
 
 
 func _show_animation(anim_name: StringName) -> void:

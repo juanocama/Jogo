@@ -13,6 +13,7 @@ var direction: Vector2 = Vector2.LEFT
 
 
 func _ready() -> void:
+	add_to_group("robot_projectiles")
 	direction = direction.normalized()
 	if direction == Vector2.ZERO:
 		direction = Vector2.LEFT
