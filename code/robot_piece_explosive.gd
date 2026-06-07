@@ -25,7 +25,10 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	if explosion_shape != null:
 		explosion_shape.disabled = true
-	await get_tree().create_timer(lifetime).timeout
+	var tree: SceneTree = get_tree()
+	if tree == null:
+		return
+	await tree.create_timer(lifetime).timeout
 	if is_inside_tree():
 		_explode()
 
@@ -54,11 +57,16 @@ func _explode() -> void:
 	if explosion_shape != null:
 		explosion_shape.disabled = false
 
-	for player_node: Node in get_tree().get_nodes_in_group("players"):
+	var tree: SceneTree = get_tree()
+	if tree == null:
+		queue_free()
+		return
+
+	for player_node: Node in tree.get_nodes_in_group("players"):
 		if player_node is Node2D and global_position.distance_to((player_node as Node2D).global_position) <= explosion_radius:
 			_damage_body(player_node)
 
-	await get_tree().create_timer(0.18).timeout
+	await tree.create_timer(0.18).timeout
 	if is_inside_tree():
 		queue_free()
 
