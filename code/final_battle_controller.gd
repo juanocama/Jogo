@@ -83,6 +83,7 @@ func _ready() -> void:
 		standard_boss_position = boss.global_position
 	_configure_boss()
 	_update_boss_health_ui()
+	_play_final_boss_music_for_phase(_get_phase(), 0.65)
 
 
 func _process(delta: float) -> void:
@@ -800,6 +801,7 @@ func _update_phase_transition() -> void:
 	if phase == last_phase:
 		return
 	last_phase = phase
+	_play_final_boss_music_for_phase(phase, 0.55)
 	roll_timer = minf(roll_timer, 1.0)
 	minion_timer = _get_minion_spawn_time(phase) if phase < 3 else 9999.0
 	if phase == 3:
@@ -828,3 +830,18 @@ func _wait_seconds(seconds: float) -> void:
 	if tree == null:
 		return
 	await tree.create_timer(seconds).timeout
+
+func _play_final_boss_music_for_phase(phase: int, fade_seconds: float = 0.75) -> void:
+	var music_key: StringName = &"final_boss_phase_1"
+	if phase == 2:
+		music_key = &"final_boss_phase_2"
+	elif phase >= 3:
+		music_key = &"final_boss_phase_3"
+	_play_scene_music(music_key, fade_seconds)
+
+
+func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_music"):
+		audio_manager.call("play_music", music_key, fade_seconds)
+
