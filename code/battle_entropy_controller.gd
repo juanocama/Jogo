@@ -2,8 +2,8 @@ extends Node
 
 const ACTIVE_DURATION: float = 5.0
 const FIRST_PHASE_ACTIVE_DURATION: float = 3.0
-const REST_DURATION: float = 5.0
-const FIRST_PHASE_TRIGGER_CHANCE: float = 0.28
+const REST_DURATION: float = 7.0
+const FIRST_PHASE_TRIGGER_CHANCE: float = 0.20
 const DELAY_SECONDS: float = 0.2
 const ENTROPY_FADE_TIME: float = 0.35
 
@@ -103,6 +103,13 @@ func force_all_effects(duration: float = ACTIVE_DURATION) -> void:
 	_start_effects(effects, duration)
 
 
+func force_background(background_name: StringName, duration: float = ACTIVE_DURATION) -> void:
+	_clear_effect()
+	active_effect = background_name
+	active_timer = duration
+	_apply_entropy_background()
+
+
 func _start_effect(effect_name: StringName, forced_duration: float = -1.0) -> void:
 	var effects: Array[StringName] = [effect_name]
 	_start_effects(effects, forced_duration)
@@ -200,6 +207,10 @@ func _get_entropy_background_texture() -> Texture2D:
 			return invert_background_texture
 		&"flip":
 			return flip_background_texture
+		&"fire":
+			return delay_background_texture
+		&"ambush", &"mix":
+			return mixed_background_texture
 	return null
 
 
