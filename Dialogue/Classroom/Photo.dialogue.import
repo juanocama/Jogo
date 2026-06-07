@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cr31w1vnsfk5y"
+path="res://.godot/imported/Photo.dialogue-bf5797e5e80be1b18125008096d86064.tres"
+
+[deps]
+
+source_file="res://Dialogue/Classroom/Photo.dialogue"
+dest_files=["res://.godot/imported/Photo.dialogue-bf5797e5e80be1b18125008096d86064.tres"]
+
+[params]
+
+defaults=true
