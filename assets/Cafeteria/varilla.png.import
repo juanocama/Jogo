@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpka17h4qu8tg"
-path="res://.godot/imported/cocina2d.png-68fe04f61ca556642179600459b0d6f2.ctex"
+uid="uid://bbvacr2gv0x2p"
+path="res://.godot/imported/varilla.png-ef1c27d6be371d464679a306f8124f00.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cocina2d.png"
-dest_files=["res://.godot/imported/cocina2d.png-68fe04f61ca556642179600459b0d6f2.ctex"]
+source_file="res://assets/Cafeteria/varilla.png"
+dest_files=["res://.godot/imported/varilla.png-ef1c27d6be371d464679a306f8124f00.ctex"]
 
 [params]
 

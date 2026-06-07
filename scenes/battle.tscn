@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://knfpoqgpreo8"]
 
-[ext_resource type="Texture2D" uid="uid://dpka17h4qu8tg" path="res://assets/cocina2d.png" id="bg"]
+[ext_resource type="Texture2D" uid="uid://dpka17h4qu8tg" path="res://assets/Cafeteria/cocina2d.png" id="bg"]
+[ext_resource type="Script" uid="uid://cyvf20r720gl5" path="res://code/battle_entropy_controller.gd" id="entropy_controller_script"]
+[ext_resource type="Texture2D" uid="uid://bk7eo7rd4calp" path="res://assets/battle/entropy_icon.png" id="entropy_icon"]
 [ext_resource type="Texture2D" uid="uid://onq1isncll25" path="res://assets/nino_01/Agacharse derecha.png" id="player_crouch"]
 [ext_resource type="Texture2D" uid="uid://d3t1hc4fjtivi" path="res://assets/nino_01/dash2d.png" id="player_dash"]
 [ext_resource type="Texture2D" uid="uid://c1kbe1q3kcgqx" path="res://assets/nino_01/Respiracion y parpadeo.png" id="player_idle"]
@@ -12,11 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://cd5up57cd2fng" path="res://assets/nino_01/ataque_agua.png" id="player_water_attack"]
 [ext_resource type="PackedScene" uid="uid://bydk8l453qugk" path="res://scenes/robot_01_boss.tscn" id="robot01"]
 [ext_resource type="PackedScene" path="res://scenes/robot_02_boss.tscn" id="robot02"]
+[ext_resource type="Texture2D" uid="uid://hgetsxsushts" path="res://assets/battle/robot_piece_1.png" id="robot_piece_1"]
+[ext_resource type="Texture2D" uid="uid://bxwfumi5e8r7k" path="res://assets/battle/robot_piece_2.png" id="robot_piece_2"]
 [ext_resource type="PackedScene" path="res://scenes/robot_piece_explosive.tscn" id="robot_piece_scene"]
-[ext_resource type="Texture2D" path="res://assets/battle/robot_piece_1.png" id="robot_piece_1"]
-[ext_resource type="Texture2D" path="res://assets/battle/robot_piece_2.png" id="robot_piece_2"]
-[ext_resource type="Texture2D" path="res://assets/battle/entropy_icon.png" id="entropy_icon"]
-[ext_resource type="Script" path="res://code/battle_entropy_controller.gd" id="entropy_controller_script"]
 
 [sub_resource type="RectangleShape2D" id="FloorShape"]
 size = Vector2(1672, 34)
@@ -491,7 +491,7 @@ theme_override_colors/font_color = Color(0.95, 0.08, 0.08, 1)
 theme_override_font_sizes/font_size = 42
 text = "♥ ♥ ♥ ♥ ♥"
 
-[node name="EntropyIcon" type="TextureRect" parent="HUD"]
+[node name="EntropyIcon" type="TextureRect" parent="HUD" unique_id=1162443085]
 visible = false
 offset_left = 372.0
 offset_top = 16.0
@@ -551,7 +551,7 @@ offset_right = 70.0
 offset_bottom = -114.0
 show_percentage = false
 
-[node name="EntropyController" type="Node" parent="."]
+[node name="EntropyController" type="Node" parent="." unique_id=667925718]
 script = ExtResource("entropy_controller_script")
 boss_path = NodePath("../robot_02_boss")
 player_path = NodePath("../Player")
