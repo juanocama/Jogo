@@ -8,7 +8,7 @@ extends Node
 @export var background_path: NodePath
 @export var burned_background_texture: Texture2D
 @export var burned_background_scale: Vector2 = Vector2(0.844, 0.844)
-@export var glitch_flash_count: int = 4
+@export var glitch_flash_count: int = 5
 @export var glitch_flash_duration: float = 0.12
 
 @onready var gun_pickup: Node2D = get_node_or_null(gun_pickup_path) as Node2D
@@ -74,7 +74,7 @@ func _play_burned_hallway_glitch() -> void:
 	var normal_texture: Texture2D = background.texture
 	var normal_scale: Vector2 = background.scale
 	var flash_count: int = maxi(glitch_flash_count, 1)
-	var flash_duration: float = maxf(glitch_flash_duration, 0.03)
+	var flash_duration: float = maxf(glitch_flash_duration, 0.05)
 
 	for _index: int in range(flash_count):
 		background.texture = burned_background_texture

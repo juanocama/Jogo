@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cocwlmd8vj3uf"]
+[gd_scene format=3 uid="uid://dremypvnflkl0"]
 
 [ext_resource type="Script" uid="uid://cx2h8vm6i2mbm" path="res://code/Hallway_controller.tscn.gd" id="1_24mfg"]
 [ext_resource type="Texture2D" uid="uid://dvudnsv7avddy" path="res://assets/hallway/Hallway_burned.png" id="1_burned"]
