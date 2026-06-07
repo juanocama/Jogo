@@ -9,7 +9,7 @@ extends Node
 @export var entropia_icon_path: NodePath
 @export var door_interactable_path: NodePath
 @export var dialogue_resource: DialogueResource
-@export var ellipsis_dialogue_resource: DialogueResource
+@export var photo_dialogue_resource: DialogueResource
 @export var candy_dialogue_resource: DialogueResource
 @export var sad_background: Texture2D
 @export var camera_center: Vector2 = Vector2(581.0, 330.5)
@@ -29,6 +29,7 @@ var classroom_sad_active: bool = false
 var entropy_loop_active: bool = false
 var photo_interaction_running: bool = false
 var candy_collected: bool = false
+var dialogue_running: bool = false
 
 
 func _ready() -> void:
@@ -53,7 +54,7 @@ func _process(_delta: float) -> void:
 	if not Input.is_action_just_pressed("ui_accept"):
 		return
 	if player.global_position.distance_to(door_interactable.global_position) <= door_interaction_distance:
-		get_tree().reload_current_scene()
+		get_tree().change_scene_to_file("res://scenes/Hallway.tscn")
 
 
 func handle_action(action: StringName) -> void:
@@ -68,7 +69,7 @@ func handle_action(action: StringName) -> void:
 			await _run_photo_interaction()
 		&"sad_door":
 			if classroom_sad_active:
-				get_tree().reload_current_scene()
+				get_tree().change_scene_to_file("res://scenes/Hallway.tscn")
 
 
 func _run_intro() -> void:
@@ -84,7 +85,6 @@ func _run_intro() -> void:
 		girl.call("face_towards", player.global_position)
 
 	await _show_default_dialogue()
-	await _show_dialogue(ellipsis_dialogue_resource)
 	await _move_girl_up_to_door()
 	girl.visible = false
 	_set_full_stage_camera()
@@ -105,7 +105,7 @@ func _run_photo_interaction() -> void:
 		player.call("force_control_locked", true)
 	if photo_overlay != null:
 		photo_overlay.visible = true
-	await _show_default_dialogue()
+	await _show_dialogue(photo_dialogue_resource)
 	if photo_overlay != null:
 		photo_overlay.visible = false
 	_activate_sad_classroom()
@@ -161,11 +161,15 @@ func _show_default_dialogue() -> void:
 func _show_dialogue(resource: DialogueResource) -> void:
 	if resource == null:
 		return
+	if dialogue_running or GameManager.is_dialogue_active:
+		return
+	dialogue_running = true
 	GameManager.is_dialogue_active = true
 	DialogueManager.show_dialogue_balloon(resource)
 	await DialogueManager.dialogue_ended
 	await get_tree().create_timer(0.2).timeout
 	GameManager.is_dialogue_active = false
+	dialogue_running = false
 
 
 func _focus_camera_on(target_position: Vector2, duration: float) -> void:
@@ -203,7 +207,9 @@ func _set_full_stage_camera() -> void:
 func _connect_action_interactables() -> void:
 	for node: Node in get_tree().get_nodes_in_group("classroom_actions"):
 		if node.has_signal("interacted"):
-			node.connect("interacted", Callable(self, "handle_action"))
+			var callback: Callable = Callable(self, "handle_action")
+			if not node.is_connected("interacted", callback):
+				node.connect("interacted", callback)
 
 
 func _disable_action(action: StringName) -> void:

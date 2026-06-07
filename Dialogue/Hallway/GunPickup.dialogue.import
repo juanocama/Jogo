@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://xoe71f1w1qbg"
+path="res://.godot/imported/GunPickup.dialogue-12672e26736754ceb54645c20830a52e.tres"
+
+[deps]
+
+source_file="res://Dialogue/Hallway/GunPickup.dialogue"
+dest_files=["res://.godot/imported/GunPickup.dialogue-12672e26736754ceb54645c20830a52e.tres"]
+
+[params]
+
+defaults=true

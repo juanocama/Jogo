@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cjtctaqdwquhq"
+path="res://.godot/imported/Alba1.dialogue-fa7ad66d65581380b925286832efa639.tres"
+
+[deps]
+
+source_file="res://Dialogue/Classroom/Alba1.dialogue"
+dest_files=["res://.godot/imported/Alba1.dialogue-fa7ad66d65581380b925286832efa639.tres"]
+
+[params]
+
+defaults=true

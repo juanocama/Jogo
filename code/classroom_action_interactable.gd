@@ -8,6 +8,7 @@ signal interacted(action: StringName)
 @onready var exclamation_mark: Sprite2D = get_node_or_null("ExclamationMark") as Sprite2D
 
 var player_is_close: bool = false
+var interaction_running: bool = false
 
 
 func _ready() -> void:
@@ -23,8 +24,13 @@ func _process(_delta: float) -> void:
 		return
 	if not Input.is_action_just_pressed("ui_accept"):
 		return
+	if interaction_running or GameManager.is_dialogue_active:
+		return
 
+	interaction_running = true
 	interacted.emit(action)
+	await get_tree().process_frame
+	interaction_running = false
 
 
 func set_enabled(value: bool) -> void:
