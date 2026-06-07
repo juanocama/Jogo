@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dj3leugyjqjfn"
+path="res://.godot/imported/Candy2.dialogue-47c2ea132fd7b98e1d214777a5d51827.tres"
+
+[deps]
+
+source_file="res://Dialogue/Hallway/Candy2.dialogue"
+dest_files=["res://.godot/imported/Candy2.dialogue-47c2ea132fd7b98e1d214777a5d51827.tres"]
+
+[params]
+
+defaults=true

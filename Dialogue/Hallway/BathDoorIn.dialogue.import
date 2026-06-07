@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://baqaf3c6qssyi"
+path="res://.godot/imported/BathDoorIn.dialogue-4eb0672a5427e06e0418413a1c38a607.tres"
+
+[deps]
+
+source_file="res://Dialogue/Hallway/BathDoorIn.dialogue"
+dest_files=["res://.godot/imported/BathDoorIn.dialogue-4eb0672a5427e06e0418413a1c38a607.tres"]
+
+[params]
+
+defaults=true

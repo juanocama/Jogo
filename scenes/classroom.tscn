@@ -60,7 +60,7 @@ photo_pickup_path = NodePath("../PhotoPickup")
 entropia_icon_path = NodePath("../UI/EntropiaIcon")
 door_interactable_path = NodePath("../Interactables/LeftDoorExit")
 dialogue_resource = ExtResource("2_npx1w")
-ellipsis_dialogue_resource = ExtResource("3_npx1w")
+photo_dialogue_resource = ExtResource("3_npx1w")
 candy_dialogue_resource = ExtResource("3_fvn43")
 sad_background = ExtResource("classroom_sad")
 

@@ -6,6 +6,7 @@ extends Area2D
 @onready var exclamation_mark: Sprite2D = get_node_or_null("ExclamationMark") as Sprite2D
 
 var player_is_close: bool = false
+var dialogue_running: bool = false
 
 
 func _ready() -> void:
@@ -19,9 +20,17 @@ func _process(_delta: float) -> void:
 		return
 	if not Input.is_action_just_pressed("ui_accept"):
 		return
+	if dialogue_running or GameManager.is_dialogue_active:
+		return
 
 	if dialogue_resource != null:
+		dialogue_running = true
+		GameManager.is_dialogue_active = true
 		DialogueManager.show_dialogue_balloon(dialogue_resource)
+		await DialogueManager.dialogue_ended
+		await get_tree().create_timer(0.2).timeout
+		GameManager.is_dialogue_active = false
+		dialogue_running = false
 	elif interaction_name != "":
 		print("Interactuando con: %s" % interaction_name)
 
