@@ -1,0 +1,134 @@
+[gd_scene format=3 uid="uid://c5a36bbqa5v6"]
+
+[ext_resource type="Script" uid="uid://bkyargf0dphux" path="res://code/Hallway2_controller.gd" id="1_3qrxs"]
+[ext_resource type="Resource" uid="uid://dwolkol54145b" path="res://Dialogue/Hallway2/DoorCafeteria.dialogue" id="2_gdtef"]
+[ext_resource type="Resource" uid="uid://xoe71f1w1qbg" path="res://Dialogue/Hallway/GunPickup.dialogue" id="3_d7eut"]
+[ext_resource type="Resource" uid="uid://dj3leugyjqjfn" path="res://Dialogue/Hallway/Candy2.dialogue" id="4_ax5mj"]
+[ext_resource type="Texture2D" uid="uid://dvudnsv7avddy" path="res://assets/hallway/Hallway_burned.png" id="5_7qosv"]
+[ext_resource type="Script" uid="uid://cjg7d1g7tksc8" path="res://code/pseudo_3d_player.gd" id="6_y2g5i"]
+[ext_resource type="Texture2D" uid="uid://dwqq66htnkwkr" path="res://assets/nino_3d/nino_idle_down.png" id="7_fhy30"]
+[ext_resource type="Texture2D" uid="uid://qyd752wh20kv" path="res://assets/nino_3d/nino_walk_down.png" id="8_1jahx"]
+[ext_resource type="Texture2D" uid="uid://2yummbox3vfi" path="res://assets/nino_3d/nino_run_down.png" id="9_22duy"]
+[ext_resource type="Texture2D" uid="uid://b1hlkrph2sfwv" path="res://assets/nino_3d/nino_idle_up.png" id="10_qnqmo"]
+[ext_resource type="Texture2D" uid="uid://bvblafsjrad8e" path="res://assets/nino_3d/nino_walk_up.png" id="11_jw0ix"]
+[ext_resource type="Texture2D" uid="uid://b5fjagmv3daga" path="res://assets/nino_3d/nino_run_up.png" id="12_hbtip"]
+[ext_resource type="Texture2D" uid="uid://cyrswrbm5ahj8" path="res://assets/nino_3d/nino_idle_side.png" id="13_n7ebw"]
+[ext_resource type="Texture2D" uid="uid://dcbo70rh102m4" path="res://assets/nino_3d/nino_walk_side.png" id="14_552cq"]
+[ext_resource type="Texture2D" uid="uid://mb5lnbwv6mec" path="res://assets/nino_3d/nino_run_side.png" id="15_3c2ga"]
+[ext_resource type="Script" uid="uid://h6nwgdloptpe" path="res://code/classroom_action_interactable.gd" id="16_mnf2j"]
+[ext_resource type="Texture2D" uid="uid://bmwestplf578s" path="res://assets/star_16x16.png" id="17_ag1be"]
+[ext_resource type="FontFile" uid="uid://b0ejqv0b60180" path="res://Fonts/Minecraftia-Regular.ttf" id="18_xykwm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r7jtc"]
+size = Vector2(4592, 59.25)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q21le"]
+height = 24.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwivi"]
+size = Vector2(101, 193)
+
+[node name="Node2D" type="Node2D" unique_id=327591162]
+
+[node name="SceneController" type="Node" parent="." unique_id=1304260321]
+script = ExtResource("1_3qrxs")
+bath_door_dialogue_resource = ExtResource("2_gdtef")
+gun_pickup_dialogue_resource = ExtResource("3_d7eut")
+candy_dialogue_resource = ExtResource("4_ax5mj")
+background_path = NodePath("../SpriteC")
+burned_background_texture = ExtResource("5_7qosv")
+
+[node name="SpriteC" type="Sprite2D" parent="." unique_id=1530251129]
+position = Vector2(576.25006, 325)
+scale = Vector2(0.844, 0.842)
+texture = ExtResource("5_7qosv")
+
+[node name="SpriteL" type="Sprite2D" parent="." unique_id=1680629401]
+position = Vector2(-576, 324.128)
+scale = Vector2(0.844, 0.8434167)
+texture = ExtResource("5_7qosv")
+
+[node name="SpriteR" type="Sprite2D" parent="." unique_id=2106181835]
+position = Vector2(1728.0001, 325.00003)
+scale = Vector2(0.844, 0.842)
+texture = ExtResource("5_7qosv")
+
+[node name="SpriteR" type="Sprite2D" parent="SpriteR" unique_id=1470738291]
+position = Vector2(-4098.833, -1.3315215)
+scale = Vector2(1.006, 1)
+texture = ExtResource("5_7qosv")
+
+[node name="WalkableAreas" type="Node2D" parent="." unique_id=1713212102]
+
+[node name="Floor" type="Area2D" parent="WalkableAreas" unique_id=645725370 groups=["classroom_walkable"]]
+position = Vector2(582, 605)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/Floor" unique_id=737694370]
+position = Vector2(-582, -138.625)
+shape = SubResource("RectangleShape2D_r7jtc")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1828645380 groups=["players"]]
+position = Vector2(2216, 456)
+script = ExtResource("6_y2g5i")
+walk_speed = 150.0
+run_speed = 220.0
+walkable_area_group = &"classroom_walkable"
+base_visual_scale = 0.54
+idle_down_texture = ExtResource("7_fhy30")
+walk_down_texture = ExtResource("8_1jahx")
+run_down_texture = ExtResource("9_22duy")
+idle_up_texture = ExtResource("10_qnqmo")
+walk_up_texture = ExtResource("11_jw0ix")
+run_up_texture = ExtResource("12_hbtip")
+idle_side_texture = ExtResource("13_n7ebw")
+walk_side_texture = ExtResource("14_552cq")
+run_side_texture = ExtResource("15_3c2ga")
+
+[node name="Shadow" type="Polygon2D" parent="Player" unique_id=43126813]
+z_index = -1
+position = Vector2(0, 2)
+color = Color(0, 0, 0, 0.3)
+polygon = PackedVector2Array(-23, -5, -12, -9, 12, -9, 23, -5, 23, 5, 12, 9, -12, 9, -23, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=975162843]
+position = Vector2(0, -31)
+texture = ExtResource("7_fhy30")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1864900546]
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_q21le")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=2000367293]
+position_smoothing_enabled = true
+
+[node name="BathDoorIn" type="Area2D" parent="." unique_id=1858066333 groups=["classroom_actions"]]
+position = Vector2(68, 510)
+script = ExtResource("16_mnf2j")
+action = &"bath_door_in"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BathDoorIn" unique_id=502104748]
+position = Vector2(-1311, -175)
+shape = SubResource("RectangleShape2D_iwivi")
+
+[node name="ExclamationMark" type="Sprite2D" parent="BathDoorIn" unique_id=281552662]
+position = Vector2(-1312, -218)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("17_ag1be")
+
+[node name="Label" type="Label" parent="." unique_id=1084553865]
+offset_left = 2192.0
+offset_top = 208.0
+offset_right = 2240.0
+offset_bottom = 236.0
+theme_override_colors/font_color = Color(0.96862745, 0.93333334, 0.34901962, 0.58431375)
+theme_override_fonts/font = ExtResource("18_xykwm")
+text = "FOOD"
+
+[node name="Label" type="Label" parent="Label" unique_id=211654073]
+layout_mode = 0
+offset_left = -3456.0
+offset_right = -3384.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.38431373, 0.93333334, 0.34901962, 0.7647059)
+theme_override_fonts/font = ExtResource("18_xykwm")
+text = "EXIT"
