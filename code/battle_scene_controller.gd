@@ -3,7 +3,7 @@ extends Node
 @export var boss_path: NodePath
 @export var exit_door_path: NodePath
 @export var victory_dialogue_resource: DialogueResource
-@export_file("*.tscn") var exit_target_scene: String = "res://scenes/Cafeteria.tscn"
+@export_file("*.tscn") var exit_target_scene: String = "res://scenes/Hallway.tscn"
 
 @onready var boss: Node = get_node_or_null(boss_path)
 @onready var exit_door: Area2D = get_node_or_null(exit_door_path) as Area2D
