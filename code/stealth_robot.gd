@@ -79,6 +79,7 @@ func begin_entry() -> void:
 		collision_shape.disabled = false
 	global_position = Vector2(-160, enter_target.y)
 	state = RobotState.ENTERING
+	_play_sfx(&"bathroom_warning", -4.0)
 	_set_alert(null)
 
 
@@ -94,6 +95,7 @@ func notify_player_hidden(spot: Area2D) -> void:
 
 	target_spot = spot
 	state = RobotState.CONFUSED
+	_play_sfx(&"bathroom_locker", -3.0)
 	confused_timer = hidden_inspection_delay * confused_duration_multiplier
 	if alert_question_texture != null:
 		_set_alert(alert_question_texture)
@@ -161,6 +163,7 @@ func _update_detection(delta: float) -> void:
 		return
 
 	state = RobotState.CHASING
+	_play_sfx(&"bathroom_detect")
 	_set_alert(alert_exclamation_texture)
 
 
@@ -191,6 +194,7 @@ func _update_confused(delta: float) -> void:
 	if target_spot != null:
 		if target_spot.has_method("set_targeted"):
 			target_spot.call("set_targeted", true)
+		_play_sfx(&"bathroom_laser_lock", -2.0)
 		state = RobotState.TARGETING_BATHROOM
 	else:
 		state = RobotState.SEARCHING
@@ -287,3 +291,9 @@ func _set_alert(texture: Texture2D) -> void:
 		return
 	alert_icon.texture = texture
 	alert_icon.visible = texture != null
+
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)

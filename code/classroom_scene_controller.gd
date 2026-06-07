@@ -55,6 +55,7 @@ func _process(_delta: float) -> void:
 	if not Input.is_action_just_pressed("ui_accept"):
 		return
 	if player.global_position.distance_to(door_interactable.global_position) <= door_interaction_distance:
+		_play_sfx(&"door")
 		get_tree().change_scene_to_file("res://scenes/Hallway.tscn")
 
 
@@ -64,12 +65,14 @@ func handle_action(action: StringName) -> void:
 			if candy_collected:
 				return
 			candy_collected = true
+			_play_sfx(&"star")
 			_disable_action(action)
 			await _show_dialogue(candy_dialogue_resource)
 		&"photo":
 			await _run_photo_interaction()
 		&"sad_door":
 			if classroom_sad_active:
+				_play_sfx(&"door")
 				get_tree().change_scene_to_file("res://scenes/Hallway.tscn")
 
 
@@ -99,6 +102,7 @@ func _run_photo_interaction() -> void:
 		return
 
 	photo_interaction_running = true
+	_play_sfx(&"photo")
 	_disable_action(&"photo")
 	if photo_pickup != null:
 		photo_pickup.visible = false
@@ -120,6 +124,7 @@ func _activate_sad_classroom() -> void:
 		return
 
 	classroom_sad_active = true
+	_play_sfx(&"transition", -2.0)
 	_play_scene_music(&"classroom_sad", 0.9)
 	if background != null and sad_background != null:
 		if background.texture == null:
@@ -226,4 +231,10 @@ func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> voi
 	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
 	if audio_manager != null and audio_manager.has_method("play_music"):
 		audio_manager.call("play_music", music_key, fade_seconds)
+
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)
 

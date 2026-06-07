@@ -297,6 +297,7 @@ func _start_melee() -> void:
 	velocity.x = 0.0
 	if is_flying_boss:
 		velocity.y = 0.0
+	_play_sfx(&"robot_shoot", -3.0, 0.9)
 	_play_state(&"attack")
 
 
@@ -327,6 +328,7 @@ func _start_dash() -> void:
 	else:
 		ram_target_position = global_position + Vector2(float(facing_direction) * 180.0, 0.0)
 
+	_play_sfx(&"robot_dash", -2.0)
 	_play_state(&"dash")
 
 
@@ -364,6 +366,7 @@ func _start_shoot() -> void:
 	velocity.x = 0.0
 	if is_flying_boss:
 		velocity.y = 0.0
+	_play_sfx(&"robot_shoot")
 	_play_state(&"shoot")
 
 
@@ -389,6 +392,7 @@ func _start_slam() -> void:
 	slam_timer = slam_cooldown
 	velocity.y = -260.0
 	velocity.x = float(facing_direction) * 95.0
+	_play_sfx(&"robot_jump", -2.0)
 	_play_state(&"fly")
 
 
@@ -398,6 +402,7 @@ func _update_slam(delta: float) -> void:
 		_play_state(&"slam")
 		velocity.x = float(facing_direction) * 160.0
 		if is_on_floor():
+			_play_sfx(&"robot_stomp")
 			_damage_targets_in_attack_area(melee_damage + 12)
 			state_timer = 0.0
 	if state_timer <= 0.0:
@@ -448,12 +453,14 @@ func _spawn_projectile() -> void:
 
 	if projectile.has_method("setup"):
 		projectile.call("setup", direction, projectile_damage, "players")
+	_play_sfx(&"robot_shoot", -4.0, 1.08)
 
 
 func take_damage(amount: int, source: Node = null) -> void:
 	if dead or hurt_timer > 0.0:
 		return
 	hurt_timer = invulnerability_time
+	_play_sfx(&"minion_damage", -6.0)
 	var previous_health: int = health
 	var final_amount: int = maxi(1, int(round(float(amount) * damage_taken_multiplier)))
 	health -= final_amount
@@ -486,10 +493,10 @@ func _die() -> void:
 	if fall_on_death:
 		is_flying_boss = false
 		gravity = maxf(gravity, 850.0)
+	_play_sfx(&"final_explosion" if boss_id == &"final_boss" else &"robot_explosion")
 	_play_state(&"death")
 	$CollisionShape2D.set_deferred("disabled", true)
 	$AttackArea/CollisionShape2D.set_deferred("disabled", true)
-	_emit_defeated_after_death_animation()
 	if remove_after_death_seconds > 0.0:
 		_remove_after_death()
 
@@ -501,6 +508,7 @@ func _remove_after_death() -> void:
 	await tree.create_timer(remove_after_death_seconds).timeout
 	if is_instance_valid(self):
 		queue_free()
+	_emit_defeated_after_death_animation()
 
 
 func _emit_defeated_after_death_animation() -> void:
@@ -510,7 +518,6 @@ func _emit_defeated_after_death_animation() -> void:
 	defeated_signal_emitted = true
 	await get_tree().create_timer(_get_animation_duration(&"death", 0.7)).timeout
 	defeated.emit(self)
-
 
 
 func is_alive() -> bool:
@@ -560,6 +567,7 @@ func _spawn_robot_piece() -> void:
 	var direction: int = -1 if fall_target_position.x > global_position.x else 1
 	if piece.has_method("setup"):
 		piece.call("setup", texture, direction, fall_target_position.y)
+	_play_sfx(&"robot_explosion", -3.0, 1.15)
 
 
 func _update_facing(to_target: Vector2) -> void:
@@ -603,3 +611,9 @@ func _show_animation(anim_name: StringName) -> void:
 		var sprite: Node = get_node_or_null(NodePath(node_name))
 		if sprite is Sprite2D:
 			(sprite as Sprite2D).visible = node_name == anim_name
+
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)

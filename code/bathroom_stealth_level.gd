@@ -30,6 +30,9 @@ var spots: Array[Area2D] = []
 
 func _ready() -> void:
 	_play_scene_music(&"bathroom", 0.75)
+	# Reproduce la puerta al llegar al baño, después de cargar la escena.
+	# Esto evita que el SFX interrumpa o bloquee la transición desde el pasillo.
+	_play_sfx(&"door", -2.0)
 	time_left = level_duration
 	if exit_door != null and exit_door.has_method("set_enabled"):
 		exit_door.call("set_enabled", false)
@@ -64,6 +67,7 @@ func start_stealth_sequence() -> void:
 
 	active = true
 	finished = false
+	_play_sfx(&"bathroom_warning", -1.5)
 	time_left = level_duration
 	current_hidden_spot = null
 	if timer_label != null:
@@ -86,6 +90,7 @@ func request_hide(spot: Area2D) -> void:
 	if player == null:
 		return
 	if player.has_method("hide_in_bathroom"):
+		_play_sfx(&"bathroom_cubicle")
 		var hide_position: Vector2 = spot.global_position
 		if spot.has_method("get_hide_position"):
 			hide_position = spot.call("get_hide_position")
@@ -105,6 +110,7 @@ func request_unhide(spot: Area2D) -> void:
 	if player == null:
 		return
 	if player.has_method("unhide_from_bathroom"):
+		_play_sfx(&"bathroom_locker", -2.0)
 		var exit_position: Vector2 = spot.global_position
 		if spot.has_method("get_exit_position"):
 			exit_position = spot.call("get_exit_position")
@@ -123,6 +129,7 @@ func defeat() -> void:
 		return
 	finished = true
 	active = false
+	_play_sfx(&"bathroom_detect")
 	get_tree().reload_current_scene()
 
 
@@ -239,10 +246,17 @@ func _on_exit_door_interacted(action: StringName) -> void:
 	if not finished:
 		return
 	if exit_target_scene != "":
+		_play_sfx(&"door")
 		get_tree().change_scene_to_file(exit_target_scene)
 
 func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> void:
 	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
 	if audio_manager != null and audio_manager.has_method("play_music"):
 		audio_manager.call("play_music", music_key, fade_seconds)
+
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)
 

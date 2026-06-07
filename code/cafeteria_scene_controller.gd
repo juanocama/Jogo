@@ -24,9 +24,11 @@ func handle_action(action: StringName) -> void:
 
 	match action:
 		&"cafeteria_candy":
+			_play_sfx(&"star")
 			await _show_dialogue_for_action(action, candy_dialogue_resource)
 			_hide_pickup(candy_pickup)
 		&"rod_pickup":
+			_play_sfx(&"pickup")
 			await _show_dialogue_for_action(action, rod_dialogue_resource)
 			_hide_pickup(rod_pickup)
 			if rod_target_scene != "":
@@ -82,3 +84,8 @@ func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> voi
 	if audio_manager != null and audio_manager.has_method("play_music"):
 		audio_manager.call("play_music", music_key, fade_seconds)
 
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)

@@ -43,12 +43,14 @@ func _start_dialogue() -> void:
 		return
 
 	interaction_started = true
+	_play_sfx(&"interact", -2.0)
 	_disable_interaction()
 	GameManager.is_dialogue_active = true
 	DialogueManager.show_dialogue_balloon(dialogue_resource)
 	await DialogueManager.dialogue_ended
 	await get_tree().create_timer(0.2).timeout
 	GameManager.is_dialogue_active = false
+	_play_sfx(&"transition", -2.0)
 	_change_background()
 	sad_bathroom_activated.emit()
 
@@ -102,3 +104,9 @@ func _on_body_exited(body: Node2D) -> void:
 		player_is_close = false
 		if exclamation_mark != null:
 			exclamation_mark.visible = false
+
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)

@@ -30,13 +30,16 @@ func handle_action(action: StringName) -> void:
 
 	match action:
 		&"bath_door_in":
+			_play_sfx(&"door")
 			await _show_dialogue_for_action(action, bath_door_dialogue_resource)
 			get_tree().change_scene_to_file("res://scenes/Cafeteria.tscn")
 		&"gun_pickup":
+			_play_sfx(&"pickup")
 			await _show_dialogue_for_action(action, gun_pickup_dialogue_resource)
 			await _play_burned_hallway_glitch()
 			_hide_pickup(gun_pickup)
 		&"candy_2":
+			_play_sfx(&"star")
 			await _show_dialogue_for_action(action, candy_dialogue_resource)
 			_hide_pickup(candy_pickup)
 
@@ -71,6 +74,8 @@ func _hide_pickup(pickup: Node2D) -> void:
 func _play_burned_hallway_glitch() -> void:
 	if background == null or burned_background_texture == null:
 		return
+
+	_play_sfx(&"transition", -3.0)
 
 	var normal_texture: Texture2D = background.texture
 	var normal_scale: Vector2 = background.scale
@@ -107,4 +112,10 @@ func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> voi
 	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
 	if audio_manager != null and audio_manager.has_method("play_music"):
 		audio_manager.call("play_music", music_key, fade_seconds)
+
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)
 

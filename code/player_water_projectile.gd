@@ -47,4 +47,11 @@ func _on_body_entered(body: Node) -> void:
 		var max_health_value: int = int(body.get("max_health"))
 		var damage: int = maxi(1, int(round(float(max_health_value) * damage_percent)))
 		body.call("take_damage", damage, self)
+		_play_sfx(&"minion_damage", -7.0, 1.2)
 		queue_free()
+
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)

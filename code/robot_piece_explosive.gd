@@ -50,6 +50,7 @@ func _explode() -> void:
 		return
 
 	exploded = true
+	_play_sfx(&"robot_explosion", -5.0, 1.18)
 	velocity = Vector2.ZERO
 	if sprite != null:
 		sprite.frame = maxi(0, sprite.hframes - 1)
@@ -79,3 +80,9 @@ func _on_body_entered(body: Node) -> void:
 func _damage_body(body: Node) -> void:
 	if body != null and body.is_in_group("players") and body.has_method("take_damage"):
 		body.call("take_damage", damage, self)
+
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)

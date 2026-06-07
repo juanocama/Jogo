@@ -2,8 +2,8 @@ extends Node
 
 const ACTIVE_DURATION: float = 5.0
 const FIRST_PHASE_ACTIVE_DURATION: float = 3.0
-const REST_DURATION: float = 7.0
-const FIRST_PHASE_TRIGGER_CHANCE: float = 0.20
+const REST_DURATION: float = 5.0
+const FIRST_PHASE_TRIGGER_CHANCE: float = 0.28
 const DELAY_SECONDS: float = 0.2
 const ENTROPY_FADE_TIME: float = 0.35
 
@@ -103,13 +103,6 @@ func force_all_effects(duration: float = ACTIVE_DURATION) -> void:
 	_start_effects(effects, duration)
 
 
-func force_background(background_name: StringName, duration: float = ACTIVE_DURATION) -> void:
-	_clear_effect()
-	active_effect = background_name
-	active_timer = duration
-	_apply_entropy_background()
-
-
 func _start_effect(effect_name: StringName, forced_duration: float = -1.0) -> void:
 	var effects: Array[StringName] = [effect_name]
 	_start_effects(effects, forced_duration)
@@ -127,6 +120,7 @@ func _start_effects(effect_names: Array[StringName], forced_duration: float = -1
 	_apply_entropy_background()
 
 	for effect_name: StringName in active_effects:
+		_play_entropy_sfx(effect_name)
 		match effect_name:
 			&"delay":
 				if player != null and player.has_method("apply_entropy_delay"):
@@ -207,10 +201,6 @@ func _get_entropy_background_texture() -> Texture2D:
 			return invert_background_texture
 		&"flip":
 			return flip_background_texture
-		&"fire":
-			return delay_background_texture
-		&"ambush", &"mix":
-			return mixed_background_texture
 	return null
 
 
@@ -256,6 +246,22 @@ func _set_screen_rotation(target_rotation: float) -> void:
 		return
 	scene_camera.ignore_rotation = false
 	scene_camera.rotation = target_rotation
+
+
+func _play_entropy_sfx(effect_name: StringName) -> void:
+	match effect_name:
+		&"delay":
+			_play_sfx(&"entropy_lag", -3.0)
+		&"invert":
+			_play_sfx(&"entropy_invert", -3.0)
+		&"flip":
+			_play_sfx(&"camera_flip", -3.0)
+
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)
 
 
 func _get_boss_health_percent() -> float:

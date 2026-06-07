@@ -15,13 +15,13 @@ const DASH_DURATION: float = 0.24
 const DASH_IMPULSE_DISTANCE: float = 22.0
 const DASH_DOUBLE_TAP_WINDOW: float = 0.28
 const ROD_ATTACK_DURATION: float = 0.34
-const ROD_ATTACK_DAMAGE_PERCENT: float = 0.07
+const ROD_ATTACK_DAMAGE_PERCENT: float = 0.06
 const ROD_ATTACK_COOLDOWN: float = 0.55
 const ROD_ATTACK_RANGE: float = 120.0
 const ROD_ATTACK_HEIGHT: float = 90.0
 const WATER_ATTACK_DURATION: float = 0.28
-const WATER_PROJECTILE_DAMAGE_PERCENT: float = 0.016
-const WATER_ATTACK_COOLDOWN: float = 0.38
+const WATER_PROJECTILE_DAMAGE_PERCENT: float = 0.02
+const WATER_ATTACK_COOLDOWN: float = 0.5
 const WATER_PROJECTILE_OFFSET: Vector2 = Vector2(84.0, -52.0)
 const WATER_PROJECTILE_SCENE: PackedScene = preload("res://scenes/player_water_projectile.tscn")
 const MAX_HEARTS: int = 5
@@ -181,9 +181,11 @@ func _handle_attack_input() -> void:
 		return
 
 	if left_mouse_just_pressed and rod_attack_cooldown_timer <= 0.0:
+		_play_sfx(&"player_melee")
 		_start_attack(&"RodAttack", ROD_ATTACK_DURATION)
 		rod_attack_cooldown_timer = ROD_ATTACK_COOLDOWN
 	elif right_mouse_just_pressed and water_attack_cooldown_timer <= 0.0:
+		_play_sfx(&"player_water")
 		_start_attack(&"WaterAttack", WATER_ATTACK_DURATION)
 		water_attack_cooldown_timer = WATER_ATTACK_COOLDOWN
 
@@ -455,10 +457,12 @@ func take_damage(_amount: int, _source: Node = null) -> void:
 		return
 
 	hearts -= 1
+	_play_sfx(&"player_hurt")
 	damage_invulnerability_timer = DAMAGE_INVULNERABILITY_TIME
 	_update_hearts_ui()
 
 	if hearts <= 0:
+		_play_sfx(&"game_over")
 		get_tree().reload_current_scene()
 
 
@@ -476,3 +480,9 @@ func is_alive() -> bool:
 	# Solo para compatibilidad con la IA de los robots.
 	# No significa que el personaje tenga sistema de vida todavía.
 	return hearts > 0
+
+
+func _play_sfx(sfx_key: StringName, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_sfx"):
+		audio_manager.call("play_sfx", sfx_key, volume_db, pitch_scale)

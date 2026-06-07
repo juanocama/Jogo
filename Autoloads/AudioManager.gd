@@ -24,6 +24,7 @@ const SFX: Dictionary = {
 	&"game_over": "res://audios/GameOver.wav",
 	&"interact": "res://audios/Interactuar.wav",
 	&"pickup": "res://audios/RecogerItem.wav",
+	&"star": "res://audios/RecogerItem.wav",
 	&"door": "res://audios/Puertas.wav",
 	&"photo": "res://audios/Foto.wav",
 	&"candy": "res://audios/Caramelo .wav",
@@ -129,6 +130,13 @@ func play_sfx(key_or_path: Variant, volume_db: float = 0.0, pitch_scale: float =
 		push_warning("AudioManager: no se encontro SFX para: %s" % str(key_or_path))
 		return
 
+	if not ResourceLoader.exists(path):
+		push_warning("AudioManager: el archivo SFX no existe: %s" % path)
+		return
+
+	if _sfx_players.is_empty():
+		_create_sfx_pool()
+
 	var stream: AudioStream = load(path) as AudioStream
 	if stream == null:
 		push_warning("AudioManager: no se pudo cargar SFX: %s" % path)
@@ -183,6 +191,9 @@ func _create_sfx_pool() -> void:
 
 
 func _get_available_sfx_player() -> AudioStreamPlayer:
+	if _sfx_players.is_empty():
+		_create_sfx_pool()
+
 	for player: AudioStreamPlayer in _sfx_players:
 		if not player.playing:
 			return player
