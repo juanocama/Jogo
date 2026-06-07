@@ -20,6 +20,7 @@ var completed_actions: Dictionary = {}
 
 
 func _ready() -> void:
+	_play_scene_music(&"hallway", 0.75)
 	_connect_action_interactables()
 
 
@@ -101,3 +102,9 @@ func _disable_action(action: StringName) -> void:
 		var node_action: StringName = StringName(node.get("action"))
 		if node_action == action:
 			node.call("set_enabled", false)
+
+func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> void:
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("play_music"):
+		audio_manager.call("play_music", music_key, fade_seconds)
+
