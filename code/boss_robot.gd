@@ -489,7 +489,6 @@ func _die() -> void:
 	_play_state(&"death")
 	$CollisionShape2D.set_deferred("disabled", true)
 	$AttackArea/CollisionShape2D.set_deferred("disabled", true)
-<<<<<<< HEAD
 	if remove_after_death_seconds > 0.0:
 		_remove_after_death()
 
@@ -501,7 +500,6 @@ func _remove_after_death() -> void:
 	await tree.create_timer(remove_after_death_seconds).timeout
 	if is_instance_valid(self):
 		queue_free()
-=======
 	_emit_defeated_after_death_animation()
 
 
@@ -512,7 +510,6 @@ func _emit_defeated_after_death_animation() -> void:
 	defeated_signal_emitted = true
 	await get_tree().create_timer(_get_animation_duration(&"death", 0.7)).timeout
 	defeated.emit(self)
->>>>>>> main
 
 
 func is_alive() -> bool:
