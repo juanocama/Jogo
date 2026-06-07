@@ -3,6 +3,11 @@ extends Node
 @export var bath_door_dialogue_resource: DialogueResource
 @export var gun_pickup_dialogue_resource: DialogueResource
 @export var candy_dialogue_resource: DialogueResource
+@export var gun_pickup_path: NodePath
+@export var candy_pickup_path: NodePath
+
+@onready var gun_pickup: Node2D = get_node_or_null(gun_pickup_path) as Node2D
+@onready var candy_pickup: Node2D = get_node_or_null(candy_pickup_path) as Node2D
 
 var dialogue_running: bool = false
 var completed_actions: Dictionary = {}
@@ -22,8 +27,10 @@ func handle_action(action: StringName) -> void:
 			get_tree().change_scene_to_file("res://scenes/bathroom.tscn")
 		&"gun_pickup":
 			await _show_dialogue_for_action(action, gun_pickup_dialogue_resource)
+			_hide_pickup(gun_pickup)
 		&"candy_2":
 			await _show_dialogue_for_action(action, candy_dialogue_resource)
+			_hide_pickup(candy_pickup)
 
 
 func _show_dialogue_for_action(action: StringName, resource: DialogueResource) -> void:
@@ -46,6 +53,11 @@ func _show_dialogue(resource: DialogueResource) -> void:
 	await get_tree().create_timer(0.2).timeout
 	GameManager.is_dialogue_active = false
 	dialogue_running = false
+
+
+func _hide_pickup(pickup: Node2D) -> void:
+	if pickup != null:
+		pickup.visible = false
 
 
 func _connect_action_interactables() -> void:

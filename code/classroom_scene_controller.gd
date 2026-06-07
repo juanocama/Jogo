@@ -54,7 +54,7 @@ func _process(_delta: float) -> void:
 	if not Input.is_action_just_pressed("ui_accept"):
 		return
 	if player.global_position.distance_to(door_interactable.global_position) <= door_interaction_distance:
-		get_tree().reload_current_scene()
+		get_tree().change_scene_to_file("res://scenes/Hallway.tscn")
 
 
 func handle_action(action: StringName) -> void:
@@ -69,7 +69,7 @@ func handle_action(action: StringName) -> void:
 			await _run_photo_interaction()
 		&"sad_door":
 			if classroom_sad_active:
-				get_tree().reload_current_scene()
+				get_tree().change_scene_to_file("res://scenes/Hallway.tscn")
 
 
 func _run_intro() -> void:

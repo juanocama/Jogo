@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://cocwlmd8vj3uf"]
 
 [ext_resource type="Script" uid="uid://cx2h8vm6i2mbm" path="res://code/Hallway_controller.tscn.gd" id="1_24mfg"]
-[ext_resource type="Texture2D" uid="uid://celg0tmqgxvop" path="res://assets/UN MUNDO QUE SE ROMPE.png" id="1_egbau"]
+[ext_resource type="Texture2D" uid="uid://celg0tmqgxvop" path="res://assets/hallway/Hallway.png" id="1_egbau"]
+[ext_resource type="Resource" uid="uid://baqaf3c6qssyi" path="res://Dialogue/Hallway/BathDoorIn.dialogue" id="2_bath"]
 [ext_resource type="Script" uid="uid://cjg7d1g7tksc8" path="res://code/pseudo_3d_player.gd" id="2_inlpd"]
-[ext_resource type="Resource" path="res://Dialogue/Hallway/BathDoorIn.dialogue" id="2_iwivi"]
 [ext_resource type="Texture2D" uid="uid://dwqq66htnkwkr" path="res://assets/nino_3d/nino_idle_down.png" id="3_5va5p"]
-[ext_resource type="Resource" path="res://Dialogue/Hallway/GunPickup.dialogue" id="3_wsp47"]
+[ext_resource type="Resource" uid="uid://xoe71f1w1qbg" path="res://Dialogue/Hallway/GunPickup.dialogue" id="3_gun"]
 [ext_resource type="Texture2D" uid="uid://qyd752wh20kv" path="res://assets/nino_3d/nino_walk_down.png" id="4_5jyi7"]
-[ext_resource type="Resource" path="res://Dialogue/Hallway/Candy2.dialogue" id="4_r7jtc"]
+[ext_resource type="Resource" uid="uid://dj3leugyjqjfn" path="res://Dialogue/Hallway/Candy2.dialogue" id="4_r7jtc"]
 [ext_resource type="Texture2D" uid="uid://2yummbox3vfi" path="res://assets/nino_3d/nino_run_down.png" id="5_fgls2"]
 [ext_resource type="Texture2D" uid="uid://b1hlkrph2sfwv" path="res://assets/nino_3d/nino_idle_up.png" id="6_eb016"]
 [ext_resource type="Texture2D" uid="uid://bvblafsjrad8e" path="res://assets/nino_3d/nino_walk_up.png" id="7_xjknv"]
@@ -18,12 +18,13 @@
 [ext_resource type="Texture2D" uid="uid://cgjrajgaeu7u4" path="res://assets/candy.png" id="12_5jyi7"]
 [ext_resource type="Script" uid="uid://h6nwgdloptpe" path="res://code/classroom_action_interactable.gd" id="13_fgls2"]
 [ext_resource type="Texture2D" uid="uid://bmwestplf578s" path="res://assets/star_16x16.png" id="14_eb016"]
+[ext_resource type="Texture2D" uid="uid://c1yfe0pbx7q3v" path="res://assets/hallway/WaterGun.png" id="17_xjknv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r7jtc"]
 size = Vector2(1136, 59.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xjknv"]
-size = Vector2(64, 64)
+size = Vector2(96, 56)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q21le"]
 height = 24.0
@@ -35,9 +36,11 @@ size = Vector2(101, 193)
 
 [node name="SceneController" type="Node" parent="." unique_id=1304260321]
 script = ExtResource("1_24mfg")
-bath_door_dialogue_resource = ExtResource("2_iwivi")
-gun_pickup_dialogue_resource = ExtResource("3_wsp47")
+bath_door_dialogue_resource = ExtResource("2_bath")
+gun_pickup_dialogue_resource = ExtResource("3_gun")
 candy_dialogue_resource = ExtResource("4_r7jtc")
+gun_pickup_path = NodePath("../GunPickup")
+candy_pickup_path = NodePath("../Candy2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1530251129]
 position = Vector2(576.25006, 325)
@@ -74,6 +77,7 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("14_eb016")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Candy2/PhotoPoint" unique_id=859821328]
+position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_xjknv")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1828645380 groups=["players"]]
@@ -108,14 +112,14 @@ position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_q21le")
 
 [node name="GunPickup" type="Node2D" parent="." unique_id=53128419]
-position = Vector2(360, 424)
+position = Vector2(360, 456)
 scale = Vector2(0.5, 0.5)
 
 [node name="PhotoProp" type="Sprite2D" parent="GunPickup" unique_id=165705469]
 position = Vector2(2, 22)
 rotation = 0.08726646
-scale = Vector2(0.06, 0.06)
-texture = ExtResource("12_5jyi7")
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("17_xjknv")
 
 [node name="PhotoPoint" type="Area2D" parent="GunPickup" unique_id=944480314 groups=["classroom_actions"]]
 script = ExtResource("13_fgls2")
@@ -123,11 +127,12 @@ action = &"gun_pickup"
 
 [node name="ExclamationMark" type="Sprite2D" parent="GunPickup/PhotoPoint" unique_id=15578124]
 z_index = 1
-position = Vector2(6, -216)
+position = Vector2(18, -230)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("14_eb016")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GunPickup/PhotoPoint" unique_id=329385040]
+position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_xjknv")
 
 [node name="BathDoorIn" type="Area2D" parent="." unique_id=1858066333 groups=["classroom_actions"]]
@@ -140,7 +145,6 @@ position = Vector2(20, -174)
 shape = SubResource("RectangleShape2D_iwivi")
 
 [node name="ExclamationMark" type="Sprite2D" parent="BathDoorIn" unique_id=281552662]
-visible = false
-position = Vector2(-164, -174)
-scale = Vector2(1.7499998, 1.7500005)
+position = Vector2(19, -217)
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("14_eb016")
