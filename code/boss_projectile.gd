@@ -13,6 +13,7 @@ var direction: Vector2 = Vector2.LEFT
 
 
 func _ready() -> void:
+	add_to_group("robot_projectiles")
 	direction = direction.normalized()
 	if direction == Vector2.ZERO:
 		direction = Vector2.LEFT
@@ -20,7 +21,10 @@ func _ready() -> void:
 		anim_player.play(&"fly")
 	if sprite != null and direction.x > 0.0:
 		sprite.flip_h = true
-	await get_tree().create_timer(lifetime).timeout
+	var tree: SceneTree = get_tree()
+	if tree == null:
+		return
+	await tree.create_timer(lifetime).timeout
 	if is_inside_tree():
 		queue_free()
 
