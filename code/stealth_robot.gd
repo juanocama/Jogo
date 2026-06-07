@@ -19,6 +19,9 @@ enum RobotState {
 @export var detection_probability: float = 0.45
 @export var capture_distance: float = 35.0
 @export var hidden_inspection_delay: float = 7.0
+@export var confused_duration_multiplier: float = 0.45
+@export var confused_speed_multiplier: float = 0.8
+@export var close_visible_detection_range: float = 170.0
 @export var frame_count: int = 6
 @export var idle_fps: float = 7.0
 @export var walk_fps: float = 10.0
@@ -89,7 +92,7 @@ func notify_player_hidden(spot: Area2D) -> void:
 
 	target_spot = spot
 	state = RobotState.CONFUSED
-	confused_timer = hidden_inspection_delay
+	confused_timer = hidden_inspection_delay * confused_duration_multiplier
 	if alert_question_texture != null:
 		_set_alert(alert_question_texture)
 
@@ -124,17 +127,19 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_search(delta: float) -> void:
+	_move_along_patrol(delta, normal_speed)
+	_update_detection(delta)
+
+
+func _move_along_patrol(delta: float, speed: float) -> void:
 	if patrol_points.is_empty():
-		_update_detection(delta)
 		_apply_animation(delta, Vector2.ZERO)
 		return
 
 	var target: Vector2 = patrol_points[patrol_index]
-	_move_towards(target, normal_speed, delta)
+	_move_towards(target, speed, delta)
 	if global_position.distance_to(target) <= 10.0:
 		patrol_index = (patrol_index + 1) % patrol_points.size()
-
-	_update_detection(delta)
 
 
 func _update_detection(delta: float) -> void:
@@ -147,9 +152,10 @@ func _update_detection(delta: float) -> void:
 		return
 	if player.has_method("is_hidden") and bool(player.call("is_hidden")):
 		return
-	if global_position.distance_to(player.global_position) > vision_range:
+	var distance_to_player: float = global_position.distance_to(player.global_position)
+	if distance_to_player > vision_range:
 		return
-	if rng.randf() > detection_probability:
+	if distance_to_player > close_visible_detection_range and rng.randf() > detection_probability:
 		return
 
 	state = RobotState.CHASING
@@ -169,13 +175,11 @@ func _update_chase(delta: float) -> void:
 
 
 func _update_confused(delta: float) -> void:
-	velocity = Vector2.ZERO
-	move_and_slide()
-	_apply_animation(delta, Vector2.ZERO)
+	_move_along_patrol(delta, normal_speed * confused_speed_multiplier)
 	if player != null and player.has_method("is_hidden") and not bool(player.call("is_hidden")):
 		target_spot = null
-		state = RobotState.SEARCHING
-		_set_alert(null)
+		state = RobotState.CHASING
+		_set_alert(alert_exclamation_texture)
 		return
 
 	confused_timer -= delta
@@ -229,7 +233,7 @@ func _move_towards(target: Vector2, speed: float, delta: float) -> void:
 
 
 func _check_touch_capture() -> void:
-	if state == RobotState.INACTIVE or state == RobotState.EXITING:
+	if state == RobotState.INACTIVE or state == RobotState.EXITING or state == RobotState.CONFUSED:
 		return
 	if player == null:
 		return

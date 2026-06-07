@@ -7,9 +7,11 @@ signal sad_bathroom_activated
 @export var sad_background: Texture2D
 
 @onready var exclamation_mark: Sprite2D = get_node_or_null("ExclamationMark") as Sprite2D
+@onready var collision_shape: CollisionShape2D = get_node_or_null("CollisionShape2D") as CollisionShape2D
 
 var player_is_close: bool = false
 var interaction_started: bool = false
+var interaction_consumed: bool = false
 
 
 func _ready() -> void:
@@ -33,12 +35,15 @@ func _start_dialogue() -> void:
 		return
 	if not player_is_close:
 		return
+	if interaction_consumed:
+		return
 	if GameManager.is_dialogue_active:
 		return
 	if dialogue_resource == null:
 		return
 
 	interaction_started = true
+	_disable_interaction()
 	GameManager.is_dialogue_active = true
 	DialogueManager.show_dialogue_balloon(dialogue_resource)
 	await DialogueManager.dialogue_ended
@@ -72,7 +77,20 @@ func _change_background() -> void:
 	background_node.scale = Vector2(previous_size.x / next_size.x, previous_size.y / next_size.y)
 
 
+func _disable_interaction() -> void:
+	interaction_consumed = true
+	player_is_close = false
+	monitoring = false
+	monitorable = false
+	if collision_shape != null:
+		collision_shape.set_deferred("disabled", true)
+	if exclamation_mark != null:
+		exclamation_mark.visible = false
+
+
 func _on_body_entered(body: Node2D) -> void:
+	if interaction_consumed:
+		return
 	if body.is_in_group("players"):
 		player_is_close = true
 		if exclamation_mark != null:
