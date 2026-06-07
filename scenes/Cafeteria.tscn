@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://mb5lnbwv6mec" path="res://assets/nino_3d/nino_run_side.png" id="11_tstj6"]
 [ext_resource type="Script" uid="uid://h6nwgdloptpe" path="res://code/classroom_action_interactable.gd" id="12_tff8m"]
 [ext_resource type="Texture2D" uid="uid://bmwestplf578s" path="res://assets/star_16x16.png" id="13_1eckh"]
+[ext_resource type="Texture2D" uid="uid://bbvacr2gv0x2p" path="res://assets/Cafeteria/varilla.png" id="15_rod"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_imjmv"]
 size = Vector2(251.5, 35.75)
@@ -115,9 +116,31 @@ action = &"candy_2"
 [node name="ExclamationMark" type="Sprite2D" parent="Candy2/PhotoPoint" unique_id=1222366338]
 z_index = 1
 position = Vector2(6, -216)
-scale = Vector2(1.5, 1.5)
+scale = Vector2(2, 2)
 texture = ExtResource("13_1eckh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Candy2/PhotoPoint" unique_id=689710735]
 position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_0d17p")
+
+[node name="Candy3" type="Node2D" parent="." unique_id=1957617909]
+position = Vector2(752, 624)
+scale = Vector2(0.25, 0.25)
+
+[node name="PhotoPoint" type="Area2D" parent="Candy3" unique_id=583054764 groups=["classroom_actions"]]
+script = ExtResource("12_tff8m")
+action = &"candy_2"
+
+[node name="ExclamationMark" type="Sprite2D" parent="Candy3/PhotoPoint" unique_id=1681339998]
+z_index = 1
+position = Vector2(6, -216)
+scale = Vector2(3, 3)
+texture = ExtResource("13_1eckh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Candy3/PhotoPoint" unique_id=687764917]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_0d17p")
+
+[node name="Sprite2D" type="Sprite2D" parent="Candy3" unique_id=2120581587]
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("15_rod")
