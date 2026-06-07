@@ -3,6 +3,8 @@ extends CharacterBody2D
 @export var walk_speed: float = 145.0
 @export var run_speed: float = 215.0
 @export var vertical_depth_scale: float = 0.72
+@export var walkable_area_group: StringName = &""
+@export var base_visual_scale: float = 0.27
 
 @export_group("Down")
 @export var idle_down_texture: Texture2D
@@ -26,15 +28,24 @@ extends CharacterBody2D
 @export var run_fps: float = 14.0
 @export var side_move_scale_multiplier: float = 1.2
 
+@export_group("Hiding")
+@export var hide_up_texture: Texture2D
+@export var unhide_down_texture: Texture2D
+@export var hide_frame_count: int = 6
+@export var hide_animation_duration: float = 0.75
+
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var shadow: Polygon2D = $Shadow
 @onready var camera: Camera2D = $Camera2D
 
+var control_locked: bool = false
 var frame_time: float = 0.0
 var current_frame: int = 0
 var last_facing: int = 1
 var last_direction: StringName = &"down"
 var current_animation_key: StringName = &""
+var player_hidden: bool = false
+var hiding_animation_active: bool = false
 
 
 func _ready() -> void:
@@ -46,12 +57,28 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if control_locked or hiding_animation_active:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		_update_depth_visuals()
+		return
+
+	if GameManager.is_dialogue_active:
+		velocity = Vector2.ZERO
+		_update_animation(delta, Vector2.ZERO, false)
+		_update_depth_visuals()
+		return
+
 	var input_vector: Vector2 = _get_input_vector()
 	var is_running: bool = Input.is_key_pressed(KEY_SHIFT)
 	var speed: float = run_speed if is_running else walk_speed
+	var previous_position: Vector2 = global_position
 
 	velocity = Vector2(input_vector.x, input_vector.y * vertical_depth_scale) * speed
 	move_and_slide()
+	if not _is_inside_walkable_area():
+		global_position = previous_position
+		velocity = Vector2.ZERO
 
 	if input_vector.x != 0.0:
 		last_facing = -1 if input_vector.x < 0.0 else 1
@@ -75,6 +102,43 @@ func _get_input_vector() -> Vector2:
 		direction.y += 1.0
 
 	return direction.normalized()
+
+
+func _is_inside_walkable_area() -> bool:
+	if walkable_area_group == &"":
+		return true
+
+	var areas: Array[Node] = get_tree().get_nodes_in_group(walkable_area_group)
+	if areas.is_empty():
+		return true
+
+	for area_node: Node in areas:
+		if _point_is_inside_area_shapes(global_position, area_node):
+			return true
+	return false
+
+
+func _point_is_inside_area_shapes(point: Vector2, area_node: Node) -> bool:
+	if area_node == null:
+		return false
+
+	for child: Node in area_node.get_children():
+		if not child is CollisionShape2D:
+			continue
+
+		var collision_shape: CollisionShape2D = child as CollisionShape2D
+		if collision_shape.disabled:
+			continue
+		if not collision_shape.shape is RectangleShape2D:
+			continue
+
+		var rectangle: RectangleShape2D = collision_shape.shape as RectangleShape2D
+		var half_size: Vector2 = rectangle.size * 0.5
+		var local_point: Vector2 = collision_shape.global_transform.affine_inverse() * point
+		if absf(local_point.x) <= half_size.x and absf(local_point.y) <= half_size.y:
+			return true
+
+	return false
 
 
 func _update_animation(delta: float, input_vector: Vector2, is_running: bool) -> void:
@@ -171,7 +235,7 @@ func _update_depth_visuals() -> void:
 	var visual_scale: float = lerpf(0.86, 1.08, depth_factor)
 	if current_animation_key == &"walk_side" or current_animation_key == &"run_side":
 		visual_scale *= side_move_scale_multiplier
-	sprite.scale = Vector2(0.27, 0.27) * visual_scale
+	sprite.scale = Vector2(base_visual_scale, base_visual_scale) * visual_scale
 
 	if shadow != null:
 		shadow.scale = Vector2(1.0, 0.72) * visual_scale
@@ -182,3 +246,68 @@ func _update_depth_visuals() -> void:
 
 func is_alive() -> bool:
 	return true
+
+
+func is_hidden() -> bool:
+	return player_hidden
+
+
+func is_control_locked() -> bool:
+	return control_locked
+
+
+func hide_in_bathroom(hide_position: Vector2) -> void:
+	if player_hidden or hiding_animation_active:
+		return
+
+	control_locked = true
+	hiding_animation_active = true
+	global_position = hide_position
+	last_direction = &"up"
+	await _play_one_shot_texture(hide_up_texture, hide_frame_count, hide_animation_duration, false)
+	player_hidden = true
+	hiding_animation_active = false
+	if sprite != null:
+		sprite.visible = false
+	if shadow != null:
+		shadow.visible = false
+
+
+func unhide_from_bathroom(exit_position: Vector2) -> void:
+	if not player_hidden or hiding_animation_active:
+		return
+
+	global_position = exit_position
+	player_hidden = false
+	hiding_animation_active = true
+	if sprite != null:
+		sprite.visible = true
+	if shadow != null:
+		shadow.visible = true
+	last_direction = &"down"
+	await _play_one_shot_texture(unhide_down_texture, hide_frame_count, hide_animation_duration, false)
+	hiding_animation_active = false
+	control_locked = false
+	current_animation_key = &""
+	_apply_visual_state(Vector2.ZERO, false)
+
+
+func force_control_locked(locked: bool) -> void:
+	control_locked = locked
+	if locked:
+		velocity = Vector2.ZERO
+
+
+func _play_one_shot_texture(texture: Texture2D, frames: int, duration: float, flip_horizontal: bool) -> void:
+	var active_frames: int = maxi(frames, 1)
+	var active_duration: float = maxf(duration, 0.05)
+	if sprite != null and texture != null:
+		sprite.texture = texture
+		sprite.hframes = active_frames
+		sprite.flip_h = flip_horizontal
+
+	var frame_delay: float = active_duration / float(active_frames)
+	for frame_index: int in range(active_frames):
+		if sprite != null:
+			sprite.frame = frame_index
+		await get_tree().create_timer(frame_delay).timeout
