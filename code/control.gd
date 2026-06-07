@@ -17,6 +17,11 @@ const GLITCH_STEPS: int = 9
 const GLITCH_JITTER_X: float = 34.0
 const GLITCH_JITTER_Y: float = 8.0
 
+@export var background_textures_override: Array[Texture2D] = []
+@export var play_once: bool = false
+@export var completion_hold_duration: float = 1.0
+@export_file("*.tscn") var completion_scene: String = ""
+
 @onready var image_a: TextureRect = $Image_A
 @onready var image_b: TextureRect = $Image_B
 
@@ -41,20 +46,30 @@ func _ready() -> void:
 
 	get_viewport().size_changed.connect(_update_background_size)
 	_update_background_size()
+	if play_once and not visible:
+		await visibility_changed
 	call_deferred("_run_background_loop")
 
 
 func _run_background_loop() -> void:
-	_show_texture(_active_image, BACKGROUND_TEXTURES[_current_index])
+	var textures: Array[Texture2D] = _get_background_textures()
+	if textures.is_empty():
+		return
+
+	_show_texture(_active_image, textures[_current_index])
 	_active_image.modulate.a = 1.0
 	_start_pan(_active_image)
+
+	if play_once:
+		await _run_once(textures)
+		return
 
 	while is_inside_tree():
 		await get_tree().create_timer(PAN_DURATION - FADE_DURATION).timeout
 		var previous_index: int = _current_index
-		_current_index = (_current_index + 1) % BACKGROUND_TEXTURES.size()
+		_current_index = (_current_index + 1) % textures.size()
 
-		_show_texture(_inactive_image, BACKGROUND_TEXTURES[_current_index])
+		_show_texture(_inactive_image, textures[_current_index])
 		_inactive_image.modulate.a = 0.0
 		_start_pan(_inactive_image)
 
@@ -66,6 +81,36 @@ func _run_background_loop() -> void:
 		var previous_image: TextureRect = _active_image
 		_active_image = _inactive_image
 		_inactive_image = previous_image
+
+
+func _get_background_textures() -> Array[Texture2D]:
+	if not background_textures_override.is_empty():
+		return background_textures_override
+	return BACKGROUND_TEXTURES
+
+
+func _run_once(textures: Array[Texture2D]) -> void:
+	for next_index: int in range(1, textures.size()):
+		await get_tree().create_timer(PAN_DURATION - FADE_DURATION).timeout
+		var previous_index: int = _current_index
+		_current_index = next_index
+
+		_show_texture(_inactive_image, textures[_current_index])
+		_inactive_image.modulate.a = 0.0
+		_start_pan(_inactive_image)
+
+		if _uses_glitch_transition(previous_index, _current_index):
+			await _play_glitch_transition()
+		else:
+			await _play_fade_transition()
+
+		var previous_image: TextureRect = _active_image
+		_active_image = _inactive_image
+		_inactive_image = previous_image
+
+	await get_tree().create_timer(completion_hold_duration).timeout
+	if completion_scene != "":
+		get_tree().change_scene_to_file(completion_scene)
 
 
 func _update_background_size() -> void:
