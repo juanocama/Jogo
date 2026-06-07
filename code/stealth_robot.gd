@@ -14,8 +14,8 @@ enum RobotState {
 @export var chase_speed: float = 185.0
 @export var enter_target: Vector2 = Vector2(80, 495)
 @export var exit_target: Vector2 = Vector2(-180, 495)
-@export var vision_range: float = 340.0
-@export var detection_interval: float = 2.2
+@export var vision_range: float = 440.0
+@export var detection_interval: float = 2.0
 @export var detection_probability: float = 0.45
 @export var capture_distance: float = 35.0
 @export var hidden_inspection_delay: float = 7.0
@@ -26,6 +26,8 @@ enum RobotState {
 @export var idle_fps: float = 7.0
 @export var walk_fps: float = 10.0
 @export var base_visual_scale: float = 0.88
+
+const CONFUSED_DURATION_MULTIPLIER: float = 0.7
 
 @export_group("Sprites")
 @export var idle_down_texture: Texture2D
@@ -233,6 +235,7 @@ func _move_towards(target: Vector2, speed: float, delta: float) -> void:
 
 
 func _check_touch_capture() -> void:
+	if state == RobotState.INACTIVE or state == RobotState.EXITING or state == RobotState.CONFUSED:
 	if state == RobotState.INACTIVE or state == RobotState.EXITING or state == RobotState.CONFUSED:
 		return
 	if player == null:
