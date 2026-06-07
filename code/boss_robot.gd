@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name BossRobot
 
+signal defeated(boss: BossRobot)
+
 @export var boss_id: StringName = &"robot_01"
 
 @export_category("Stats")
@@ -69,6 +71,7 @@ var ram_target_position: Vector2 = Vector2.ZERO
 var active_state_duration: float = 0.0
 var next_piece_drop_percent: float = 0.35
 var next_piece_texture_index: int = 0
+var defeated_signal_emitted: bool = false
 
 
 func _ready() -> void:
@@ -471,6 +474,16 @@ func _die() -> void:
 	_play_state(&"death")
 	$CollisionShape2D.set_deferred("disabled", true)
 	$AttackArea/CollisionShape2D.set_deferred("disabled", true)
+	_emit_defeated_after_death_animation()
+
+
+func _emit_defeated_after_death_animation() -> void:
+	if defeated_signal_emitted:
+		return
+
+	defeated_signal_emitted = true
+	await get_tree().create_timer(_get_animation_duration(&"death", 0.7)).timeout
+	defeated.emit(self)
 
 
 func is_alive() -> bool:
