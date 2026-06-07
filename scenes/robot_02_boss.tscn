@@ -1,17 +1,14 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://ccx1u3ks2dyo1"]
 
-[ext_resource type="Script" path="res://code/boss_robot.gd" id="script"]
 [ext_resource type="PackedScene" path="res://scenes/robot_02_projectile_soft.tscn" id="projectile_scene"]
-[ext_resource type="Texture2D" path="res://assets/Robot2/caminar.png" id="tex_idle"]
-[ext_resource type="Texture2D" path="res://assets/Robot2/caminar.png" id="tex_walk"]
-[ext_resource type="Texture2D" path="res://assets/Robot2/envestir.png" id="tex_dash"]
-[ext_resource type="Texture2D" path="res://assets/Robot2/golpeo.png" id="tex_attack"]
-[ext_resource type="Texture2D" path="res://assets/Robot2/disparar.png" id="tex_shoot"]
-[ext_resource type="Texture2D" path="res://assets/Robot2/volar.png" id="tex_fly"]
-[ext_resource type="Texture2D" path="res://assets/Robot2/caer con fuerza.png" id="tex_slam"]
-[ext_resource type="Texture2D" path="res://assets/Robot2/golpeo.png" id="tex_hit"]
-[ext_resource type="Texture2D" path="res://assets/Robot2/caer con fuerza.png" id="tex_death"]
-[ext_resource type="Texture2D" path="res://assets/Robot2/transformar tanque y disparo.png" id="tex_special"]
+[ext_resource type="Script" uid="uid://4chos6q1337" path="res://code/boss_robot.gd" id="script"]
+[ext_resource type="Texture2D" uid="uid://dm5o2jp05jcwc" path="res://assets/Robot2/envestir.png" id="tex_dash"]
+[ext_resource type="Texture2D" uid="uid://k8vbsqrcwp07" path="res://assets/Robot2/caer con fuerza.png" id="tex_death"]
+[ext_resource type="Texture2D" uid="uid://cgfgamhckbqxr" path="res://assets/Robot2/volar.png" id="tex_fly"]
+[ext_resource type="Texture2D" uid="uid://d37be7gip0ei5" path="res://assets/Robot2/golpeo.png" id="tex_hit"]
+[ext_resource type="Texture2D" uid="uid://c6cjufvisixp4" path="res://assets/Robot2/disparar.png" id="tex_shoot"]
+[ext_resource type="Texture2D" uid="uid://bvuyovahk71l2" path="res://assets/Robot2/transformar tanque y disparo.png" id="tex_special"]
+[ext_resource type="Texture2D" uid="uid://qu4lqjjbgwwe" path="res://assets/Robot2/caminar.png" id="tex_walk"]
 
 [sub_resource type="Animation" id="Animation_RESET"]
 resource_name = "RESET"
@@ -29,35 +26,17 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_idle"]
-resource_name = "idle"
-length = 0.75
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_attack"]
+resource_name = "attack"
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("idle:frame")
+tracks/0/path = NodePath("attack:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_walk"]
-resource_name = "walk"
-length = 0.75
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("walk:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -79,29 +58,13 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_attack"]
-resource_name = "attack"
+[sub_resource type="Animation" id="Animation_death"]
+resource_name = "death"
 length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("attack:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_shoot"]
-resource_name = "shoot"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("shoot:frame")
+tracks/0/path = NodePath("death:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -128,22 +91,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_slam"]
-resource_name = "slam"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("slam:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
 [sub_resource type="Animation" id="Animation_hit"]
 resource_name = "hit"
 length = 0.6
@@ -160,13 +107,46 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_death"]
-resource_name = "death"
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 0.75
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("idle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_shoot"]
+resource_name = "shoot"
 length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("death:frame")
+tracks/0/path = NodePath("shoot:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_slam"]
+resource_name = "slam"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("slam:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -193,30 +173,46 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
+[sub_resource type="Animation" id="Animation_walk"]
+resource_name = "walk"
+length = 0.75
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("walk:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_main"]
 _data = {
 &"RESET": SubResource("Animation_RESET"),
-&"idle": SubResource("Animation_idle"),
-&"walk": SubResource("Animation_walk"),
-&"dash": SubResource("Animation_dash"),
 &"attack": SubResource("Animation_attack"),
-&"shoot": SubResource("Animation_shoot"),
-&"fly": SubResource("Animation_fly"),
-&"slam": SubResource("Animation_slam"),
-&"hit": SubResource("Animation_hit"),
+&"dash": SubResource("Animation_dash"),
 &"death": SubResource("Animation_death"),
-&"special": SubResource("Animation_special")
+&"fly": SubResource("Animation_fly"),
+&"hit": SubResource("Animation_hit"),
+&"idle": SubResource("Animation_idle"),
+&"shoot": SubResource("Animation_shoot"),
+&"slam": SubResource("Animation_slam"),
+&"special": SubResource("Animation_special"),
+&"walk": SubResource("Animation_walk")
 }
 
 [sub_resource type="RectangleShape2D" id="BodyShape"]
-size = Vector2(58, 92)
+size = Vector2(43, 73)
 
 [sub_resource type="RectangleShape2D" id="AttackShape"]
 size = Vector2(68, 64)
 
-[node name="robot_02_boss" type="CharacterBody2D" groups=["bosses"]]
+[node name="robot_02_boss" type="CharacterBody2D" unique_id=1754539187 groups=["bosses"]]
 script = ExtResource("script")
-damage_enabled = false
 boss_id = &"robot_02"
 max_health = 330
 contact_damage = 14
@@ -228,89 +224,89 @@ shoot_cooldown = 2.2
 slam_cooldown = 4.5
 projectile_scene = ExtResource("projectile_scene")
 
-[node name="idle" type="Sprite2D" parent="."]
-visible = true
+[node name="idle" type="Sprite2D" parent="." unique_id=1138490491]
 position = Vector2(0, -60)
 scale = Vector2(0.42, 0.42)
-texture = ExtResource("tex_idle")
+texture = ExtResource("tex_walk")
 hframes = 6
 
-[node name="walk" type="Sprite2D" parent="."]
+[node name="walk" type="Sprite2D" parent="." unique_id=339913366]
 visible = false
 position = Vector2(0, -60)
 scale = Vector2(0.42, 0.42)
 texture = ExtResource("tex_walk")
 hframes = 6
 
-[node name="dash" type="Sprite2D" parent="."]
+[node name="dash" type="Sprite2D" parent="." unique_id=1692921802]
 visible = false
 position = Vector2(0, -60)
 scale = Vector2(0.42, 0.42)
 texture = ExtResource("tex_dash")
 hframes = 6
 
-[node name="attack" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(0, -60)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("tex_attack")
-hframes = 6
-
-[node name="shoot" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(0, -60)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("tex_shoot")
-hframes = 6
-
-[node name="fly" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(0, -60)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("tex_fly")
-hframes = 6
-
-[node name="slam" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(0, -60)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("tex_slam")
-hframes = 6
-
-[node name="hit" type="Sprite2D" parent="."]
+[node name="attack" type="Sprite2D" parent="." unique_id=337791462]
 visible = false
 position = Vector2(0, -60)
 scale = Vector2(0.42, 0.42)
 texture = ExtResource("tex_hit")
 hframes = 6
 
-[node name="death" type="Sprite2D" parent="."]
+[node name="shoot" type="Sprite2D" parent="." unique_id=1300676239]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_shoot")
+hframes = 6
+
+[node name="fly" type="Sprite2D" parent="." unique_id=2135875904]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_fly")
+hframes = 6
+
+[node name="slam" type="Sprite2D" parent="." unique_id=687865842]
 visible = false
 position = Vector2(0, -60)
 scale = Vector2(0.42, 0.42)
 texture = ExtResource("tex_death")
 hframes = 6
 
-[node name="special" type="Sprite2D" parent="."]
+[node name="hit" type="Sprite2D" parent="." unique_id=1933126163]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_hit")
+hframes = 6
+
+[node name="death" type="Sprite2D" parent="." unique_id=1670673161]
+visible = false
+position = Vector2(0, -60)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("tex_death")
+hframes = 6
+
+[node name="special" type="Sprite2D" parent="." unique_id=1295285004]
 visible = false
 position = Vector2(0, -60)
 scale = Vector2(0.42, 0.42)
 texture = ExtResource("tex_special")
 hframes = 6
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=670143102]
 libraries/ = SubResource("AnimationLibrary_main")
 speed_scale = 0.9
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -46)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2074894201]
+position = Vector2(1.5, -55.5)
 shape = SubResource("BodyShape")
 
-[node name="AttackArea" type="Area2D" parent="."]
+[node name="AttackArea" type="Area2D" parent="." unique_id=117516752]
 position = Vector2(-50, -48)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1919227109]
+position = Vector2(8, -3)
 shape = SubResource("AttackShape")
 
-[node name="ProjectileOrigin" type="Marker2D" parent="."]
+[node name="ProjectileOrigin" type="Marker2D" parent="." unique_id=1203953987]
 position = Vector2(-54, -54)

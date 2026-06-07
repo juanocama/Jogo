@@ -25,6 +25,7 @@ func handle_action(action: StringName) -> void:
 	match action:
 		&"cafeteria_candy":
 			await _show_dialogue_for_action(action, candy_dialogue_resource)
+			GameManager.collect_candy(&"cafeteria_candy2")
 			_hide_pickup(candy_pickup)
 		&"rod_pickup":
 			await _show_dialogue_for_action(action, rod_dialogue_resource)

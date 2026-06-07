@@ -19,6 +19,7 @@ const PHASE_TWO_MAX_MINIONS: int = 1
 const ROBOT2_PHASE_ONE_HEALTH: int = 45
 const ROBOT1_PHASE_ONE_HEALTH: int = 30
 const MINION_DAMAGE_TAKEN_MULTIPLIER: float = 6.0
+const MINION_MIN_SPAWN_DISTANCE: float = 260.0
 const FLOOR_Y: float = 188.0
 const LASER_BASE_PREPARE_TIME: float = 0.85
 const LASER_MIN_PREPARE_TIME: float = 0.28
@@ -28,6 +29,9 @@ const LASER_HIT_HALF_WIDTH: float = 115.0
 const LASER_FLOOR_Y: float = 125.0
 const LASER_TOP_Y: float = -390.0
 const LASER_GROUND_Y: float = 188.0
+const MIN_BOSS_ATTACK_ANIMATION_DURATION: float = 1.6
+const FINAL_ATTACK_IMPACT_TIME: float = 1.02
+const FINAL_ATTACK_RECOVERY_TIME: float = 0.58
 const SPECIAL_ENTROPY_COOLDOWN: float = 7.2
 const AMBUSH_PHASE_TWO_CHANCE: float = 0.07
 const AMBUSH_PHASE_THREE_CHANCE: float = 0.17
@@ -70,6 +74,7 @@ var dark_flash_rect: ColorRect = null
 var fire_entropy_active: bool = false
 var special_entropy_cooldown_timer: float = 0.0
 var active_fire_flames: Array[Sprite2D] = []
+var intro_dialogue_running: bool = false
 
 @onready var boss: Node2D = get_node_or_null(boss_path) as Node2D
 @onready var player: Node2D = get_node_or_null(player_path) as Node2D
@@ -84,6 +89,7 @@ func _ready() -> void:
 	_configure_boss()
 	_update_boss_health_ui()
 	_play_final_boss_music_for_phase(_get_phase(), 0.65)
+	call_deferred("_show_intro_candy_dialogue_if_needed")
 
 
 func _process(delta: float) -> void:
@@ -118,6 +124,30 @@ func _configure_boss() -> void:
 	boss.set("dash_timer", 9999.0)
 	boss.set("shoot_timer", 9999.0)
 	boss.set("slam_timer", 9999.0)
+
+
+func _show_intro_candy_dialogue_if_needed() -> void:
+	if not GameManager.should_show_final_battle_candy_dialogue():
+		return
+	if intro_dialogue_running or GameManager.is_dialogue_active:
+		return
+
+	intro_dialogue_running = true
+	action_locked = true
+	current_action = &"intro_dialogue"
+	GameManager.is_dialogue_active = true
+
+	var dialogue_text: String = GameManager.build_final_battle_candy_dialogue()
+	var resource: DialogueResource = DialogueManager.create_resource_from_text(dialogue_text) as DialogueResource
+	DialogueManager.show_dialogue_balloon(resource)
+	await DialogueManager.dialogue_ended
+	await _wait_seconds(0.2)
+
+	GameManager.mark_final_battle_candy_dialogue_shown()
+	GameManager.is_dialogue_active = false
+	action_locked = false
+	current_action = &""
+	intro_dialogue_running = false
 
 
 func _update_minions(delta: float) -> void:
@@ -179,7 +209,7 @@ func _spawn_robot1_minion() -> void:
 	_attach_minion_health_bar(minion, 44.0, -112.0)
 	if minion is Node2D:
 		var minion_2d: Node2D = minion as Node2D
-		minion_2d.global_position = Vector2(randf_range(140.0, 540.0), randf_range(65.0, 145.0))
+		minion_2d.global_position = _get_spaced_minion_spawn_position(120.0, 720.0, 65.0, 145.0)
 		minion_2d.scale *= 1.18
 	get_tree().current_scene.add_child(minion)
 	minion.add_to_group("final_minions")
@@ -201,7 +231,7 @@ func _spawn_robot2_minion() -> void:
 	_attach_minion_health_bar(minion, 56.0, -132.0)
 	if minion is Node2D:
 		var minion_2d: Node2D = minion as Node2D
-		minion_2d.global_position = Vector2(randf_range(260.0, 700.0), FLOOR_Y)
+		minion_2d.global_position = _get_spaced_minion_spawn_position(180.0, 760.0, FLOOR_Y, FLOOR_Y)
 		minion_2d.scale *= 1.16
 	get_tree().current_scene.add_child(minion)
 	minion.add_to_group("final_minions")
@@ -223,6 +253,29 @@ func _attach_minion_health_bar(minion: Node, half_width: float, y_offset: float)
 	health_bar.show_percentage = false
 	health_bar.modulate = Color(1.0, 0.18, 0.12, 1.0)
 	minion.add_child(health_bar)
+
+
+func _get_spaced_minion_spawn_position(min_x: float, max_x: float, min_y: float, max_y: float) -> Vector2:
+	var best_position: Vector2 = Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
+	var best_distance: float = -INF
+	for attempt: int in range(12):
+		var candidate: Vector2 = Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
+		var nearest_distance: float = INF
+		for node: Node in get_tree().get_nodes_in_group("final_minions"):
+			if not node is Node2D:
+				continue
+			if node.has_method("is_alive") and not bool(node.call("is_alive")):
+				continue
+			var distance: float = candidate.distance_to((node as Node2D).global_position)
+			nearest_distance = minf(nearest_distance, distance)
+		if nearest_distance == INF:
+			return candidate.round()
+		if nearest_distance >= MINION_MIN_SPAWN_DISTANCE:
+			return candidate.round()
+		if nearest_distance > best_distance:
+			best_distance = nearest_distance
+			best_position = candidate
+	return best_position.round()
 
 
 func _refresh_minion_health_bar(minion: Node) -> void:
@@ -309,7 +362,7 @@ func _get_boss_roll_interval(phase: int) -> float:
 func _start_boss_stomp() -> void:
 	var action_id: int = _begin_action(&"slam")
 	_play_boss_animation(&"slam")
-	await _wait_seconds(_get_slam_wait_time(0.78))
+	await _wait_seconds(MIN_BOSS_ATTACK_ANIMATION_DURATION)
 	if action_id != action_serial:
 		return
 	_apply_slam_entropy()
@@ -320,35 +373,35 @@ func _start_boss_shot(projectile_count: int = 1) -> void:
 	var action_id: int = _begin_action(&"shoot")
 	_play_boss_animation(&"shoot")
 	for projectile_index: int in range(projectile_count):
-		await _wait_seconds(_get_attack_wait_time(0.28 if projectile_index == 0 else 0.34))
+		await _wait_seconds(FINAL_ATTACK_IMPACT_TIME if projectile_index == 0 else 0.42)
 		if action_id != action_serial:
 			return
 		_spawn_final_projectile()
-	await _wait_seconds(_get_attack_wait_time(0.32))
+	await _wait_seconds(FINAL_ATTACK_RECOVERY_TIME)
 	_finish_action(action_id)
 
 
 func _start_boss_laser(laser_count: int = 1) -> void:
 	var action_id: int = _begin_action(&"laser")
 	_play_boss_animation(&"special")
-	await _wait_seconds(_get_attack_wait_time(0.25))
+	await _wait_seconds(MIN_BOSS_ATTACK_ANIMATION_DURATION)
 	if action_id != action_serial:
 		return
 	_spawn_laser_sequence(laser_count)
-	await _wait_seconds(_get_laser_prepare_time() + _get_attack_wait_time(LASER_ACTION_RECOVERY_TIME))
+	await _wait_seconds(_get_laser_prepare_time() + LASER_ACTION_RECOVERY_TIME)
 	_finish_action(action_id)
 
 
 func _start_boss_melee() -> void:
 	var action_id: int = _begin_action(&"melee")
 	_play_boss_animation(&"attack")
-	await _wait_seconds(_get_attack_wait_time(0.38))
+	await _wait_seconds(FINAL_ATTACK_IMPACT_TIME)
 	if action_id != action_serial:
 		return
 	if _is_player_near_boss_body(CLOSE_MELEE_HIT_DISTANCE) and player.has_method("take_damage"):
 		player.call("take_damage", 1, boss)
 		_push_player_to_middle()
-	await _wait_seconds(_get_attack_wait_time(0.35))
+	await _wait_seconds(FINAL_ATTACK_RECOVERY_TIME)
 	_finish_action(action_id)
 
 
@@ -374,7 +427,7 @@ func _start_dark_ambush() -> void:
 		if action_id != action_serial:
 			return
 		_play_boss_animation(&"attack")
-		await _wait_seconds(_get_attack_wait_time(0.30))
+		await _wait_seconds(FINAL_ATTACK_IMPACT_TIME)
 		if action_id != action_serial:
 			return
 		if _is_player_near_boss_body(CLOSE_MELEE_HIT_DISTANCE + 25.0) and player.has_method("take_damage"):
@@ -552,24 +605,6 @@ func _apply_slam_entropy() -> void:
 		entropy_controller.call("force_random_effect", 5.0)
 	elif entropy_controller.has_method("force_effect"):
 		entropy_controller.call("force_effect", &"delay", 5.0)
-
-
-func _get_attack_wait_time(base_time: float) -> float:
-	var phase: int = _get_phase()
-	if phase == 3:
-		return base_time * 0.52
-	if phase == 2:
-		return base_time * 0.72
-	return base_time
-
-
-func _get_slam_wait_time(base_time: float) -> float:
-	var phase: int = _get_phase()
-	if phase == 3:
-		return base_time * 0.42
-	if phase == 2:
-		return base_time * 0.58
-	return base_time
 
 
 func _begin_action(action_name: StringName) -> int:
@@ -763,23 +798,23 @@ func _play_boss_animation(animation_name: StringName) -> void:
 	if boss.has_method("_show_animation"):
 		boss.call("_show_animation", animation_name)
 	if anim_player != null and anim_player.has_animation(animation_name):
-		anim_player.speed_scale = _get_animation_speed_scale(animation_name)
+		anim_player.speed_scale = _get_animation_speed_scale(animation_name, anim_player)
 		anim_player.stop()
 		anim_player.play(animation_name)
 	elif boss.has_method("_play_state"):
 		boss.call("_play_state", animation_name)
 
 
-func _get_animation_speed_scale(animation_name: StringName) -> float:
-	if animation_name == &"slam":
-		if _get_phase() == 3:
-			return 1.85
-		if _get_phase() == 2:
-			return 1.55
-	if _get_phase() == 3 and (animation_name == &"attack" or animation_name == &"shoot" or animation_name == &"special" or animation_name == &"slam"):
-		return 1.45
-	if _get_phase() == 2 and (animation_name == &"attack" or animation_name == &"shoot" or animation_name == &"special"):
-		return 1.25
+func _get_animation_speed_scale(animation_name: StringName, anim_player: AnimationPlayer) -> float:
+	if animation_name != &"attack" and animation_name != &"shoot" and animation_name != &"special" and animation_name != &"slam":
+		return 1.0
+	if not anim_player.has_animation(animation_name):
+		return 1.0
+	var animation: Animation = anim_player.get_animation(animation_name)
+	if animation == null or animation.length <= 0.0:
+		return 1.0
+	if animation.length < MIN_BOSS_ATTACK_ANIMATION_DURATION:
+		return animation.length / MIN_BOSS_ATTACK_ANIMATION_DURATION
 	return 1.0
 
 

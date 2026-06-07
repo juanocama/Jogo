@@ -44,6 +44,7 @@ func handle_action(action: StringName) -> void:
 				bath_door.call("set_enabled", true)
 		&"candy_2":
 			await _show_dialogue_for_action(action, candy_dialogue_resource)
+			GameManager.collect_candy(&"hallway_candy2")
 			_hide_pickup(candy_pickup)
 
 

@@ -1,10 +1,10 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dksothn2gtxg"]
 
-[ext_resource type="Texture2D" path="res://assets/Robot2/proyectil suave.png" id="texture"]
-[ext_resource type="Script" path="res://code/boss_projectile.gd" id="script"]
+[ext_resource type="Script" uid="uid://jaslt0g2o35o" path="res://code/boss_projectile.gd" id="script"]
+[ext_resource type="Texture2D" uid="uid://bvtn1mj74y6p" path="res://assets/Robot2/proyectil suave.png" id="texture"]
 
 [sub_resource type="RectangleShape2D" id="ProjectileShape"]
-size = Vector2(28, 16)
+size = Vector2(13, 10)
 
 [sub_resource type="Animation" id="Animation_fly"]
 resource_name = "fly"
@@ -28,19 +28,20 @@ _data = {
 &"fly": SubResource("Animation_fly")
 }
 
-[node name="robot_02_projectile_soft" type="CharacterBody2D"]
+[node name="robot_02_projectile_soft" type="CharacterBody2D" unique_id=163070080]
 script = ExtResource("script")
 speed = 310.0
 damage = 18
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=105844461]
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("texture")
 hframes = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1344245803]
+position = Vector2(7.5, -1)
 shape = SubResource("ProjectileShape")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=656580606]
 libraries/ = SubResource("AnimationLibrary_main")
 speed_scale = 1.6

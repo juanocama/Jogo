@@ -1,14 +1,14 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b4r0585p1tv1s"]
 
-[ext_resource type="Script" path="res://code/boss_robot.gd" id="script"]
 [ext_resource type="PackedScene" path="res://scenes/final_boss_projectile.tscn" id="projectile_scene"]
-[ext_resource type="Texture2D" path="res://assets/FinalBoss/idle.png" id="tex_idle"]
-[ext_resource type="Texture2D" path="res://assets/FinalBoss/shoot_right.png" id="tex_shoot"]
-[ext_resource type="Texture2D" path="res://assets/FinalBoss/shoot_left.png" id="tex_dash"]
-[ext_resource type="Texture2D" path="res://assets/FinalBoss/shoot_up.png" id="tex_special"]
-[ext_resource type="Texture2D" path="res://assets/FinalBoss/slam.png" id="tex_slam"]
-[ext_resource type="Texture2D" path="res://assets/FinalBoss/melee.png" id="tex_melee"]
-[ext_resource type="Texture2D" path="res://assets/FinalBoss/warning.png" id="tex_warning"]
+[ext_resource type="Script" uid="uid://4chos6q1337" path="res://code/boss_robot.gd" id="script"]
+[ext_resource type="Texture2D" uid="uid://d3gviya7qp0g6" path="res://assets/FinalBoss/shoot_left.png" id="tex_dash"]
+[ext_resource type="Texture2D" uid="uid://ddw1s6f0of5xt" path="res://assets/FinalBoss/idle.png" id="tex_idle"]
+[ext_resource type="Texture2D" uid="uid://bxenn07c8e4pl" path="res://assets/FinalBoss/melee.png" id="tex_melee"]
+[ext_resource type="Texture2D" uid="uid://bx6ih34fyq1cc" path="res://assets/FinalBoss/shoot_right.png" id="tex_shoot"]
+[ext_resource type="Texture2D" uid="uid://fj8g6uo0bn0c" path="res://assets/FinalBoss/slam.png" id="tex_slam"]
+[ext_resource type="Texture2D" uid="uid://nn7ux6431vb0" path="res://assets/FinalBoss/shoot_up.png" id="tex_special"]
+[ext_resource type="Texture2D" uid="uid://bp6caek23m07o" path="res://assets/FinalBoss/warning.png" id="tex_warning"]
 
 [sub_resource type="Animation" id="Animation_RESET"]
 resource_name = "RESET"
@@ -24,56 +24,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_idle"]
-resource_name = "idle"
-length = 0.9
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("idle:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_walk"]
-resource_name = "walk"
-length = 0.9
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("walk:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_dash"]
-resource_name = "dash"
-length = 0.75
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("dash:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_attack"]
@@ -92,17 +42,33 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6]
 }
 
-[sub_resource type="Animation" id="Animation_shoot"]
-resource_name = "shoot"
-length = 0.72
+[sub_resource type="Animation" id="Animation_dash"]
+resource_name = "dash"
+length = 0.75
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("shoot:frame")
+tracks/0/path = NodePath("dash:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.12, 0.24, 0.36, 0.48, 0.6),
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_death"]
+resource_name = "death"
+length = 0.78
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("death:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13, 0.26, 0.39, 0.52, 0.65),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -125,22 +91,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_slam"]
-resource_name = "slam"
-length = 0.78
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("slam:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.13, 0.26, 0.39, 0.52, 0.65),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
 [sub_resource type="Animation" id="Animation_hit"]
 resource_name = "hit"
 length = 0.45
@@ -157,13 +107,46 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_death"]
-resource_name = "death"
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("idle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_shoot"]
+resource_name = "shoot"
+length = 0.72
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("shoot:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36, 0.48, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_slam"]
+resource_name = "slam"
 length = 0.78
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("death:frame")
+tracks/0/path = NodePath("slam:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -189,19 +172,36 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
+[sub_resource type="Animation" id="Animation_walk"]
+resource_name = "walk"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("walk:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_main"]
 _data = {
 &"RESET": SubResource("Animation_RESET"),
-&"idle": SubResource("Animation_idle"),
-&"walk": SubResource("Animation_walk"),
-&"dash": SubResource("Animation_dash"),
 &"attack": SubResource("Animation_attack"),
-&"shoot": SubResource("Animation_shoot"),
-&"fly": SubResource("Animation_fly"),
-&"slam": SubResource("Animation_slam"),
-&"hit": SubResource("Animation_hit"),
+&"dash": SubResource("Animation_dash"),
 &"death": SubResource("Animation_death"),
-&"special": SubResource("Animation_special")
+&"fly": SubResource("Animation_fly"),
+&"hit": SubResource("Animation_hit"),
+&"idle": SubResource("Animation_idle"),
+&"shoot": SubResource("Animation_shoot"),
+&"slam": SubResource("Animation_slam"),
+&"special": SubResource("Animation_special"),
+&"walk": SubResource("Animation_walk")
 }
 
 [sub_resource type="RectangleShape2D" id="BodyShape"]
@@ -210,17 +210,16 @@ size = Vector2(160, 230)
 [sub_resource type="RectangleShape2D" id="AttackShape"]
 size = Vector2(190, 145)
 
-[node name="final_boss" type="CharacterBody2D" groups=["bosses"]]
+[node name="final_boss" type="CharacterBody2D" unique_id=1144829194 groups=["bosses"]]
 script = ExtResource("script")
-damage_enabled = false
 boss_id = &"final_boss"
 max_health = 4000
-damage_taken_multiplier = 0.46
-ai_enabled = false
-hit_reaction_enabled = false
 contact_damage = 18
 melee_damage = 34
 projectile_damage = 30
+damage_taken_multiplier = 0.46
+ai_enabled = false
+hit_reaction_enabled = false
 speed = 54.0
 acceleration = 360.0
 stop_distance = 125.0
@@ -235,77 +234,76 @@ shoot_delay = 0.34
 slam_cooldown = 4.3
 projectile_scene = ExtResource("projectile_scene")
 
-[node name="idle" type="Sprite2D" parent="."]
-visible = true
+[node name="idle" type="Sprite2D" parent="." unique_id=231621764]
 position = Vector2(0, -120)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("tex_idle")
 hframes = 6
 
-[node name="walk" type="Sprite2D" parent="."]
+[node name="walk" type="Sprite2D" parent="." unique_id=259189722]
 visible = false
 position = Vector2(0, -120)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("tex_idle")
 hframes = 6
 
-[node name="dash" type="Sprite2D" parent="."]
+[node name="dash" type="Sprite2D" parent="." unique_id=1862770877]
 visible = false
 position = Vector2(0, -120)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("tex_dash")
 hframes = 6
 
-[node name="attack" type="Sprite2D" parent="."]
+[node name="attack" type="Sprite2D" parent="." unique_id=998975186]
 visible = false
 position = Vector2(0, -118)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("tex_melee")
 hframes = 7
 
-[node name="shoot" type="Sprite2D" parent="."]
+[node name="shoot" type="Sprite2D" parent="." unique_id=946453247]
 visible = false
 position = Vector2(0, -120)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("tex_shoot")
 hframes = 6
 
-[node name="fly" type="Sprite2D" parent="."]
+[node name="fly" type="Sprite2D" parent="." unique_id=71586004]
 visible = false
 position = Vector2(0, -120)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("tex_idle")
 hframes = 6
 
-[node name="slam" type="Sprite2D" parent="."]
+[node name="slam" type="Sprite2D" parent="." unique_id=854107072]
 visible = false
 position = Vector2(0, -120)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("tex_slam")
 hframes = 6
 
-[node name="hit" type="Sprite2D" parent="."]
+[node name="hit" type="Sprite2D" parent="." unique_id=641916828]
 visible = false
 position = Vector2(0, -120)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("tex_idle")
 hframes = 6
 
-[node name="death" type="Sprite2D" parent="."]
+[node name="death" type="Sprite2D" parent="." unique_id=1997765961]
 visible = false
 position = Vector2(0, -120)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("tex_slam")
 hframes = 6
 
-[node name="special" type="Sprite2D" parent="."]
+[node name="special" type="Sprite2D" parent="." unique_id=1259535854]
 visible = false
 position = Vector2(0, -145)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("tex_special")
 hframes = 6
 
-[node name="warning" type="Sprite2D" parent="."]
+[node name="warning" type="Sprite2D" parent="." unique_id=1556548855]
 visible = false
 z_index = 30
 position = Vector2(0, -280)
@@ -313,19 +311,18 @@ scale = Vector2(0.22, 0.22)
 texture = ExtResource("tex_warning")
 hframes = 8
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=374132676]
 libraries/ = SubResource("AnimationLibrary_main")
-speed_scale = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=76196390]
 position = Vector2(0, -115)
 shape = SubResource("BodyShape")
 
-[node name="AttackArea" type="Area2D" parent="."]
+[node name="AttackArea" type="Area2D" parent="." unique_id=1198608734]
 position = Vector2(130, -105)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1551424198]
 shape = SubResource("AttackShape")
 
-[node name="ProjectileOrigin" type="Marker2D" parent="."]
+[node name="ProjectileOrigin" type="Marker2D" parent="." unique_id=372763557]
 position = Vector2(130, -122)
