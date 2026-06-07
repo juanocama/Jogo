@@ -36,8 +36,7 @@ func _prepare_cutscene() -> void:
 	if girl != null:
 		girl.visible = true
 		girl.modulate.a = 0.0
-		if girl.has_method("face_towards") and player is Node2D:
-			girl.call("face_towards", (player as Node2D).global_position)
+		_set_girl_idle_down()
 
 	if camera != null:
 		camera.enabled = true
@@ -116,3 +115,21 @@ func _advance_idle_sprite(character: Node) -> void:
 		return
 
 	sprite.frame = (sprite.frame + 1) % sprite.hframes
+
+
+func _set_girl_idle_down() -> void:
+	if girl == null:
+		return
+
+	girl.set("last_direction", &"down")
+
+	var sprite: Sprite2D = girl.get_node_or_null("Sprite2D") as Sprite2D
+	if sprite == null:
+		return
+
+	var idle_down_texture: Texture2D = girl.get("idle_down_texture") as Texture2D
+	if idle_down_texture != null:
+		sprite.texture = idle_down_texture
+	sprite.hframes = int(girl.get("frame_count"))
+	sprite.frame = 0
+	sprite.flip_h = false

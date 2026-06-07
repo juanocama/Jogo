@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://u1bnocca7jxu" path="res://assets/nina/girl_walk_side.png" id="18_7jwdh"]
 [ext_resource type="Script" uid="uid://b5y0wi3btwkuw" path="res://code/final_cutscene_controller.gd" id="19_cutscene"]
 [ext_resource type="Script" uid="uid://ctm3psw0fn2il" path="res://code/control.gd" id="20_intro_background"]
+[ext_resource type="Texture2D" path="res://assets/Main Menu/Leaves.png" id="21_leaves"]
+[ext_resource type="Texture2D" path="res://assets/Main Menu/Burned_leaves.png" id="22_burned_leaves"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q6nbb"]
 height = 24.0
@@ -115,6 +117,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("20_intro_background")
+background_textures_override = Array[Texture2D]([ExtResource("21_leaves"), ExtResource("22_burned_leaves")])
+play_once = true
+completion_scene = "res://scenes/main_manu.tscn"
 
 [node name="Image_A" type="TextureRect" parent="IntroBackgroundLayer/Background" unique_id=1786799453]
 layout_mode = 0
