@@ -5,7 +5,7 @@ extends Node
 @export var mirror_path: NodePath
 @export var timer_label_path: NodePath
 @export var exit_door_path: NodePath
-@export_file("*.tscn") var exit_target_scene: String = "res://scenes/Hallway.tscn"
+@export_file("*.tscn") var exit_target_scene: String = "res://scenes/Hallway2.tscn"
 @export var level_duration: float = 60.0
 @export var robot_vision_range: float = 520.0
 @export var robot_detection_interval: float = 0.8
