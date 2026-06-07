@@ -1,5 +1,5 @@
 f098f8d3115d962055284dee314b4f89
-::res://::1780795787
+::res://::1780799954
 icon.svg::CompressedTexture2D::2283935863672813662::1780706037::1780706037::1::::<><><>0<>0<>0898c564e61cbdcadbc6c7220d87cc8b<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 map.tscn::PackedScene::712281116534741659::1780788185::0::1::::<><><>0<>0<><>::uid://c1kbe1q3kcgqx::::res://assets/nino_01/Respiracion y parpadeo.png<>uid://5x2ebhjgn35i::::res://playerMovement.gd<>uid://dwrn3ygwkhpo5::::res://assets/nino_01/Salto caminando derecha.png<>uid://b3ox3bctig4je::::res://assets/nino_01/correr derecha.png<>uid://onq1isncll25::::res://assets/nino_01/Agacharse derecha.png<>uid://dy6sgc5bhmxw8::::res://assets/nino_01/caminar derecha.png
 playerMovement.gd::GDScript::2154792563219122716::1780788094::0::1::::<>CharacterBody2D<><>0<>0<><>::
@@ -97,7 +97,7 @@ misil.png::CompressedTexture2D::1433540362939582420::1780723952::1780723975::1::
 move.png::CompressedTexture2D::7070552844493703012::1780723952::1780723975::1::::<><><>0<>0<>903392d253a481e1fe180708013f7b92<>res://.godot/imported/move.png-fef06747be67c55d37024d754a0a1179.ctex::
 shoot.png::CompressedTexture2D::7639474025616138746::1780723952::1780723975::1::::<><><>0<>0<>45996efccf19efc9419c5edb4b475f31<>res://.godot/imported/shoot.png-2023dd519ea71fcbc13572e2d00ad725.ctex::
 up_down.png::CompressedTexture2D::2240244935945646075::1780723952::1780723975::1::::<><><>0<>0<>db170d878a7997e5ffb6d73c9161c3be<>res://.godot/imported/up_down.png-10fb83dfdb2e67af3659cfb32a36e255.ctex::
-::res://assets/Main Menu/::1780795787
+::res://assets/Main Menu/::1780795788
 Burned_desk.png::CompressedTexture2D::7830483036218559629::1780795746::1780795780::1::::<><><>0<>0<>ac77bcc4c9181a58f990d92dfaceae92<>res://.godot/imported/Burned_desk.png-e3e346804ec9d02b026b48f243fbb11b.ctex::
 Burned_leaves.png::CompressedTexture2D::7486258201171911910::1780795733::1780795788::1::::<><><>0<>0<>f969b467b1ad75dd11c12107be9a0694<>res://.godot/imported/Burned_leaves.png-059ac369c9bbb3c6f3f226d59a0ebb6d.ctex::
 Burned_locker.png::CompressedTexture2D::5011633565314112159::1780795733::1780795763::1::::<><><>0<>0<>845d41a8346c437402a77cbcf8a961bc<>res://.godot/imported/Burned_locker.png-e978deb070ffec05e56a989c0bb87cf7.ctex::
@@ -148,11 +148,12 @@ transformar tanque y disparo.png::CompressedTexture2D::3903157267437092857::1780
 volar.png::CompressedTexture2D::5204661261139419527::1780788094::1780788186::1::::<><><>0<>0<>a9a6e0df4ecdf0510164b41cc8ad8f83<>res://.godot/imported/volar.png-c8580d807dcf0b22120113abde044bd0.ctex::
 ::res://Autoloads/::1780788499
 Game_manager.gd::GDScript::1523131296937566430::1780788499::0::1::::<>Node<><>0<>0<><>::
-::res://code/::1780790829
+::res://code/::1780799954
 .gitkeep.txt::TextFile::-1::1780706037::0::1::::<><><>0<>0<><>::
 battle_level.gd::GDScript::2601586297707130141::1780788094::0::1::::<>Node2D<><>0<>0<><>::
 boss_projectile.gd::GDScript::632813179218082074::1780788094::0::1::::BossProjectile<>CharacterBody2D<><>0<>0<><>::
 boss_robot.gd::GDScript::60001653974916984::1780788094::0::1::::BossRobot<>CharacterBody2D<><>0<>0<><>::
+control.gd::GDScript::6132929772812678623::1780799826::0::1::::<>Control<><>0<>0<><>::
 ghost.gd::GDScript::2503397765581055866::1780765599::0::1::::<>CharacterBody2D<><>0<>0<><>::
 level.gd::GDScript::7091105921217293497::1780788094::0::1::::<>Node2D<><>0<>0<><>::
 main_character.gd::GDScript::1493430342389178501::1780788094::0::1::::MainCharacter<>CharacterBody2D<><>0<>0<><>::
@@ -160,6 +161,7 @@ main_manu.gd::GDScript::1756096805680731975::1780790829::0::1::::<>Node2D<><>0<>
 player.gd::GDScript::3293446522429233936::1780788499::0::1::::<>CharacterBody2D<><>0<>0<><>::
 projectile.gd::GDScript::3556165744545843127::1780723952::0::1::::<>CharacterBody2D<><>0<>0<><>::
 pseudo_3d_player.gd::GDScript::5418876904158761901::1780788094::0::1::::<>CharacterBody2D<><>0<>0<><>::
+pattern.gd::GDScript::4484597135049432967::1780795057::0::1::::<>TextureRect<><>0<>0<><>::
 tanlik_ghost.gd::GDScript::3017799765916281821::1780788499::0::1::::<>Area2D<><>0<>0<><>::
 ::res://Dialogue/::1780784339
 ::res://Dialogue/Fonts/::1780788534
@@ -168,18 +170,17 @@ Minecraftia-Regular.ttf::FontFile::4149975452995865339::1780788499::1780788534::
 balloon.gd::GDScript::6685743247592616377::1780788499::0::1::::<>CanvasLayer<><>0<>0<><>::
 balloon.tscn::PackedScene::3499252440488638315::1780788534::0::1::::<><><>0<>0<><>::uid://b0ejqv0b60180::::res://Dialogue/Fonts/Minecraftia-Regular.ttf<>uid://ckvgyvclnwggo::::res://addons/dialogue_manager/dialogue_label.tscn<>uid://bb52rsfwhkxbn::::res://addons/dialogue_manager/dialogue_responses_menu.gd
 Dialogue1.dialogue::Resource::7921437815253383193::1780788499::1780788534::1::::<><><>0<>0<>b6d1d701a5aa7d62ca41f0639d8bbcbe<>res://.godot/imported/Dialogue1.dialogue-1f1ce79435b4c5ba12d160aac0c2383d.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
-::res://scenes/::1780795206
+::res://scenes/::1780799954
 .gitkeep.txt::TextFile::-1::1780706037::0::1::::<><><>0<>0<><>::
 battle_test.tscn::PackedScene::-1::1780788094::0::1::::<><><>0<>0<><>::res://assets/nino_01/Respiracion y parpadeo.png<>res://playerMovement.gd<>res://assets/nino_01/Salto caminando derecha.png<>res://assets/nino_01/correr derecha.png<>res://assets/nino_01/Agacharse derecha.png<>res://assets/nino_01/caminar derecha.png<>res://assets/00032.png<>res://scenes/robot_01_boss.tscn<>res://scenes/robot_02_boss.tscn
 dialogue_test.tscn::PackedScene::4238021904395587386::1780788094::0::1::::<><><>0<>0<><>::uid://c8a8qje6k074x::::res://code/level.gd<>uid://djq3pfyl0vosl::::res://assets/00032.png<>uid://dxblhflhcclge::::res://assets/world_tileset.png<>uid://djm4jjhyjssjb::::res://scenes/test_character.tscn<>uid://fs6qc05ldrjh::::res://scenes/dik.tscn
 dik.tscn::PackedScene::5164563727233803173::1780787989::0::1::::<><><>0<>0<><>::uid://bi83yr0tctngf::::res://code/tanlik_ghost.gd<>uid://cc1axwmccj8o7::::res://assets/test.png.png<>uid://b38jmouk3up05::::res://assets/Exclamation.png
 fantasma.tscn::PackedScene::9050633440183148526::1780776493::0::1::::<><><>0<>0<><>::uid://dj50phf2desag::::res://assets/fantasma/IDLE.png<>uid://c70a8cancb6a7::::res://assets/fantasma/move.png<>uid://66grh36iqm00::::res://assets/fantasma/up_down.png<>uid://dg3vayl1jg6b3::::res://assets/fantasma/shoot.png<>uid://bbwwuilq1hjne::::res://code/ghost.gd
 find_in_files.tscn::PackedScene::9027765392847093779::1780788186::0::1::::<><><>0<>0<><>::
-main_manu.tscn::PackedScene::3439663421579230708::1780795057::0::1::::<><><>0<>0<><>::uid://0awwmo8mhhtn::::res://code/main_manu.gd<>uid://bm733w8evws7k::::res://scenes/scroll.gdshader<>uid://cd4yi77vk6y8w::::res://assets/Main Menu/Desk.png<>uid://b45mworf2q1ap::::res://scenes/pattern.gd
+main_manu.tscn::PackedScene::3439663421579230708::1780799954::0::1::::<><><>0<>0<><>::uid://0awwmo8mhhtn::::res://code/main_manu.gd<>uid://ctm3psw0fn2il::::res://code/control.gd
 nino_01.tscn::PackedScene::5637696322461267736::1780788186::0::1::::<><><>0<>0<><>::uid://vjotx7qrogsj::::res://code/main_character.gd<>uid://b3ox3bctig4je::::res://assets/nino_01/correr derecha.png<>res://assets/nino_01/dash2d.png<>uid://onq1isncll25::::res://assets/nino_01/Agacharse derecha.png<>uid://dwrn3ygwkhpo5::::res://assets/nino_01/Salto caminando derecha.png<>uid://c1kbe1q3kcgqx::::res://assets/nino_01/Respiracion y parpadeo.png<>uid://dy6sgc5bhmxw8::::res://assets/nino_01/caminar derecha.png
 nino_02.tscn::PackedScene::5415623761943937542::1780788186::0::1::::<><><>0<>0<><>::uid://vjotx7qrogsj::::res://code/main_character.gd<>uid://c3faue6hpb7cs::::res://assets/nino_02/boy_school_clean_crouch_sheet.png<>uid://vpb1ryxq5be7::::res://assets/nino_02/boy_school_clean_run_sheet.png<>uid://j6exrbjak05f::::res://assets/nino_02/boy_school_clean_walk_sheet.png<>uid://c6fxjks1dh37v::::res://assets/nino_02/boy_school_clean_walk_jump_sheet.png
 node_2d.tscn::PackedScene::7683240241585204722::1780788186::0::1::::<><><>0<>0<><>::res://code/characters/legacy_player/playerMovement.gd<>res://assets/characters/nino_01/Respiracion y parpadeo.png<>res://assets/characters/nino_01/Salto caminando derecha.png<>res://assets/characters/nino_01/correr derecha.png<>res://assets/characters/nino_01/Agacharse derecha.png<>res://assets/characters/nino_01/caminar derecha.png
-pattern.gd::GDScript::4484597135049432967::1780795057::0::1::::<>TextureRect<><>0<>0<><>::
 pelea_test.tscn::PackedScene::6305075728286041684::1780787989::0::1::::<><><>0<>0<><>::uid://dxblhflhcclge::::res://assets/world_tileset.png<>uid://djq3pfyl0vosl::::res://assets/00032.png<>uid://djm4jjhyjssjb::::res://scenes/test_character.tscn<>uid://d17gu0w7uhgvu::::res://scenes/fantasma.tscn<>uid://c8a8qje6k074x::::res://code/level.gd
 proyectil.tscn::PackedScene::2561851713189658014::1780776493::0::1::::<><><>0<>0<><>::uid://uoog2t7sfn53::::res://assets/fantasma/misil.png<>uid://bqwvsa77vua3p::::res://code/projectile.gd
 pseudo_3d_test.tscn::PackedScene::6535683405365933812::1780788186::0::1::::<><><>0<>0<><>::res://assets/levels/battle/00032.png<>res://code/characters/pseudo_3d_player.gd<>res://assets/characters/nino_3d/nino_idle_down.png<>res://assets/characters/nino_3d/nino_walk_down.png<>res://assets/characters/nino_3d/nino_run_down.png<>res://assets/characters/nino_3d/nino_idle_up.png<>res://assets/characters/nino_3d/nino_walk_up.png<>res://assets/characters/nino_3d/nino_run_up.png<>res://assets/characters/nino_3d/nino_idle_side.png<>res://assets/characters/nino_3d/nino_walk_side.png<>res://assets/characters/nino_3d/nino_run_side.png
@@ -187,6 +188,6 @@ robot_01_boss.tscn::PackedScene::4077812789351895782::1780788186::0::1::::<><><>
 robot_02_boss.tscn::PackedScene::-1::1780788094::0::1::::<><><>0<>0<><>::res://code/boss_robot.gd<>res://scenes/robot_02_projectile_soft.tscn<>res://assets/Robot2/caminar.png<>res://assets/Robot2/caminar.png<>res://assets/Robot2/envestir.png<>res://assets/Robot2/golpeo.png<>res://assets/Robot2/disparar.png<>res://assets/Robot2/volar.png<>res://assets/Robot2/caer con fuerza.png<>res://assets/Robot2/golpeo.png<>res://assets/Robot2/caer con fuerza.png<>res://assets/Robot2/transformar tanque y disparo.png
 robot_02_projectile_soft.tscn::PackedScene::-1::1780788094::0::1::::<><><>0<>0<><>::res://assets/Robot2/proyectil suave.png<>res://code/boss_projectile.gd
 robot_02_projectile_strong.tscn::PackedScene::-1::1780788094::0::1::::<><><>0<>0<><>::res://assets/Robot2/proyectil fuerte.png<>res://code/boss_projectile.gd
-scroll.gdshader::Shader::3296498180209140818::1780795206::0::1::::<><><>0<>0<><>::
+scroll.gdshader::Shader::3296498180209140818::1780796166::0::1::::<><><>0<>0<><>::
 test3d.tscn::PackedScene::1340363966020091929::1780788186::0::1::::<><><>0<>0<><>::uid://djq3pfyl0vosl::::res://assets/00032.png<>uid://dwqq66htnkwkr::::res://assets/nino_3d/nino_idle_down.png<>uid://cyrswrbm5ahj8::::res://assets/nino_3d/nino_idle_side.png<>uid://b1hlkrph2sfwv::::res://assets/nino_3d/nino_idle_up.png<>uid://cjg7d1g7tksc8::::res://code/pseudo_3d_player.gd<>uid://2yummbox3vfi::::res://assets/nino_3d/nino_run_down.png<>uid://mb5lnbwv6mec::::res://assets/nino_3d/nino_run_side.png<>uid://b5fjagmv3daga::::res://assets/nino_3d/nino_run_up.png<>uid://qyd752wh20kv::::res://assets/nino_3d/nino_walk_down.png<>uid://dcbo70rh102m4::::res://assets/nino_3d/nino_walk_side.png<>uid://bvblafsjrad8e::::res://assets/nino_3d/nino_walk_up.png
 test_character.tscn::PackedScene::7817511526432671451::1780787989::0::1::::<><><>0<>0<><>::uid://cc1axwmccj8o7::::res://assets/test.png.png<>uid://bm6mt3abfo0j1::::res://code/player.gd

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bpag0vvx1kvei"]
 
 [ext_resource type="Script" uid="uid://0awwmo8mhhtn" path="res://code/main_manu.gd" id="1_atvfq"]
-[ext_resource type="Script" uid="uid://ctm3psw0fn2il" path="res://scenes/control.gd" id="2_kc7eb"]
+[ext_resource type="Script" uid="uid://ctm3psw0fn2il" path="res://code/control.gd" id="2_kc7eb"]
 
 [node name="Main Manu" type="Node2D" unique_id=37578756]
 script = ExtResource("1_atvfq")
