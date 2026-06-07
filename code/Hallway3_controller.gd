@@ -5,7 +5,6 @@ extends Node
 @export var candy_dialogue_resource: DialogueResource
 @export var gun_pickup_path: NodePath
 @export var candy_pickup_path: NodePath
-@export var bath_door_path: NodePath
 @export var background_path: NodePath
 @export var burned_background_texture: Texture2D
 @export var burned_background_scale: Vector2 = Vector2(0.844, 0.844)
@@ -14,7 +13,6 @@ extends Node
 
 @onready var gun_pickup: Node2D = get_node_or_null(gun_pickup_path) as Node2D
 @onready var candy_pickup: Node2D = get_node_or_null(candy_pickup_path) as Node2D
-@onready var bath_door: Area2D = get_node_or_null(bath_door_path) as Area2D
 @onready var background: Sprite2D = get_node_or_null(background_path) as Sprite2D
 
 var dialogue_running: bool = false
@@ -22,9 +20,6 @@ var completed_actions: Dictionary = {}
 
 
 func _ready() -> void:
-	_play_scene_music(&"hallway", 0.75)
-	if bath_door != null and bath_door.has_method("set_enabled"):
-		bath_door.call("set_enabled", false)
 	_connect_action_interactables()
 
 
@@ -35,13 +30,11 @@ func handle_action(action: StringName) -> void:
 	match action:
 		&"bath_door_in":
 			await _show_dialogue_for_action(action, bath_door_dialogue_resource)
-			get_tree().change_scene_to_file("res://scenes/bathroom.tscn")
+			get_tree().change_scene_to_file("res://scenes/Outside.tscn")
 		&"gun_pickup":
 			await _show_dialogue_for_action(action, gun_pickup_dialogue_resource)
 			await _play_burned_hallway_glitch()
 			_hide_pickup(gun_pickup)
-			if bath_door != null and bath_door.has_method("set_enabled"):
-				bath_door.call("set_enabled", true)
 		&"candy_2":
 			await _show_dialogue_for_action(action, candy_dialogue_resource)
 			_hide_pickup(candy_pickup)
@@ -108,9 +101,3 @@ func _disable_action(action: StringName) -> void:
 		var node_action: StringName = StringName(node.get("action"))
 		if node_action == action:
 			node.call("set_enabled", false)
-
-func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> void:
-	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
-	if audio_manager != null and audio_manager.has_method("play_music"):
-		audio_manager.call("play_music", music_key, fade_seconds)
-

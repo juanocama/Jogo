@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_morado.png" id="26_entropy_purple"]
 [ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_verde.png" id="27_entropy_green"]
 [ext_resource type="Texture2D" path="res://assets/FinalBoss/entropy_backgrounds/fondo_mix.png" id="28_entropy_mix"]
+[ext_resource type="Texture2D" path="res://assets/FinalBoss/fire/floor_flame.png" id="29_floor_flame"]
 
 [sub_resource type="RectangleShape2D" id="FloorShape"]
 size = Vector2(1798, 34)
@@ -654,3 +655,4 @@ robot1_projectile_scene = ExtResource("19_minion_projectile")
 final_projectile_scene = ExtResource("20_final_projectile")
 laser_texture = ExtResource("23_laser")
 warning_texture = ExtResource("24_warning")
+floor_flame_texture = ExtResource("29_floor_flame")
