@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://bpag0vvx1kvei"]
+
+[ext_resource type="Script" uid="uid://0awwmo8mhhtn" path="res://code/main_manu.gd" id="1_atvfq"]
+[ext_resource type="Script" uid="uid://ctm3psw0fn2il" path="res://code/control.gd" id="2_kc7eb"]
+[ext_resource type="FontFile" uid="uid://b0ejqv0b60180" path="res://Dialogue/Fonts/Minecraftia-Regular.ttf" id="3_eckp7"]
+[ext_resource type="Texture2D" uid="uid://d13j4siyfxeh5" path="res://assets/Main Menu/Torn_paper.webp" id="3_torn"]
+[ext_resource type="Texture2D" uid="uid://do5v65eslwqlb" path="res://assets/Main Menu/ELIO_Tittle_Card.png" id="5_m3cu0"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_torn_normal"]
+content_margin_left = 28.0
+content_margin_top = 16.0
+content_margin_right = 28.0
+content_margin_bottom = 16.0
+texture = ExtResource("3_torn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_torn_pressed"]
+content_margin_left = 28.0
+content_margin_top = 16.0
+content_margin_right = 28.0
+content_margin_bottom = 16.0
+texture = ExtResource("3_torn")
+modulate_color = Color(0.86, 0.86, 0.86, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_torn_hover"]
+content_margin_left = 28.0
+content_margin_top = 16.0
+content_margin_right = 28.0
+content_margin_bottom = 16.0
+texture = ExtResource("3_torn")
+modulate_color = Color(1.08, 1.08, 1.08, 1)
+
+[node name="Main Manu" type="Node2D" unique_id=37578756]
+script = ExtResource("1_atvfq")
+
+[node name="X" type="ColorRect" parent="." unique_id=81830610]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Background" type="Control" parent="." unique_id=1628968696]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("2_kc7eb")
+
+[node name="Image_A" type="TextureRect" parent="Background" unique_id=53427304]
+layout_mode = 0
+offset_right = 1264.0
+offset_bottom = 842.0
+mouse_filter = 2
+
+[node name="Image_B" type="TextureRect" parent="Background" unique_id=1639548855]
+layout_mode = 0
+offset_right = 1264.0
+offset_bottom = 842.0
+mouse_filter = 2
+
+[node name="Button_manager" type="Control" parent="." unique_id=1443624733]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Start" type="Button" parent="Button_manager" unique_id=327265100]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 272.0
+offset_right = 728.0
+offset_bottom = 384.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_eckp7")
+theme_override_styles/normal = SubResource("StyleBoxTexture_torn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_torn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_torn_hover")
+theme_override_styles/focus = SubResource("StyleBoxTexture_torn_normal")
+text = "Start"
+
+[node name="Exit" type="Button" parent="Button_manager" unique_id=687842911]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 432.0
+offset_right = 728.0
+offset_bottom = 544.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_eckp7")
+theme_override_styles/normal = SubResource("StyleBoxTexture_torn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_torn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_torn_hover")
+theme_override_styles/focus = SubResource("StyleBoxTexture_torn_normal")
+text = "Exit"
+
+[node name="ElioTittleCard" type="Sprite2D" parent="." unique_id=1794364524]
+position = Vector2(584, 160)
+texture = ExtResource("5_m3cu0")
+
+[connection signal="pressed" from="Button_manager/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Button_manager/Exit" to="." method="_on_exit_pressed"]
