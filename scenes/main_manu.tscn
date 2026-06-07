@@ -1,16 +1,7 @@
 [gd_scene format=3 uid="uid://bpag0vvx1kvei"]
 
 [ext_resource type="Script" uid="uid://0awwmo8mhhtn" path="res://code/main_manu.gd" id="1_atvfq"]
-[ext_resource type="Shader" uid="uid://bm733w8evws7k" path="res://scenes/scroll.gdshader" id="2_eckp7"]
 [ext_resource type="Script" uid="uid://ctm3psw0fn2il" path="res://scenes/control.gd" id="2_kc7eb"]
-[ext_resource type="Texture2D" uid="uid://djte5805u4ter" path="res://assets/Main Menu/Burned_desk.png" id="3_kc7eb"]
-[ext_resource type="Texture2D" uid="uid://cd4yi77vk6y8w" path="res://assets/Main Menu/Desk.png" id="3_m3cu0"]
-[ext_resource type="Script" uid="uid://b45mworf2q1ap" path="res://scenes/pattern.gd" id="4_kc7eb"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nqqoy"]
-shader = ExtResource("2_eckp7")
-shader_parameter/offset_y = 0.0
-shader_parameter/zoom = 2.0
 
 [node name="Main Manu" type="Node2D" unique_id=37578756]
 script = ExtResource("1_atvfq")
@@ -19,32 +10,26 @@ script = ExtResource("1_atvfq")
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="Control" type="Control" parent="." unique_id=1628968696]
+[node name="Background" type="Control" parent="." unique_id=1628968696]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("2_kc7eb")
 
-[node name="Image_A" type="TextureRect" parent="Control" unique_id=53427304]
-texture_repeat = 2
-material = SubResource("ShaderMaterial_nqqoy")
+[node name="Image_A" type="TextureRect" parent="Background" unique_id=53427304]
 layout_mode = 0
 offset_right = 1264.0
 offset_bottom = 842.0
-texture = ExtResource("3_kc7eb")
-flip_h = true
-script = ExtResource("4_kc7eb")
+mouse_filter = 2
 
-[node name="Image_B" type="TextureRect" parent="Control" unique_id=1639548855]
-texture_repeat = 2
-material = SubResource("ShaderMaterial_nqqoy")
+[node name="Image_B" type="TextureRect" parent="Background" unique_id=1639548855]
 layout_mode = 0
 offset_right = 1264.0
 offset_bottom = 842.0
-texture = ExtResource("3_m3cu0")
-flip_h = true
-script = ExtResource("4_kc7eb")
+mouse_filter = 2
 
 [node name="Button_manager" type="Control" parent="." unique_id=1443624733]
 layout_mode = 3
