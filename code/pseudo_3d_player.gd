@@ -28,15 +28,24 @@ extends CharacterBody2D
 @export var run_fps: float = 14.0
 @export var side_move_scale_multiplier: float = 1.2
 
+@export_group("Hiding")
+@export var hide_up_texture: Texture2D
+@export var unhide_down_texture: Texture2D
+@export var hide_frame_count: int = 6
+@export var hide_animation_duration: float = 0.75
+
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var shadow: Polygon2D = $Shadow
 @onready var camera: Camera2D = $Camera2D
 
+var control_locked: bool = false
 var frame_time: float = 0.0
 var current_frame: int = 0
 var last_facing: int = 1
 var last_direction: StringName = &"down"
 var current_animation_key: StringName = &""
+var player_hidden: bool = false
+var hiding_animation_active: bool = false
 
 
 func _ready() -> void:
@@ -48,6 +57,18 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if control_locked or hiding_animation_active:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		_update_depth_visuals()
+		return
+
+	if GameManager.is_dialogue_active:
+		velocity = Vector2.ZERO
+		_update_animation(delta, Vector2.ZERO, false)
+		_update_depth_visuals()
+		return
+
 	var input_vector: Vector2 = _get_input_vector()
 	var is_running: bool = Input.is_key_pressed(KEY_SHIFT)
 	var speed: float = run_speed if is_running else walk_speed
@@ -225,3 +246,68 @@ func _update_depth_visuals() -> void:
 
 func is_alive() -> bool:
 	return true
+
+
+func is_hidden() -> bool:
+	return player_hidden
+
+
+func is_control_locked() -> bool:
+	return control_locked
+
+
+func hide_in_bathroom(hide_position: Vector2) -> void:
+	if player_hidden or hiding_animation_active:
+		return
+
+	control_locked = true
+	hiding_animation_active = true
+	global_position = hide_position
+	last_direction = &"up"
+	await _play_one_shot_texture(hide_up_texture, hide_frame_count, hide_animation_duration, false)
+	player_hidden = true
+	hiding_animation_active = false
+	if sprite != null:
+		sprite.visible = false
+	if shadow != null:
+		shadow.visible = false
+
+
+func unhide_from_bathroom(exit_position: Vector2) -> void:
+	if not player_hidden or hiding_animation_active:
+		return
+
+	global_position = exit_position
+	player_hidden = false
+	hiding_animation_active = true
+	if sprite != null:
+		sprite.visible = true
+	if shadow != null:
+		shadow.visible = true
+	last_direction = &"down"
+	await _play_one_shot_texture(unhide_down_texture, hide_frame_count, hide_animation_duration, false)
+	hiding_animation_active = false
+	control_locked = false
+	current_animation_key = &""
+	_apply_visual_state(Vector2.ZERO, false)
+
+
+func force_control_locked(locked: bool) -> void:
+	control_locked = locked
+	if locked:
+		velocity = Vector2.ZERO
+
+
+func _play_one_shot_texture(texture: Texture2D, frames: int, duration: float, flip_horizontal: bool) -> void:
+	var active_frames: int = maxi(frames, 1)
+	var active_duration: float = maxf(duration, 0.05)
+	if sprite != null and texture != null:
+		sprite.texture = texture
+		sprite.hframes = active_frames
+		sprite.flip_h = flip_horizontal
+
+	var frame_delay: float = active_duration / float(active_frames)
+	for frame_index: int in range(active_frames):
+		if sprite != null:
+			sprite.frame = frame_index
+		await get_tree().create_timer(frame_delay).timeout
