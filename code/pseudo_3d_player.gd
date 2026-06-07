@@ -46,6 +46,7 @@ var last_direction: StringName = &"down"
 var current_animation_key: StringName = &""
 var player_hidden: bool = false
 var hiding_animation_active: bool = false
+var bathroom_hide_origin_position: Vector2 = Vector2.ZERO
 var controls_inverted: bool = false
 
 
@@ -260,13 +261,13 @@ func is_control_locked() -> bool:
 	return control_locked
 
 
-func hide_in_bathroom(hide_position: Vector2) -> void:
+func hide_in_bathroom(_hide_position: Vector2) -> void:
 	if player_hidden or hiding_animation_active:
 		return
 
 	control_locked = true
 	hiding_animation_active = true
-	global_position = hide_position
+	bathroom_hide_origin_position = global_position
 	last_direction = &"up"
 	await _play_one_shot_texture(hide_up_texture, hide_frame_count, hide_animation_duration, false)
 	player_hidden = true
@@ -277,11 +278,11 @@ func hide_in_bathroom(hide_position: Vector2) -> void:
 		shadow.visible = false
 
 
-func unhide_from_bathroom(exit_position: Vector2) -> void:
+func unhide_from_bathroom(_exit_position: Vector2) -> void:
 	if not player_hidden or hiding_animation_active:
 		return
 
-	global_position = exit_position
+	global_position = bathroom_hide_origin_position
 	player_hidden = false
 	hiding_animation_active = true
 	if sprite != null:
