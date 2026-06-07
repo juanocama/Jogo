@@ -10,7 +10,7 @@ const BACKGROUND_TEXTURES: Array[Texture2D] = [
 ]
 
 const ZOOM: float = 1.5
-const PAN_DURATION: float = 5.0
+const PAN_DURATION: float = 6.0
 const FADE_DURATION: float = 0.55
 
 @onready var image_a: TextureRect = $Image_A
