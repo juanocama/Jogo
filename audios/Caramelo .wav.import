@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://qxn35tkal4od"
+path="res://.godot/imported/Caramelo .wav-18f399310a2f0cf12112126ca2cf3898.sample"
+
+[deps]
+
+source_file="res://audios/Caramelo .wav"
+dest_files=["res://.godot/imported/Caramelo .wav-18f399310a2f0cf12112126ca2cf3898.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
