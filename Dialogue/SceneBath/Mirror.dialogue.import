@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dyg7wi0wylqps"
+path="res://.godot/imported/Mirror.dialogue-09be787040b1fe42abd1c7c74b964cc6.tres"
+
+[deps]
+
+source_file="res://Dialogue/SceneBath/Mirror.dialogue"
+dest_files=["res://.godot/imported/Mirror.dialogue-09be787040b1fe42abd1c7c74b964cc6.tres"]
+
+[params]
+
+defaults=true
