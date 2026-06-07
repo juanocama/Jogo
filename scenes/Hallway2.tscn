@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bkyargf0dphux" path="res://code/Hallway2_controller.gd" id="1_2e2mi"]
 [ext_resource type="Resource" uid="uid://dwolkol54145b" path="res://Dialogue/Hallway2/DoorCafeteria.dialogue" id="2_jhcy7"]
-[ext_resource type="Resource" uid="uid://xoe71f1w1qbg" path="res://Dialogue/Hallway/GunPickup.dialogue" id="3_tyvm4"]
-[ext_resource type="Resource" uid="uid://dj3leugyjqjfn" path="res://Dialogue/Hallway/Candy2.dialogue" id="4_rav87"]
 [ext_resource type="Texture2D" uid="uid://dvudnsv7avddy" path="res://assets/hallway/Hallway_burned.png" id="5_u3vs6"]
 [ext_resource type="Script" uid="uid://h6nwgdloptpe" path="res://code/classroom_action_interactable.gd" id="8_uj8bu"]
 [ext_resource type="Texture2D" uid="uid://bmwestplf578s" path="res://assets/star_16x16.png" id="9_4fhh6"]
@@ -20,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://mb5lnbwv6mec" path="res://assets/nino_3d/nino_run_side.png" id="19_fwdh4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r7jtc"]
-size = Vector2(2288, 59.25)
+size = Vector2(2240, 59.25)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q21le"]
 height = 24.0
@@ -30,13 +28,16 @@ size = Vector2(101, 193)
 
 [node name="Node2D" type="Node2D" unique_id=327591162]
 
+[node name="ColorRect" type="ColorRect" parent="." unique_id=210679843]
+offset_left = -256.0
+offset_top = -80.0
+offset_right = 696.0
+offset_bottom = 816.0
+color = Color(0.043137256, 0.050980393, 0.101960786, 1)
+
 [node name="SceneController" type="Node" parent="." unique_id=1304260321]
 script = ExtResource("1_2e2mi")
 bath_door_dialogue_resource = ExtResource("2_jhcy7")
-gun_pickup_dialogue_resource = ExtResource("3_tyvm4")
-candy_dialogue_resource = ExtResource("4_rav87")
-background_path = NodePath("../Sprite2D")
-burned_background_texture = ExtResource("5_u3vs6")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1530251129]
 position = Vector2(576.25006, 325)
@@ -89,6 +90,11 @@ position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_q21le")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=2000367293]
+limit_left = 0
+limit_top = -100000
+limit_right = 2300
+limit_bottom = 650
+limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="BathDoorIn" type="Area2D" parent="." unique_id=1858066333 groups=["classroom_actions"]]
@@ -97,19 +103,26 @@ script = ExtResource("8_uj8bu")
 action = &"bath_door_in"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BathDoorIn" unique_id=502104748]
-position = Vector2(1169, -175)
+position = Vector2(2147, -177)
 shape = SubResource("RectangleShape2D_iwivi")
 
 [node name="ExclamationMark" type="Sprite2D" parent="BathDoorIn" unique_id=281552662]
-position = Vector2(1168, -218)
+position = Vector2(2146, -220)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("9_4fhh6")
 
 [node name="Label" type="Label" parent="." unique_id=1084553865]
-offset_left = 1184.0
-offset_top = 202.0
-offset_right = 1288.0
-offset_bottom = 230.0
-theme_override_colors/font_color = Color(0.96862745, 0.93333334, 0.34901962, 0.3764706)
+offset_left = 2192.0
+offset_top = 208.0
+offset_right = 2240.0
+offset_bottom = 236.0
+theme_override_colors/font_color = Color(0.96862745, 0.93333334, 0.34901962, 0.58431375)
 theme_override_fonts/font = ExtResource("18_jhcy7")
-text = "CAFETERÍA"
+text = "FOOD"
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=12444854]
+offset_left = -32.0
+offset_top = 608.0
+offset_right = 2304.0
+offset_bottom = 760.0
+color = Color(0.043137256, 0.050980393, 0.101960786, 1)

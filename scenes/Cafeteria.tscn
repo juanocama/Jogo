@@ -31,6 +31,9 @@ height = 24.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0d17p"]
 size = Vector2(140, 88)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2m6oa"]
+size = Vector2(256, 160)
+
 [node name="Cafeteria" type="Node2D" unique_id=193494941]
 
 [node name="SceneController" type="Node" parent="." unique_id=93488887]
@@ -135,13 +138,13 @@ action = &"rod_pickup"
 
 [node name="ExclamationMark" type="Sprite2D" parent="Candy3/PhotoPoint" unique_id=1681339998]
 z_index = 1
-position = Vector2(-96, -192)
+position = Vector2(-96, -224)
 scale = Vector2(6, 6)
 texture = ExtResource("13_1eckh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Candy3/PhotoPoint" unique_id=687764917]
-position = Vector2(64, -32)
-shape = SubResource("RectangleShape2D_0d17p")
+position = Vector2(32, -16)
+shape = SubResource("RectangleShape2D_2m6oa")
 
 [node name="Sprite2D" type="Sprite2D" parent="Candy3" unique_id=2120581587]
 scale = Vector2(0.5, 0.5)
