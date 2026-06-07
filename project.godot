@@ -31,13 +31,8 @@ enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
 [internationalization]
 
-<<<<<<< HEAD
 locale/translations_pot_files=PackedStringArray("res://Dialogue/Scene1/Dialogue1.dialogue", "res://Dialogue/SceneBath/Mirror.dialogue", "res://Dialogue/Candy found/Candy.dialogue", "res://Dialogue/Classroom/Alba1.dialogue", "res://Dialogue/Classroom/Photo.dialogue", "res://Dialogue/Hallway/BathDoorIn.dialogue", "res://Dialogue/Hallway/Candy2.dialogue", "res://Dialogue/Hallway/GunPickup.dialogue", "res://Dialogue/Cafeteria/BattleBossDefeated.dialogue", "res://Dialogue/Cafeteria/Varilla.dialogue", "res://Dialogue/Hallway2/DoorCafeteria.dialogue", "res://Dialogue/Hallway3/FinalExitDoor.dialogue")
 <<<<<<<HEADlocale/translations_pot_files=PackedStringArray("res://Dialogue/Scene1/Dialogue1.dialogue", "res://Dialogue/SceneBath/Mirror.dialogue", "res://Dialogue/Candy found/Candy.dialogue", "res://Dialogue/Classroom/Alba1.dialogue", "res://Dialogue/Classroom/Photo.dialogue", "res://Dialogue/Hallway/BathDoorIn.dialogue", "res://Dialogue/Hallway/Candy2.dialogue", "res://Dialogue/Hallway/GunPickup.dialogue", "res://Dialogue/Cafeteria/Varilla.dialogue", "res://Dialogue/Cafeteria/BattleBossDefeated.dialogue", "res://Dialogue/Hallway2/DoorCafeteria.dialogue", "res://Dialogue/Hallway3/FinalExitDoor.dialogue")
-=======
-locale/translations_pot_files=PackedStringArray("res://Dialogue/Scene1/Dialogue1.dialogue", "res://Dialogue/SceneBath/Mirror.dialogue", "res://Dialogue/Candy found/Candy.dialogue", "res://Dialogue/Classroom/Alba1.dialogue", "res://Dialogue/Classroom/Photo.dialogue", "res://Dialogue/Hallway/BathDoorIn.dialogue", "res://Dialogue/Hallway/Candy2.dialogue", "res://Dialogue/Hallway/GunPickup.dialogue", "res://Dialogue/Cafeteria/BattleBossDefeated.dialogue", "res://Dialogue/Cafeteria/Varilla.dialogue", "res://Dialogue/Hallway2/DoorCafeteria.dialogue", "res://Dialogue/Hallway3/FinalExitDoor.dialogue", "res://Dialogue/Scene1/Candy.dialogue", "res://Dialogue/Scene1/Ellipsis.dialogue")
-<<<<<<<HEADlocale/translations_pot_files=PackedStringArray("res://Dialogue/Scene1/Dialogue1.dialogue", "res://Dialogue/Scene1/Candy.dialogue", "res://Dialogue/Scene1/Ellipsis.dialogue")
->>>>>>> main
 
 [physics]
 

@@ -12,10 +12,6 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-func _on_start_pressed():
-	get_tree().change_scene_to_file("res://scenes/classroom.tscn")
-	_setup_scene_fade()
-	await _fade_scene(0.0)
 
 
 func _on_start_pressed() -> void:
