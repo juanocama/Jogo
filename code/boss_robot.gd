@@ -10,6 +10,11 @@ class_name BossRobot
 @export var projectile_damage: int = 18
 @export var invulnerability_time: float = 0.2
 @export var damage_enabled: bool = false
+@export var damage_taken_multiplier: float = 1.0
+@export var ai_enabled: bool = true
+@export var hit_reaction_enabled: bool = true
+@export var fall_on_death: bool = false
+@export var remove_after_death_seconds: float = 0.0
 
 @export_category("Movement")
 @export var speed: float = 70.0
@@ -100,6 +105,12 @@ func _physics_process(delta: float) -> void:
 		return
 
 	_update_timers(delta)
+
+	if not ai_enabled:
+		velocity = Vector2.ZERO
+		global_position = global_position.round()
+		return
+
 	_apply_gravity(delta)
 	_find_target()
 
@@ -217,11 +228,11 @@ func _choose_next_action(distance: float, to_target: Vector2, delta: float) -> v
 		_start_melee()
 		return
 
-	if boss_id == &"robot_02" and projectile_scene != null and shoot_timer <= 0.0 and distance <= shoot_range:
+	if _uses_ground_specials() and projectile_scene != null and shoot_timer <= 0.0 and distance <= shoot_range:
 		_start_shoot()
 		return
 
-	if boss_id == &"robot_02" and slam_timer <= 0.0 and distance > 90.0:
+	if _uses_ground_specials() and slam_timer <= 0.0 and distance > 90.0:
 		_start_slam()
 		return
 
@@ -441,7 +452,8 @@ func take_damage(amount: int, source: Node = null) -> void:
 		return
 	hurt_timer = invulnerability_time
 	var previous_health: int = health
-	health -= amount
+	var final_amount: int = maxi(1, int(round(float(amount) * damage_taken_multiplier)))
+	health -= final_amount
 	health = maxi(health, 0)
 	_update_health_bar()
 	_drop_pieces_for_health_change(previous_health, health)
@@ -456,7 +468,7 @@ func take_damage(amount: int, source: Node = null) -> void:
 
 	if health <= 0:
 		_die()
-	else:
+	elif hit_reaction_enabled:
 		state = &"hit"
 		state_timer = 0.18
 		_play_state(&"hit")
@@ -468,13 +480,31 @@ func _die() -> void:
 	health = 0
 	_update_health_bar()
 	velocity = Vector2.ZERO
+	if fall_on_death:
+		is_flying_boss = false
+		gravity = maxf(gravity, 850.0)
 	_play_state(&"death")
 	$CollisionShape2D.set_deferred("disabled", true)
 	$AttackArea/CollisionShape2D.set_deferred("disabled", true)
+	if remove_after_death_seconds > 0.0:
+		_remove_after_death()
+
+
+func _remove_after_death() -> void:
+	var tree: SceneTree = get_tree()
+	if tree == null:
+		return
+	await tree.create_timer(remove_after_death_seconds).timeout
+	if is_instance_valid(self):
+		queue_free()
 
 
 func is_alive() -> bool:
 	return not dead and health > 0
+
+
+func _uses_ground_specials() -> bool:
+	return boss_id == &"robot_02" or boss_id == &"final_boss"
 
 
 func _update_health_bar() -> void:

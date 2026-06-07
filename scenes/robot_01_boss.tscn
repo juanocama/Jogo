@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cybtkaqv4lv84" path="res://assets/Robot1/por defecto.png" id="tex_hit"]
 [ext_resource type="Texture2D" uid="uid://bh18vfaegpyyj" path="res://assets/Robot1/arriba.png" id="tex_special"]
 [ext_resource type="Texture2D" uid="uid://di8rirxjg2hxu" path="res://assets/Robot1/movimiento a la derecha.png" id="tex_walk"]
+[ext_resource type="PackedScene" path="res://scenes/robot_02_projectile_soft.tscn" id="projectile_scene"]
 
 [sub_resource type="Animation" id="Animation_RESET"]
 resource_name = "RESET"
@@ -212,6 +213,8 @@ size = Vector2(58, 58)
 script = ExtResource("script")
 damage_enabled = false
 max_health = 230
+fall_on_death = true
+remove_after_death_seconds = 0.8
 melee_damage = 24
 speed = 82.0
 gravity = 0.0
@@ -222,7 +225,9 @@ vertical_follow_speed = 180.0
 hover_amplitude = 12.0
 hover_speed = 3.4
 dash_speed = 285.0
-shoot_cooldown = 99.0
+shoot_range = 900.0
+shoot_cooldown = 2.4
+projectile_scene = ExtResource("projectile_scene")
 
 [node name="idle" type="Sprite2D" parent="." unique_id=2039796361]
 visible = false

@@ -4,12 +4,16 @@ const ACTIVE_DURATION: float = 5.0
 const FIRST_PHASE_ACTIVE_DURATION: float = 3.0
 const REST_DURATION: float = 5.0
 const FIRST_PHASE_TRIGGER_CHANCE: float = 0.28
-const DELAY_SECONDS: float = 0.5
+const DELAY_SECONDS: float = 0.3
 
 @export var boss_path: NodePath
 @export var player_path: NodePath
 @export var camera_path: NodePath
 @export var entropy_icon_path: NodePath
+@export var automatic_enabled: bool = true
+@export var delay_icon_texture: Texture2D
+@export var invert_icon_texture: Texture2D
+@export var flip_icon_texture: Texture2D
 
 var active_timer: float = 0.0
 var rest_timer: float = 2.0
@@ -40,6 +44,8 @@ func _process(delta: float) -> void:
 			_clear_effect()
 			rest_timer = REST_DURATION
 		return
+	if not automatic_enabled:
+		return
 
 	rest_timer -= delta
 	if rest_timer <= 0.0:
@@ -58,19 +64,39 @@ func _try_start_effect() -> void:
 		_start_effect(&"invert" if randf() < 0.5 else &"flip")
 
 
-func _start_effect(effect_name: StringName) -> void:
+func force_effect(effect_name: StringName, duration: float = ACTIVE_DURATION) -> void:
+	_clear_effect()
+	_start_effect(effect_name, duration)
+
+
+func force_random_effect(duration: float = ACTIVE_DURATION) -> void:
+	var effects: Array[StringName] = [&"delay", &"invert", &"flip"]
+	force_effect(effects.pick_random(), duration)
+
+
+func _start_effect(effect_name: StringName, forced_duration: float = -1.0) -> void:
 	active_effect = effect_name
-	active_timer = FIRST_PHASE_ACTIVE_DURATION if active_effect == &"delay" else ACTIVE_DURATION
+	if forced_duration > 0.0:
+		active_timer = forced_duration
+	else:
+		active_timer = FIRST_PHASE_ACTIVE_DURATION if active_effect == &"delay" else ACTIVE_DURATION
 
 	if entropy_icon != null:
 		entropy_icon.visible = true
+		entropy_icon.z_index = 90
 		match active_effect:
 			&"delay":
+				_apply_icon_texture(delay_icon_texture)
 				entropy_icon.modulate = Color(1.0, 0.58, 0.06, 1.0)
+				entropy_icon.tooltip_text = "Entropia: retraso"
 			&"invert":
+				_apply_icon_texture(invert_icon_texture)
 				entropy_icon.modulate = Color(1.0, 0.35, 1.0, 1.0)
+				entropy_icon.tooltip_text = "Entropia: controles invertidos"
 			&"flip":
+				_apply_icon_texture(flip_icon_texture)
 				entropy_icon.modulate = Color(0.45, 1.0, 0.1, 1.0)
+				entropy_icon.tooltip_text = "Entropia: pantalla invertida"
 
 	match active_effect:
 		&"delay":
@@ -88,7 +114,14 @@ func _clear_effect() -> void:
 	active_timer = 0.0
 	if entropy_icon != null:
 		entropy_icon.visible = false
+		entropy_icon.tooltip_text = ""
 	_set_screen_rotation(0.0)
+
+
+func _apply_icon_texture(texture: Texture2D) -> void:
+	if entropy_icon == null or texture == null:
+		return
+	entropy_icon.texture = texture
 
 
 func _set_screen_rotation(target_rotation: float) -> void:
