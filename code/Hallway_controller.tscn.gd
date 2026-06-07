@@ -7,6 +7,7 @@ extends Node
 @export var candy_pickup_path: NodePath
 @export var background_path: NodePath
 @export var burned_background_texture: Texture2D
+@export var burned_background_scale: Vector2 = Vector2(0.844, 0.844)
 @export var glitch_flash_count: int = 4
 @export var glitch_flash_duration: float = 0.12
 
@@ -71,13 +72,16 @@ func _play_burned_hallway_glitch() -> void:
 		return
 
 	var normal_texture: Texture2D = background.texture
+	var normal_scale: Vector2 = background.scale
 	var flash_count: int = maxi(glitch_flash_count, 1)
 	var flash_duration: float = maxf(glitch_flash_duration, 0.03)
 
 	for _index: int in range(flash_count):
 		background.texture = burned_background_texture
+		background.scale = burned_background_scale
 		await get_tree().create_timer(flash_duration).timeout
 		background.texture = normal_texture
+		background.scale = normal_scale
 		await get_tree().create_timer(flash_duration).timeout
 
 
