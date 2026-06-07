@@ -32,7 +32,7 @@
 size = Vector2(176.0039, 280)
 
 [sub_resource type="RectangleShape2D" id="WalkBottom"]
-size = Vector2(1584, 54.5)
+size = Vector2(1584, 45.25)
 
 [sub_resource type="RectangleShape2D" id="InteractShape"]
 size = Vector2(92, 82)
@@ -111,7 +111,7 @@ shape = SubResource("WalkRight")
 position = Vector2(582, 605)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/BottomPassage" unique_id=1089144465]
-position = Vector2(-6, 25)
+position = Vector2(-6, 20.375)
 shape = SubResource("WalkBottom")
 
 [node name="Interactables" type="Node2D" parent="." unique_id=1672669305]
