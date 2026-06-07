@@ -1,7 +1,9 @@
 extends Area2D
 
-@export var interaction_name: String = ""
-@export var dialogue_resource: DialogueResource
+signal interacted(action: StringName)
+
+@export var action: StringName = &""
+@export var enabled: bool = true
 
 @onready var exclamation_mark: Sprite2D = get_node_or_null("ExclamationMark") as Sprite2D
 
@@ -15,15 +17,19 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if not enabled:
+		return
 	if not player_is_close:
 		return
 	if not Input.is_action_just_pressed("ui_accept"):
 		return
 
-	if dialogue_resource != null:
-		DialogueManager.show_dialogue_balloon(dialogue_resource)
-	elif interaction_name != "":
-		print("Interactuando con: %s" % interaction_name)
+	interacted.emit(action)
+
+
+func set_enabled(value: bool) -> void:
+	enabled = value
+	_update_icon()
 
 
 func _on_body_entered(body: Node2D) -> void:
@@ -41,4 +47,4 @@ func _on_body_exited(body: Node2D) -> void:
 func _update_icon() -> void:
 	if exclamation_mark == null:
 		return
-	exclamation_mark.visible = player_is_close
+	exclamation_mark.visible = enabled and player_is_close

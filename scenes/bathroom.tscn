@@ -38,7 +38,7 @@ size = Vector2(1142.5, 148)
 size = Vector2(76, 219.5)
 
 [sub_resource type="RectangleShape2D" id="HidingSpotShape"]
-size = Vector2(96, 150)
+size = Vector2(96, 77.5)
 
 [sub_resource type="CapsuleShape2D" id="RobotShape"]
 radius = 18.0
@@ -100,6 +100,7 @@ exit_icon_texture = ExtResource("out_icon")
 target_icon_texture = ExtResource("alert_target")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HidingSpotLeft" unique_id=1105457193]
+position = Vector2(0, -16)
 shape = SubResource("HidingSpotShape")
 
 [node name="InteractionIcon" type="Sprite2D" parent="Interactables/HidingSpotLeft" unique_id=1684398264]
@@ -123,6 +124,7 @@ exit_icon_texture = ExtResource("out_icon")
 target_icon_texture = ExtResource("alert_target")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HidingSpotCenter" unique_id=169022028]
+position = Vector2(0, -14.5)
 shape = SubResource("HidingSpotShape")
 
 [node name="InteractionIcon" type="Sprite2D" parent="Interactables/HidingSpotCenter" unique_id=142226717]
@@ -146,6 +148,7 @@ exit_icon_texture = ExtResource("out_icon")
 target_icon_texture = ExtResource("alert_target")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HidingSpotRight" unique_id=1490523217]
+position = Vector2(-8, -9.75)
 shape = SubResource("HidingSpotShape")
 
 [node name="InteractionIcon" type="Sprite2D" parent="Interactables/HidingSpotRight" unique_id=1861517209]

@@ -1,33 +1,54 @@
 [gd_scene format=3 uid="uid://got2gqjnjnnf"]
 
-[ext_resource type="Texture2D" uid="uid://b3ht18ys827kw" path="res://assets/classroom/classroom_background.png" id="background"]
+[ext_resource type="Texture2D" uid="uid://brdbaolnhy8uy" path="res://assets/classroom/classroom_background.jpg" id="1_a6egp"]
+[ext_resource type="Script" uid="uid://h6nwgdloptpe" path="res://code/classroom_action_interactable.gd" id="action_interactable_script"]
+[ext_resource type="Resource" uid="uid://ddwgr31ausx0t" path="res://Dialogue/Scene1/Candy.dialogue" id="candy_dialogue"]
+[ext_resource type="Texture2D" uid="uid://fyr2lxqs0k4i" path="res://assets/classroom/classroom_sad.png" id="classroom_sad"]
 [ext_resource type="Resource" uid="uid://dk4g6nsqp82un" path="res://Dialogue/Scene1/Dialogue1.dialogue" id="dialogue"]
+[ext_resource type="Resource" uid="uid://bqraf8vfw7qtb" path="res://Dialogue/Scene1/Ellipsis.dialogue" id="ellipsis_dialogue"]
+[ext_resource type="Texture2D" uid="uid://cri7lm42hmygh" path="res://assets/classroom/entropia_icon.png" id="entropia_icon"]
+[ext_resource type="Texture2D" uid="uid://b38jmouk3up05" path="res://assets/Exclamation.png" id="exclamation_icon"]
+[ext_resource type="Texture2D" uid="uid://cyktcad5toejn" path="res://assets/nina/girl_idle_down.png" id="girl_idle_down"]
+[ext_resource type="Texture2D" uid="uid://r26atl3rjtl1" path="res://assets/nina/girl_idle_side.png" id="girl_idle_side"]
+[ext_resource type="Texture2D" uid="uid://yibuh8idsysu" path="res://assets/nina/girl_idle_up.png" id="girl_idle_up"]
+[ext_resource type="Script" uid="uid://hm3vg1e8ahfm" path="res://code/classroom_npc.gd" id="girl_script"]
+[ext_resource type="Texture2D" uid="uid://3cwxy1731tmq" path="res://assets/nina/girl_walk_down.png" id="girl_walk_down"]
+[ext_resource type="Texture2D" uid="uid://u1bnocca7jxu" path="res://assets/nina/girl_walk_side.png" id="girl_walk_side"]
+[ext_resource type="Texture2D" uid="uid://btth6w24xqqs2" path="res://assets/nina/girl_walk_up.png" id="girl_walk_up"]
 [ext_resource type="Texture2D" uid="uid://dwqq66htnkwkr" path="res://assets/nino_3d/nino_idle_down.png" id="idle_down"]
 [ext_resource type="Texture2D" uid="uid://cyrswrbm5ahj8" path="res://assets/nino_3d/nino_idle_side.png" id="idle_side"]
 [ext_resource type="Texture2D" uid="uid://b1hlkrph2sfwv" path="res://assets/nino_3d/nino_idle_up.png" id="idle_up"]
 [ext_resource type="Script" uid="uid://yit7ccf77r7f" path="res://code/classroom_interactable.gd" id="interactable_script"]
+[ext_resource type="Texture2D" uid="uid://dmrp8j7r2gyhp" path="res://assets/classroom/photo.png" id="photo_texture"]
 [ext_resource type="Script" uid="uid://cjg7d1g7tksc8" path="res://code/pseudo_3d_player.gd" id="player_script"]
 [ext_resource type="Texture2D" uid="uid://2yummbox3vfi" path="res://assets/nino_3d/nino_run_down.png" id="run_down"]
 [ext_resource type="Texture2D" uid="uid://mb5lnbwv6mec" path="res://assets/nino_3d/nino_run_side.png" id="run_side"]
 [ext_resource type="Texture2D" uid="uid://b5fjagmv3daga" path="res://assets/nino_3d/nino_run_up.png" id="run_up"]
+[ext_resource type="Script" uid="uid://1p5autyn8un3" path="res://code/classroom_scene_controller.gd" id="scene_controller_script"]
 [ext_resource type="Texture2D" uid="uid://qyd752wh20kv" path="res://assets/nino_3d/nino_walk_down.png" id="walk_down"]
 [ext_resource type="Texture2D" uid="uid://dcbo70rh102m4" path="res://assets/nino_3d/nino_walk_side.png" id="walk_side"]
 [ext_resource type="Texture2D" uid="uid://bvblafsjrad8e" path="res://assets/nino_3d/nino_walk_up.png" id="walk_up"]
 
 [sub_resource type="RectangleShape2D" id="WalkLeft"]
-size = Vector2(340.5, 35.5)
+size = Vector2(760, 190)
 
 [sub_resource type="RectangleShape2D" id="WalkCenter"]
 size = Vector2(237, 124)
 
 [sub_resource type="RectangleShape2D" id="WalkRight"]
-size = Vector2(436, 22)
+size = Vector2(229.3125, 352.25)
 
 [sub_resource type="RectangleShape2D" id="WalkBottom"]
-size = Vector2(252, 73)
+size = Vector2(928, 54.5)
 
 [sub_resource type="RectangleShape2D" id="InteractShape"]
 size = Vector2(92, 82)
+
+[sub_resource type="RectangleShape2D" id="DoorInteractShape"]
+size = Vector2(170, 260)
+
+[sub_resource type="RectangleShape2D" id="PhotoInteractShape"]
+size = Vector2(90, 70)
 
 [sub_resource type="CapsuleShape2D" id="PlayerShape"]
 height = 24.0
@@ -35,10 +56,25 @@ height = 24.0
 [node name="classroom" type="Node2D" unique_id=354152300]
 y_sort_enabled = true
 
+[node name="SceneController" type="Node" parent="." unique_id=680530789]
+script = ExtResource("scene_controller_script")
+player_path = NodePath("../Player")
+girl_path = NodePath("../Girl")
+camera_path = NodePath("../Player/Camera2D")
+background_path = NodePath("../background")
+photo_overlay_path = NodePath("../UI/PhotoOverlay")
+photo_pickup_path = NodePath("../PhotoPickup")
+entropia_icon_path = NodePath("../UI/EntropiaIcon")
+door_interactable_path = NodePath("../Interactables/LeftDoorExit")
+dialogue_resource = ExtResource("dialogue")
+ellipsis_dialogue_resource = ExtResource("ellipsis_dialogue")
+candy_dialogue_resource = ExtResource("candy_dialogue")
+sad_background = ExtResource("classroom_sad")
+
 [node name="background" type="Sprite2D" parent="." unique_id=1907899337]
 z_index = -1000
 position = Vector2(581, 330.5)
-texture = ExtResource("background")
+texture = ExtResource("1_a6egp")
 
 [node name="WalkableAreas" type="Node2D" parent="." unique_id=41239084]
 
@@ -46,7 +82,11 @@ texture = ExtResource("background")
 position = Vector2(210, 505)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/LeftAisle" unique_id=523257605]
-position = Vector2(106.75, -15.25)
+position = Vector2(-90, 96)
+shape = SubResource("WalkLeft")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/LeftAisle/CollisionShape2D" unique_id=511564795]
+position = Vector2(-246, -396)
 shape = SubResource("WalkLeft")
 
 [node name="CenterFloor" type="Area2D" parent="WalkableAreas" unique_id=1631435938 groups=["classroom_walkable"]]
@@ -63,23 +103,75 @@ position = Vector2(575, 365)
 position = Vector2(940, 490)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/RightAisle" unique_id=34186320]
-position = Vector2(-28, 7)
+position = Vector2(-171.5, 135)
+shape = SubResource("WalkRight")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="WalkableAreas/RightAisle" unique_id=314321025]
+position = Vector2(240, 148)
+shape = SubResource("WalkRight")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WalkableAreas/RightAisle" unique_id=1231135093]
+position = Vector2(-551.34375, 140)
+shape = SubResource("WalkRight")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WalkableAreas/RightAisle/CollisionShape2D2" unique_id=76188439]
+position = Vector2(-496.65625, -36.875)
+shape = SubResource("WalkRight")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="WalkableAreas/RightAisle/CollisionShape2D2" unique_id=256146536]
+position = Vector2(-493.65625, -136)
 shape = SubResource("WalkRight")
 
 [node name="BottomPassage" type="Area2D" parent="WalkableAreas" unique_id=13242361 groups=["classroom_walkable"]]
 position = Vector2(582, 605)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/BottomPassage" unique_id=1089144465]
-position = Vector2(10, 17.5)
+position = Vector2(340, 25)
 shape = SubResource("WalkBottom")
 
 [node name="Interactables" type="Node2D" parent="." unique_id=1672669305]
+
+[node name="BottomMiddleDeskPoint" type="Area2D" parent="Interactables" unique_id=338011881 groups=["classroom_actions"]]
+position = Vector2(566, 612)
+script = ExtResource("action_interactable_script")
+action = &"bottom_desk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/BottomMiddleDeskPoint" unique_id=1205477442]
+shape = SubResource("InteractShape")
+
+[node name="ExclamationMark" type="Sprite2D" parent="Interactables/BottomMiddleDeskPoint" unique_id=1019030686]
+visible = false
+position = Vector2(0, -70)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("exclamation_icon")
+
+[node name="LeftDoorExit" type="Area2D" parent="Interactables" unique_id=1674990522 groups=["classroom_actions"]]
+position = Vector2(68, 510)
+script = ExtResource("action_interactable_script")
+action = &"sad_door"
+enabled = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/LeftDoorExit" unique_id=974516173]
+position = Vector2(-152, -141)
+shape = SubResource("DoorInteractShape")
+
+[node name="ExclamationMark" type="Sprite2D" parent="Interactables/LeftDoorExit" unique_id=1690866902]
+visible = false
+position = Vector2(-44, -82)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("exclamation_icon")
 
 [node name="DeskPoint" type="Area2D" parent="Interactables" unique_id=157750191]
 position = Vector2(425, 518)
 script = ExtResource("interactable_script")
 interaction_name = "pupitre"
 dialogue_resource = ExtResource("dialogue")
+
+[node name="ExclamationMark" type="Sprite2D" parent="Interactables/DeskPoint" unique_id=747032668]
+visible = false
+position = Vector2(0, -70)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("exclamation_icon")
 
 [node name="BoardTablePoint" type="Area2D" parent="Interactables" unique_id=554868513]
 position = Vector2(605, 447)
@@ -90,14 +182,72 @@ dialogue_resource = ExtResource("dialogue")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/BoardTablePoint" unique_id=886023368]
 shape = SubResource("InteractShape")
 
+[node name="ExclamationMark" type="Sprite2D" parent="Interactables/BoardTablePoint" unique_id=1176131091]
+visible = false
+position = Vector2(0, -70)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("exclamation_icon")
+
 [node name="PlantTabletPoint" type="Area2D" parent="Interactables" unique_id=1025262065]
 position = Vector2(1063, 425)
 script = ExtResource("interactable_script")
 interaction_name = "planta y tablet"
 dialogue_resource = ExtResource("dialogue")
 
+[node name="ExclamationMark" type="Sprite2D" parent="Interactables/PlantTabletPoint" unique_id=1189117949]
+visible = false
+position = Vector2(0, -70)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("exclamation_icon")
+
+[node name="PhotoPickup" type="Node2D" parent="." unique_id=172050966]
+position = Vector2(1120.0001, 557.0001)
+
+[node name="PhotoProp" type="Sprite2D" parent="PhotoPickup" unique_id=659422603]
+rotation = -0.22
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("photo_texture")
+
+[node name="PhotoPoint" type="Area2D" parent="PhotoPickup" unique_id=88995168 groups=["classroom_actions"]]
+script = ExtResource("action_interactable_script")
+action = &"photo"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PhotoPickup/PhotoPoint" unique_id=114993029]
+shape = SubResource("PhotoInteractShape")
+
+[node name="ExclamationMark" type="Sprite2D" parent="PhotoPickup/PhotoPoint" unique_id=22187848]
+visible = false
+position = Vector2(0, -62)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("exclamation_icon")
+
+[node name="Girl" type="CharacterBody2D" parent="." unique_id=225794821]
+position = Vector2(-80, 630)
+script = ExtResource("girl_script")
+base_visual_scale = 0.62
+idle_down_texture = ExtResource("girl_idle_down")
+walk_down_texture = ExtResource("girl_walk_down")
+idle_up_texture = ExtResource("girl_idle_up")
+walk_up_texture = ExtResource("girl_walk_up")
+idle_side_texture = ExtResource("girl_idle_side")
+walk_side_texture = ExtResource("girl_walk_side")
+
+[node name="Shadow" type="Polygon2D" parent="Girl" unique_id=1084894611]
+z_index = -1
+position = Vector2(0, 2)
+color = Color(0, 0, 0, 0.3)
+polygon = PackedVector2Array(-23, -5, -12, -9, 12, -9, 23, -5, 23, 5, 12, 9, -12, 9, -23, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Girl" unique_id=1028490557]
+position = Vector2(0, -31)
+texture = ExtResource("girl_idle_down")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Girl" unique_id=806547938]
+position = Vector2(0, -9)
+shape = SubResource("PlayerShape")
+
 [node name="Player" type="CharacterBody2D" parent="." unique_id=511022955 groups=["players"]]
-position = Vector2(575, 560)
+position = Vector2(95, 630)
 script = ExtResource("player_script")
 walk_speed = 150.0
 run_speed = 220.0
@@ -129,9 +279,53 @@ shape = SubResource("PlayerShape")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1489959069]
 position = Vector2(0, -32)
-limit_left = 0
-limit_top = 0
-limit_right = 1162
-limit_bottom = 661
-position_smoothing_enabled = true
-position_smoothing_speed = 6.0
+zoom = Vector2(0.72, 0.72)
+limit_left = -10000
+limit_top = -10000
+limit_right = 10000
+limit_bottom = 10000
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1677443769]
+
+[node name="PhotoOverlay" type="Control" parent="UI" unique_id=1476011970]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backdrop" type="ColorRect" parent="UI/PhotoOverlay" unique_id=642325002]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.72)
+
+[node name="Photo" type="TextureRect" parent="UI/PhotoOverlay" unique_id=224762886]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -240.0
+offset_right = 180.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("photo_texture")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="EntropiaIcon" type="TextureRect" parent="UI" unique_id=151994059]
+visible = false
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 162.0
+offset_bottom = 162.0
+texture = ExtResource("entropia_icon")
+expand_mode = 1
+stretch_mode = 5
