@@ -30,7 +30,7 @@ func handle_action(action: StringName) -> void:
 	match action:
 		&"bath_door_in":
 			await _show_dialogue_for_action(action, bath_door_dialogue_resource)
-			get_tree().change_scene_to_file("res://scenes/Cafeteria.tscn")
+			get_tree().change_scene_to_file("res://scenes/Outside.tscn")
 		&"gun_pickup":
 			await _show_dialogue_for_action(action, gun_pickup_dialogue_resource)
 			await _play_burned_hallway_glitch()

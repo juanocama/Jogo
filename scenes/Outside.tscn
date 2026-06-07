@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cee8267wedjch"]
+
+[ext_resource type="Texture2D" uid="uid://gx2wln6tmsu3" path="res://assets/Outside/pinos.png" id="1_h7pq5"]
+
+[node name="Node2D" type="Node2D" unique_id=955238777]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2101323516]
+position = Vector2(263, 323)
+scale = Vector2(0.81675875, 0.8977901)
+texture = ExtResource("1_h7pq5")
