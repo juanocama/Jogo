@@ -1,10 +1,118 @@
 [gd_scene format=3 uid="uid://cee8267wedjch"]
 
 [ext_resource type="Texture2D" uid="uid://gx2wln6tmsu3" path="res://assets/Outside/pinos.png" id="1_h7pq5"]
+[ext_resource type="Script" uid="uid://doi4f22miukb8" path="res://code/Outside_controller.gd" id="1_m5nsq"]
+[ext_resource type="Resource" uid="uid://dwolkol54145b" path="res://Dialogue/Hallway2/DoorCafeteria.dialogue" id="2_6ow7b"]
+[ext_resource type="Script" uid="uid://cjg7d1g7tksc8" path="res://code/pseudo_3d_player.gd" id="2_5426x"]
+[ext_resource type="Texture2D" uid="uid://dwqq66htnkwkr" path="res://assets/nino_3d/nino_idle_down.png" id="3_atsa5"]
+[ext_resource type="Resource" uid="uid://xoe71f1w1qbg" path="res://Dialogue/Hallway/GunPickup.dialogue" id="3_j6mnj"]
+[ext_resource type="Resource" uid="uid://dj3leugyjqjfn" path="res://Dialogue/Hallway/Candy2.dialogue" id="4_06hlj"]
+[ext_resource type="Texture2D" uid="uid://qyd752wh20kv" path="res://assets/nino_3d/nino_walk_down.png" id="4_eyej7"]
+[ext_resource type="Texture2D" uid="uid://dvudnsv7avddy" path="res://assets/hallway/Hallway_burned.png" id="5_2ukas"]
+[ext_resource type="Texture2D" uid="uid://2yummbox3vfi" path="res://assets/nino_3d/nino_run_down.png" id="5_lajn4"]
+[ext_resource type="Texture2D" uid="uid://b1hlkrph2sfwv" path="res://assets/nino_3d/nino_idle_up.png" id="6_x0nku"]
+[ext_resource type="Script" uid="uid://h6nwgdloptpe" path="res://code/classroom_action_interactable.gd" id="7_kee8u"]
+[ext_resource type="Texture2D" uid="uid://bvblafsjrad8e" path="res://assets/nino_3d/nino_walk_up.png" id="7_kgm3o"]
+[ext_resource type="Texture2D" uid="uid://bmwestplf578s" path="res://assets/star_16x16.png" id="8_hrxyj"]
+[ext_resource type="Texture2D" uid="uid://b5fjagmv3daga" path="res://assets/nino_3d/nino_run_up.png" id="8_ni4a0"]
+[ext_resource type="Texture2D" uid="uid://cyrswrbm5ahj8" path="res://assets/nino_3d/nino_idle_side.png" id="9_m5nsq"]
+[ext_resource type="Texture2D" uid="uid://dcbo70rh102m4" path="res://assets/nino_3d/nino_walk_side.png" id="10_6ow7b"]
+[ext_resource type="Texture2D" uid="uid://mb5lnbwv6mec" path="res://assets/nino_3d/nino_run_side.png" id="11_j6mnj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c075h"]
+size = Vector2(101, 193)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_06hlj"]
+height = 24.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ukas"]
+size = Vector2(1664, 88)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hrxyj"]
+size = Vector2(886.375, 104)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5426x"]
+size = Vector2(352, 80)
 
 [node name="Node2D" type="Node2D" unique_id=955238777]
+
+[node name="SceneController" type="Node" parent="." unique_id=284964557]
+script = ExtResource("1_m5nsq")
+bath_door_dialogue_resource = ExtResource("2_6ow7b")
+gun_pickup_dialogue_resource = ExtResource("3_j6mnj")
+candy_dialogue_resource = ExtResource("4_06hlj")
+background_path = NodePath("../SpriteC")
+burned_background_texture = ExtResource("5_2ukas")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2101323516]
 position = Vector2(286.99997, 323)
 scale = Vector2(0.79465926, 0.8977901)
 texture = ExtResource("1_h7pq5")
+
+[node name="BathDoorIn" type="Area2D" parent="." unique_id=649826385 groups=["classroom_actions"]]
+position = Vector2(68, 510)
+script = ExtResource("7_kee8u")
+action = &"bath_door_in"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BathDoorIn" unique_id=675343114]
+position = Vector2(-575, 9)
+shape = SubResource("RectangleShape2D_c075h")
+
+[node name="ExclamationMark" type="Sprite2D" parent="BathDoorIn" unique_id=1574290197]
+position = Vector2(-612, -38)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("8_hrxyj")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=94693429 groups=["players"]]
+position = Vector2(880, 448)
+script = ExtResource("2_5426x")
+walk_speed = 150.0
+run_speed = 220.0
+walkable_area_group = &"classroom_walkable"
+base_visual_scale = 0.54
+idle_down_texture = ExtResource("3_atsa5")
+walk_down_texture = ExtResource("4_eyej7")
+run_down_texture = ExtResource("5_lajn4")
+idle_up_texture = ExtResource("6_x0nku")
+walk_up_texture = ExtResource("7_kgm3o")
+run_up_texture = ExtResource("8_ni4a0")
+idle_side_texture = ExtResource("9_m5nsq")
+walk_side_texture = ExtResource("10_6ow7b")
+run_side_texture = ExtResource("11_j6mnj")
+
+[node name="Shadow" type="Polygon2D" parent="Player" unique_id=1117400498]
+z_index = -1
+position = Vector2(0, 2)
+color = Color(0, 0, 0, 0.3)
+polygon = PackedVector2Array(-23, -5, -12, -9, 12, -9, 23, -5, 23, 5, 12, 9, -12, 9, -23, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1064772716]
+position = Vector2(0, -31)
+texture = ExtResource("3_atsa5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1432223457]
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_06hlj")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=842141922]
+limit_left = -580
+limit_right = 1150
+limit_bottom = 650
+position_smoothing_enabled = true
+
+[node name="WalkableAreas" type="Node2D" parent="." unique_id=1880140466]
+
+[node name="Floor" type="Area2D" parent="WalkableAreas" unique_id=768037347 groups=["classroom_walkable"]]
+position = Vector2(582, 605)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WalkableAreas/Floor" unique_id=127497347]
+position = Vector2(-294, -33)
+shape = SubResource("RectangleShape2D_2ukas")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="WalkableAreas/Floor" unique_id=1657456039]
+position = Vector2(94.8125, -129)
+shape = SubResource("RectangleShape2D_hrxyj")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="WalkableAreas/Floor" unique_id=1176382664]
+position = Vector2(-734, -117)
+shape = SubResource("RectangleShape2D_5426x")
