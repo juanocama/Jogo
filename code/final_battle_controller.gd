@@ -80,7 +80,7 @@ func _configure_boss() -> void:
 	if boss == null:
 		return
 	boss.set("ai_enabled", false)
-	boss.set("damage_taken_multiplier", 0.4)
+	boss.set("damage_taken_multiplier", 0.46)
 	boss.set("hit_reaction_enabled", false)
 	boss.set("speed", 0.0)
 	boss.set("dash_speed", 0.0)

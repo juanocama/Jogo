@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b3kkvngllu465"
+path="res://.godot/imported/BattleBossDefeated.dialogue-9b1d6424c43da5b579387c8e0ab78b18.tres"
+
+[deps]
+
+source_file="res://Dialogue/Cafeteria/BattleBossDefeated.dialogue"
+dest_files=["res://.godot/imported/BattleBossDefeated.dialogue-9b1d6424c43da5b579387c8e0ab78b18.tres"]
+
+[params]
+
+defaults=true

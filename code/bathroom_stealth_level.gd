@@ -4,6 +4,8 @@ extends Node
 @export var robot_path: NodePath
 @export var mirror_path: NodePath
 @export var timer_label_path: NodePath
+@export var exit_door_path: NodePath
+@export_file("*.tscn") var exit_target_scene: String = "res://scenes/Hallway2.tscn"
 @export var level_duration: float = 60.0
 @export var robot_vision_range: float = 520.0
 @export var robot_detection_interval: float = 0.8
@@ -17,6 +19,7 @@ extends Node
 @onready var robot: CharacterBody2D = get_node(robot_path) as CharacterBody2D
 @onready var mirror: Area2D = get_node(mirror_path) as Area2D
 @onready var timer_label: Label = get_node(timer_label_path) as Label
+@onready var exit_door: Area2D = get_node_or_null(exit_door_path) as Area2D
 
 var active: bool = false
 var finished: bool = false
@@ -27,8 +30,11 @@ var spots: Array[Area2D] = []
 
 func _ready() -> void:
 	time_left = level_duration
+	if exit_door != null and exit_door.has_method("set_enabled"):
+		exit_door.call("set_enabled", false)
 	_collect_spots()
 	_connect_mirror()
+	_connect_exit_door()
 	_setup_robot()
 	_update_timer_label()
 	if timer_label != null:
@@ -127,6 +133,7 @@ func complete_victory() -> void:
 	if timer_label != null:
 		timer_label.visible = false
 	print("Nivel de sigilo completado")
+	_enable_exit_door()
 
 
 func _collect_spots() -> void:
@@ -148,6 +155,15 @@ func _connect_mirror() -> void:
 		return
 	if mirror.has_signal("sad_bathroom_activated"):
 		mirror.connect("sad_bathroom_activated", Callable(self, "_on_sad_bathroom_activated"))
+
+
+func _connect_exit_door() -> void:
+	if exit_door == null:
+		return
+	if exit_door.has_signal("interacted"):
+		var callback: Callable = Callable(self, "_on_exit_door_interacted")
+		if not exit_door.is_connected("interacted", callback):
+			exit_door.connect("interacted", callback)
 
 
 func _setup_robot() -> void:
@@ -191,6 +207,11 @@ func _disable_hiding_spots() -> void:
 			spot.call("set_targeted", false)
 
 
+func _enable_exit_door() -> void:
+	if exit_door != null and exit_door.has_method("set_enabled"):
+		exit_door.call("set_enabled", true)
+
+
 func _update_timer_label() -> void:
 	if timer_label == null:
 		return
@@ -209,3 +230,12 @@ func _on_hide_requested(spot: Area2D) -> void:
 
 func _on_unhide_requested(spot: Area2D) -> void:
 	request_unhide(spot)
+
+
+func _on_exit_door_interacted(action: StringName) -> void:
+	if action != &"bathroom_exit_door":
+		return
+	if not finished:
+		return
+	if exit_target_scene != "":
+		get_tree().change_scene_to_file(exit_target_scene)

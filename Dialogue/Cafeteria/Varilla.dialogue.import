@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dukmqjfbukvnj"
+path="res://.godot/imported/Varilla.dialogue-6f759c246c199195a2827fac86ff0fbc.tres"
+
+[deps]
+
+source_file="res://Dialogue/Cafeteria/Varilla.dialogue"
+dest_files=["res://.godot/imported/Varilla.dialogue-6f759c246c199195a2827fac86ff0fbc.tres"]
+
+[params]
+
+defaults=true
