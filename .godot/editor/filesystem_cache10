@@ -1,5 +1,5 @@
 f098f8d3115d962055284dee314b4f89
-::res://::1780822988
+::res://::1780823468
 icon.svg::CompressedTexture2D::2283935863672813662::1780706037::1780706037::1::::<><><>0<>0<>0898c564e61cbdcadbc6c7220d87cc8b<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 map.tscn::PackedScene::712281116534741659::1780788185::0::1::::<><><>0<>0<><>::uid://c1kbe1q3kcgqx::::res://assets/nino_01/Respiracion y parpadeo.png<>uid://5x2ebhjgn35i::::res://playerMovement.gd<>uid://dwrn3ygwkhpo5::::res://assets/nino_01/Salto caminando derecha.png<>uid://b3ox3bctig4je::::res://assets/nino_01/correr derecha.png<>uid://onq1isncll25::::res://assets/nino_01/Agacharse derecha.png<>uid://dy6sgc5bhmxw8::::res://assets/nino_01/caminar derecha.png
 playerMovement.gd::GDScript::2154792563219122716::1780788094::0::1::::<>CharacterBody2D<><>0<>0<><>::
@@ -199,7 +199,7 @@ classroom_npc.gd::GDScript::517832371515272546::1780817407::0::1::::<>CharacterB
 classroom_scene_controller.gd::GDScript::1857698191610162494::1780822057::0::1::::<>Node<><>0<>0<><>::
 control.gd::GDScript::6132929772812678623::1780806010::0::1::::<>Control<><>0<>0<><>::
 ghost.gd::GDScript::2503397765581055866::1780765599::0::1::::<>CharacterBody2D<><>0<>0<><>::
-Hallway_controller.tscn.gd::GDScript::6443408043517057686::1780823303::0::1::::<>Node<><>0<>0<><>::
+Hallway_controller.tscn.gd::GDScript::6443408043517057686::1780823623::0::1::::<>Node<><>0<>0<><>::
 hiding_spot.gd::GDScript::5859176560478327330::1780816138::0::1::::<>Area2D<><>0<>0<><>::
 level.gd::GDScript::7091105921217293497::1780788094::0::1::::<>Node2D<><>0<>0<><>::
 main_character.gd::GDScript::1493430342389178501::1780788094::0::1::::MainCharacter<>CharacterBody2D<><>0<>0<><>::
@@ -216,10 +216,10 @@ Candy.dialogue::Resource::4657077967051702662::1780819758::1780819758::1::::<><>
 ::res://Dialogue/Classroom/::1780820681
 Alba1.dialogue::Resource::5443919526408583822::1780820476::1780820476::1::::<><><>0<>0<>d348cc299d6fbb0724d3de3358d291ed<>res://.godot/imported/Alba1.dialogue-fa7ad66d65581380b925286832efa639.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
 Photo.dialogue::Resource::6025473614287182308::1780820681::1780820681::1::::<><><>0<>0<>19930fe24b06ae2b866ebeecc1e2b713<>res://.godot/imported/Photo.dialogue-bf5797e5e80be1b18125008096d86064.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
-::res://Dialogue/Hallway/::1780823406
+::res://Dialogue/Hallway/::1780823468
 BathDoorIn.dialogue::Resource::2419461131901603440::1780823468::1780823468::1::::<><><>0<>0<>3ca215250b2ae8319ca5ee1a184ab0d7<>res://.godot/imported/BathDoorIn.dialogue-4eb0672a5427e06e0418413a1c38a607.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
 Candy2.dialogue::Resource::7849440311870265067::1780823316::1780823406::1::::<><><>0<>0<>1bb672277cc52f80420846bb876f5b04<>res://.godot/imported/Candy2.dialogue-47c2ea132fd7b98e1d214777a5d51827.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
-GunPickup.dialogue::Resource::1643546080150490904::1780823316::1780823406::1::::<><><>0<>0<>70f6590b90e35e1ed8de7da410b82ca2<>res://.godot/imported/GunPickup.dialogue-12672e26736754ceb54645c20830a52e.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
+GunPickup.dialogue::Resource::1643546080150490904::1780823685::1780823686::1::::<><><>0<>0<>70f6590b90e35e1ed8de7da410b82ca2<>res://.godot/imported/GunPickup.dialogue-12672e26736754ceb54645c20830a52e.tres::uid://dbs4435dsf3ry::::res://addons/dialogue_manager/dialogue_resource.gd
 ::res://Dialogue/Scene1/::1780819870
 balloon.gd::GDScript::6685743247592616377::1780809700::0::1::::<>CanvasLayer<><>0<>0<><>::
 balloon.tscn::PackedScene::3499252440488638315::1780819848::0::1::::<><><>0<>0<><>::uid://b0ejqv0b60180::::res://Fonts/Minecraftia-Regular.ttf<>uid://ckvgyvclnwggo::::res://addons/dialogue_manager/dialogue_label.tscn<>uid://bb52rsfwhkxbn::::res://addons/dialogue_manager/dialogue_responses_menu.gd

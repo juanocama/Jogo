@@ -189,7 +189,7 @@ scale = Vector2(0.7, 0.7)
 shape = SubResource("RobotShape")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=319021199 groups=["players"]]
-position = Vector2(570.5, 500)
+position = Vector2(93.5, 460)
 script = ExtResource("player_script")
 walk_speed = 150.0
 run_speed = 220.0

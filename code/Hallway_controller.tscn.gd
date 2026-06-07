@@ -19,6 +19,7 @@ func handle_action(action: StringName) -> void:
 	match action:
 		&"bath_door_in":
 			await _show_dialogue_for_action(action, bath_door_dialogue_resource)
+			get_tree().change_scene_to_file("res://scenes/bathroom.tscn")
 		&"gun_pickup":
 			await _show_dialogue_for_action(action, gun_pickup_dialogue_resource)
 		&"candy_2":
