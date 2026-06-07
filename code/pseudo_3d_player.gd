@@ -46,6 +46,7 @@ var last_direction: StringName = &"down"
 var current_animation_key: StringName = &""
 var player_hidden: bool = false
 var hiding_animation_active: bool = false
+var controls_inverted: bool = false
 
 
 func _ready() -> void:
@@ -100,6 +101,9 @@ func _get_input_vector() -> Vector2:
 		direction.y -= 1.0
 	if Input.is_action_pressed("ui_down") or Input.is_key_pressed(KEY_S):
 		direction.y += 1.0
+
+	if controls_inverted:
+		direction *= -1.0
 
 	return direction.normalized()
 
@@ -296,6 +300,19 @@ func force_control_locked(locked: bool) -> void:
 	control_locked = locked
 	if locked:
 		velocity = Vector2.ZERO
+
+
+func set_controls_inverted(inverted: bool) -> void:
+	controls_inverted = inverted
+
+
+func face_towards(target_position: Vector2) -> void:
+	var direction: Vector2 = target_position - global_position
+	if direction.x != 0.0:
+		last_facing = -1 if direction.x < 0.0 else 1
+	last_direction = _get_direction_name(direction.normalized())
+	current_animation_key = &""
+	_apply_visual_state(Vector2.ZERO, false)
 
 
 func _play_one_shot_texture(texture: Texture2D, frames: int, duration: float, flip_horizontal: bool) -> void:
