@@ -65,6 +65,7 @@ func handle_action(action: StringName) -> void:
 			candy_collected = true
 			_disable_action(action)
 			await _show_dialogue(candy_dialogue_resource)
+			GameManager.collect_candy(&"classroom_candy_local1")
 		&"photo":
 			await _run_photo_interaction()
 		&"sad_door":

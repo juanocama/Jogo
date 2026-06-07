@@ -56,6 +56,7 @@ signal defeated(boss: BossRobot)
 const SPRITE_NODE_NAMES: Array[StringName] = [
 	&"idle", &"walk", &"dash", &"attack", &"shoot", &"fly", &"slam", &"hit", &"death", &"special"
 ]
+const MIN_NON_MOVEMENT_ANIMATION_DURATION: float = 1.6
 
 var health: int = 0
 var target: Node2D = null
@@ -290,7 +291,7 @@ func _update_hover(delta: float) -> void:
 
 func _start_melee() -> void:
 	state = &"melee"
-	active_state_duration = _get_animation_duration(&"attack", 0.55)
+	active_state_duration = maxf(_get_animation_duration(&"attack", 0.55), MIN_NON_MOVEMENT_ANIMATION_DURATION)
 	state_timer = active_state_duration
 	attack_has_hit = false
 	melee_timer = melee_cooldown
@@ -306,7 +307,7 @@ func _update_melee(delta: float) -> void:
 	if is_flying_boss:
 		_update_hover(delta)
 	var elapsed: float = active_state_duration - state_timer
-	var hit_time: float = min(0.3, active_state_duration * 0.45)
+	var hit_time: float = active_state_duration * 0.62
 	if not attack_has_hit and elapsed >= hit_time:
 		attack_has_hit = true
 		_damage_targets_in_attack_area(melee_damage)
@@ -357,7 +358,7 @@ func _update_dash(delta: float) -> void:
 
 func _start_shoot() -> void:
 	state = &"shoot"
-	active_state_duration = _get_animation_duration(&"shoot", 0.85)
+	active_state_duration = maxf(_get_animation_duration(&"shoot", 0.85), MIN_NON_MOVEMENT_ANIMATION_DURATION)
 	state_timer = active_state_duration
 	shot_spawned = false
 	shoot_timer = shoot_cooldown
@@ -373,7 +374,8 @@ func _update_shoot(delta: float) -> void:
 	if is_flying_boss:
 		_update_hover(delta)
 
-	if not shot_spawned and active_state_duration - state_timer >= shoot_delay:
+	var shot_time: float = maxf(shoot_delay, active_state_duration * 0.62)
+	if not shot_spawned and active_state_duration - state_timer >= shot_time:
 		shot_spawned = true
 		_spawn_projectile()
 
@@ -384,8 +386,8 @@ func _update_shoot(delta: float) -> void:
 
 func _start_slam() -> void:
 	state = &"slam"
-	active_state_duration = _get_animation_duration(&"slam", 1.05)
-	state_timer = max(1.05, active_state_duration)
+	active_state_duration = maxf(_get_animation_duration(&"slam", 1.05), MIN_NON_MOVEMENT_ANIMATION_DURATION)
+	state_timer = active_state_duration
 	slam_timer = slam_cooldown
 	velocity.y = -260.0
 	velocity.x = float(facing_direction) * 95.0
@@ -581,6 +583,7 @@ func _play_state(anim_name: StringName) -> void:
 
 	_show_animation(final_anim)
 	if anim_player and anim_player.has_animation(final_anim) and anim_player.current_animation != final_anim:
+		anim_player.speed_scale = _get_animation_speed_scale(final_anim)
 		anim_player.play(final_anim)
 
 
@@ -596,6 +599,19 @@ func _get_animation_duration(anim_name: StringName, fallback: float) -> float:
 	if speed <= 0.0:
 		speed = 1.0
 	return animation.length / speed
+
+
+func _get_animation_speed_scale(anim_name: StringName) -> float:
+	if anim_name == &"idle" or anim_name == &"walk" or anim_name == &"fly" or anim_name == &"dash":
+		return 1.0
+	if anim_player == null or not anim_player.has_animation(anim_name):
+		return 1.0
+	var animation: Animation = anim_player.get_animation(anim_name)
+	if animation == null or animation.length <= 0.0:
+		return 1.0
+	if animation.length < MIN_NON_MOVEMENT_ANIMATION_DURATION:
+		return animation.length / MIN_NON_MOVEMENT_ANIMATION_DURATION
+	return 1.0
 
 
 func _show_animation(anim_name: StringName) -> void:
