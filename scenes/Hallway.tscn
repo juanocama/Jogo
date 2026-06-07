@@ -142,7 +142,6 @@ shape = SubResource("RectangleShape2D_xjknv")
 position = Vector2(68, 510)
 script = ExtResource("13_fgls2")
 action = &"bath_door_in"
-enabled = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BathDoorIn" unique_id=502104748]
 position = Vector2(20, -174)

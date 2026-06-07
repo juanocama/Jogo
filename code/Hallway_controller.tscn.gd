@@ -5,6 +5,7 @@ extends Node
 @export var candy_dialogue_resource: DialogueResource
 @export var gun_pickup_path: NodePath
 @export var candy_pickup_path: NodePath
+@export var bath_door_path: NodePath
 @export var background_path: NodePath
 @export var burned_background_texture: Texture2D
 @export var burned_background_scale: Vector2 = Vector2(0.844, 0.844)
@@ -13,6 +14,7 @@ extends Node
 
 @onready var gun_pickup: Node2D = get_node_or_null(gun_pickup_path) as Node2D
 @onready var candy_pickup: Node2D = get_node_or_null(candy_pickup_path) as Node2D
+@onready var bath_door: Area2D = get_node_or_null(bath_door_path) as Area2D
 @onready var background: Sprite2D = get_node_or_null(background_path) as Sprite2D
 
 var dialogue_running: bool = false
@@ -21,6 +23,7 @@ var completed_actions: Dictionary = {}
 
 func _ready() -> void:
 	_play_scene_music(&"hallway", 0.75)
+	_ensure_bath_door_available()
 	_connect_action_interactables()
 
 
@@ -93,12 +96,26 @@ func _play_burned_hallway_glitch() -> void:
 		await get_tree().create_timer(flash_duration).timeout
 
 
+func _ensure_bath_door_available() -> void:
+	# El baño es una escena de sigilo/escondidas y debe poder abrirse desde el pasillo.
+	# En una versión del proyecto, BathDoorIn quedó con enabled=false dentro de Hallway.tscn;
+	# por eso el jugador se paraba frente a la puerta pero nunca recibía la interacción.
+	if bath_door == null:
+		bath_door = get_node_or_null("../BathDoorIn") as Area2D
+	if bath_door != null and bath_door.has_method("set_enabled"):
+		bath_door.call("set_enabled", true)
+
 func _connect_action_interactables() -> void:
+	var callback: Callable = Callable(self, "handle_action")
 	for node: Node in get_tree().get_nodes_in_group("classroom_actions"):
 		if node.has_signal("interacted"):
-			var callback: Callable = Callable(self, "handle_action")
 			if not node.is_connected("interacted", callback):
 				node.connect("interacted", callback)
+
+	# Fallback explícito para la puerta del baño. Así la entrada no depende solo del grupo.
+	if bath_door != null and bath_door.has_signal("interacted"):
+		if not bath_door.is_connected("interacted", callback):
+			bath_door.connect("interacted", callback)
 
 
 func _disable_action(action: StringName) -> void:
