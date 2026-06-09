@@ -60,6 +60,7 @@ const FIRE_Y: float = 158.0
 @export var laser_texture: Texture2D
 @export var warning_texture: Texture2D
 @export var floor_flame_texture: Texture2D
+@export_file("*.tscn") var final_cutscene_scene: String = "res://scenes/FinalCutScene.tscn"
 
 var roll_timer: float = 1.2
 var minion_timer: float = 4.0
@@ -75,6 +76,7 @@ var fire_entropy_active: bool = false
 var special_entropy_cooldown_timer: float = 0.0
 var active_fire_flames: Array[Sprite2D] = []
 var intro_dialogue_running: bool = false
+var victory_sequence_started: bool = false
 
 @onready var boss: Node2D = get_node_or_null(boss_path) as Node2D
 @onready var player: Node2D = get_node_or_null(player_path) as Node2D
@@ -86,6 +88,10 @@ var intro_dialogue_running: bool = false
 func _ready() -> void:
 	if boss != null:
 		standard_boss_position = boss.global_position
+		if boss.has_signal("defeated"):
+			var defeated_callback: Callable = Callable(self, "_on_final_boss_defeated")
+			if not boss.is_connected("defeated", defeated_callback):
+				boss.connect("defeated", defeated_callback)
 	_configure_boss()
 	_update_boss_health_ui()
 	if GameManager.should_show_final_battle_candy_dialogue():
@@ -99,6 +105,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if boss == null or player == null:
+		return
+	if victory_sequence_started:
 		return
 	if boss.has_method("is_alive") and not bool(boss.call("is_alive")):
 		_update_boss_health_ui()
@@ -890,3 +898,25 @@ func _play_scene_music(music_key: StringName, fade_seconds: float = 0.75) -> voi
 	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
 	if audio_manager != null and audio_manager.has_method("play_music"):
 		audio_manager.call("play_music", music_key, fade_seconds)
+
+
+func _on_final_boss_defeated(_defeated_boss: Node) -> void:
+	if victory_sequence_started:
+		return
+
+	victory_sequence_started = true
+	action_serial += 1
+	action_locked = true
+	current_action = &"victory"
+	intro_dialogue_running = false
+	GameManager.is_dialogue_active = false
+	_clear_final_minions()
+	_clear_fire_flames()
+
+	var audio_manager: Node = get_tree().root.get_node_or_null("AudioManager")
+	if audio_manager != null and audio_manager.has_method("stop_music"):
+		audio_manager.call("stop_music", 0.7)
+
+	await _wait_seconds(0.8)
+	if final_cutscene_scene != "":
+		get_tree().change_scene_to_file(final_cutscene_scene)

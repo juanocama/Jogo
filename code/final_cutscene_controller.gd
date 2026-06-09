@@ -59,6 +59,7 @@ func _run_cutscene() -> void:
 	await _fade_in_girl()
 	await _tween_camera(bench_camera_position, leaves_camera_position, leaves_zoom, leaves_focus_duration)
 	await _show_intro_background()
+	GameManager.is_dialogue_active = false
 
 
 func _tween_camera(from_position: Vector2, to_position: Vector2, to_zoom: Vector2, duration: float) -> void:
